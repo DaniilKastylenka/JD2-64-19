@@ -1,6 +1,5 @@
 package by.it.academy.service;
 
-import by.it.academy.type.Author;
 import by.it.academy.type.Article;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final List<Article> articles;
 
-    public ArticleServiceImpl() {
+    private ArticleServiceImpl() {
         articles = new ArrayList<>();
     }
 
