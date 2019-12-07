@@ -7,8 +7,11 @@ import java.util.List;
 public interface ArticleService {
 
     List<Article> getAllArticles();
+
     void addNewArticle(Article article);
 
+    void deleteArticle(Long id);
 
+    void update(Article article);
 
 }

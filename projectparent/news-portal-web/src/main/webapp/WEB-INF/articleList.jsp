@@ -7,7 +7,6 @@
 <body>
 
 <%=request.getAttribute("articleList")%>
-<c:out value="${articleList}"/>
 
 <table>
     <tr>
