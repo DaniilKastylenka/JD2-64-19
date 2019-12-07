@@ -1,7 +1,6 @@
 package by.it.academy.service;
 
 import by.it.academy.type.Article;
-import by.it.academy.type.Author;
 
 import java.util.ArrayList;
 import java.util.List;
