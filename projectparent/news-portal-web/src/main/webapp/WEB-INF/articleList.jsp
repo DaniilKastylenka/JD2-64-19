@@ -14,7 +14,7 @@
         <td>Title</td>
         <td>Text</td>
         <td>Author</td>
-        <td>Publication date</td>
+        <td>Date</td>
         <td>Likes</td>
         <td>Dislikes</td>
         <td>Comments</td>
@@ -25,7 +25,7 @@
             <td><c:out value="${article.title}"/></td>
             <td><c:out value="${article.text}"/></td>
             <td><c:out value="${article.author.nickname}"/></td>
-            <td><c:out value="${article.publicationDate}"/></td>
+            <td><c:out value="${article.date}"/></td>
             <td><c:out value="${article.likes}"/></td>
             <td><c:out value="${article.dislikes}"/></td>
             <td><c:out value="${article.comments}"/></td>

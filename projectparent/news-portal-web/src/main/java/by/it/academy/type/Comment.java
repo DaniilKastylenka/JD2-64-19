@@ -1,10 +1,13 @@
 package by.it.academy.type;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 
 public class Comment {
 
@@ -13,13 +16,4 @@ public class Comment {
     private Long likes;
     private Long dislikes;
 
-    public Comment(User user, String text, Long likes, Long dislikes) {
-        this.user = user;
-        this.text = text;
-        this.likes = likes;
-        this.dislikes = dislikes;
-    }
-
-    public Comment() {
-    }
 }

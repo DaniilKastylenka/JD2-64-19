@@ -1,17 +1,16 @@
 package by.it.academy.type;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 
 public class Author {
 
     private String nickname;
-
-    public Author(String nickname) {
-        this.nickname = nickname;
-    }
 
 }

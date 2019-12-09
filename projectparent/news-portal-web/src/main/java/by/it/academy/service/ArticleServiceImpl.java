@@ -44,7 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
                 a.setTitle(article.getTitle());
                 a.setText(article.getText());
                 a.setAuthor(article.getAuthor());
-                a.setPublicationDate(article.getPublicationDate());
+                a.setDate(article.getDate());
                 a.setLikes(article.getLikes());
                 a.setDislikes(article.getDislikes());
                 a.setComments(article.getComments());
@@ -52,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    public synchronized static ArticleService getService() {
+    public static ArticleService getService() {
         return INSTANCE;
     }
 }
