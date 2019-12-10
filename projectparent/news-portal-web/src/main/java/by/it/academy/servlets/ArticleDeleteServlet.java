@@ -24,6 +24,6 @@ public class ArticleDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
         articleService.deleteArticle(id);
-        resp.sendRedirect("/articleList");
+        resp.sendRedirect(req.getContextPath() + "/articleList");
     }
 }

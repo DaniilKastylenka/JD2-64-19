@@ -4,6 +4,7 @@ import by.it.academy.type.Article;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ArticleServiceImpl implements ArticleService {
 
@@ -11,20 +12,20 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final List<Article> articles;
 
-    private Long id;
+    private AtomicLong id = new AtomicLong();
+
     private ArticleServiceImpl() {
-        id = 0L;
         articles = new ArrayList<>();
     }
 
     @Override
     public List<Article> getAllArticles() {
-        return articles;
+        return new ArrayList<>(articles);
     }
 
     @Override
     public void addNewArticle(Article article) {
-        article.setId(++id);
+        article.setId(id.incrementAndGet());
         articles.add(article);
     }
 
@@ -33,6 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
         for (Article a : articles) {
             if (a.getId().equals(id)) {
                 articles.remove(a);
+                break;
             }
         }
     }
@@ -40,7 +42,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void update(Article article) {
         for (Article a : articles) {
-            if (a.getId().equals(article.getId())){
+            if (a.getId().equals(article.getId())) {
                 a.setTitle(article.getTitle());
                 a.setText(article.getText());
                 a.setAuthor(article.getAuthor());
@@ -48,6 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
                 a.setLikes(article.getLikes());
                 a.setDislikes(article.getDislikes());
                 a.setComments(article.getComments());
+                break;
             }
         }
     }
