@@ -23,7 +23,7 @@ public class ArticleListServlet extends HttpServlet {
         List<Article> allArticles = articleService.getAllArticles();
         req.setAttribute("articleList", allArticles);
 
-        req.getRequestDispatcher("/WEB-INF/articleList.jsp")
+        req.getRequestDispatcher("/WEB-INF/jsp/articleList.jsp")
                 .forward(req,resp);
     }
 }

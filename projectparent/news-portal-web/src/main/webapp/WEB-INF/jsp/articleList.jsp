@@ -26,7 +26,7 @@
             <td><c:out value="${article.section}"/></td>
             <td><c:out value="${article.title}"/></td>
             <td><c:out value="${article.text}"/></td>
-            <td><c:out value="${article.author_id}"/></td>
+            <td><c:out value="${article.author.username}"/></td>
             <td><c:out value="${article.date}"/></td>
             <td><c:out value="${article.likes}"/></td>
             <td><c:out value="${article.dislikes}"/></td>

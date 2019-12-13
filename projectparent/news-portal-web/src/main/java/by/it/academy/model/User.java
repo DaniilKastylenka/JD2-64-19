@@ -2,6 +2,9 @@ package by.it.academy.model;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicLong;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,11 +19,16 @@ public class User {
     private String password;
     private String role;
 
-
-    User(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         role = "user";
     }
+
+    public User(String username, String password, String role) {
+        this(username,password);
+        this.role = role;
+    }
+
 }
 
