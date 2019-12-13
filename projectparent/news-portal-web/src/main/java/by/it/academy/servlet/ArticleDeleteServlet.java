@@ -1,4 +1,4 @@
-package by.it.academy.servlets;
+package by.it.academy.servlet;
 
 import by.it.academy.service.ArticleService;
 import by.it.academy.service.ArticleServiceImpl;

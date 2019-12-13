@@ -6,12 +6,12 @@
 </head>
 <body>
 
-<form method="post" action="${pageContext.request.contextPath}/articleCreate">
+<form method="post" action="${pageContext.request.contextPath}/createArticle">
+    <label>Section <input type="text" name="section"/></label>
+    <br>
     <label>Title <input type="text" name="title"/></label>
     <br>
     <label>Text <input type="text" name="text"/></label>
-    <br>
-    <label>Author <input type="text" name="author"/></label>
     <br>
     <input type="submit" value="Create"/>
 </form>

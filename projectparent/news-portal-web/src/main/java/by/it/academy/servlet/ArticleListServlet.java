@@ -1,8 +1,8 @@
-package by.it.academy.servlets;
+package by.it.academy.servlet;
 
 import by.it.academy.service.ArticleService;
 import by.it.academy.service.ArticleServiceImpl;
-import by.it.academy.type.Article;
+import by.it.academy.model.Article;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

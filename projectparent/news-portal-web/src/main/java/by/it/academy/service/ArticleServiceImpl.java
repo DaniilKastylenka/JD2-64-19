@@ -1,6 +1,6 @@
 package by.it.academy.service;
 
-import by.it.academy.type.Article;
+import by.it.academy.model.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class ArticleServiceImpl implements ArticleService {
             if (a.getId().equals(article.getId())) {
                 a.setTitle(article.getTitle());
                 a.setText(article.getText());
-                a.setAuthor(article.getAuthor());
+                a.setAuthor_id(article.getAuthor_id());
                 a.setDate(article.getDate());
                 a.setLikes(article.getLikes());
                 a.setDislikes(article.getDislikes());
