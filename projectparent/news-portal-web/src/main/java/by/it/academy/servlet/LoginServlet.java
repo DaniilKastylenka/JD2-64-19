@@ -47,7 +47,6 @@ public class LoginServlet extends HttpServlet {
 
         if (hasError) {
             req.setAttribute("errorString", errMsg);
-            req.setAttribute("user", new User(username, password));
             req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
         } else {
             resp.sendRedirect(req.getContextPath() + "/home");

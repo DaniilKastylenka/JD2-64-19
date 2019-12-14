@@ -5,10 +5,10 @@
     <title>Article List</title>
 </head>
 <body>
+<%@include file="/WEB-INF/include/header.jsp" %>
+<%@include file="/WEB-INF/include/menu.jsp" %>
 
-<%=request.getAttribute("articleList")%>
-
-<table>
+<table border="1px" style="width: 100%; border: black">
     <tr>
         <td>ID</td>
         <td>Section</td>
@@ -27,13 +27,14 @@
             <td><c:out value="${article.title}"/></td>
             <td><c:out value="${article.text}"/></td>
             <td><c:out value="${article.author.username}"/></td>
-            <td><c:out value="${article.date}"/></td>
+            <td><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/> </td>
             <td><c:out value="${article.likes}"/></td>
             <td><c:out value="${article.dislikes}"/></td>
             <td><c:out value="${article.comments}"/></td>
         </tr>
     </c:forEach>
 </table>
+<%@include file="/WEB-INF/include/footer.jsp" %>
 
 </body>
 </html>

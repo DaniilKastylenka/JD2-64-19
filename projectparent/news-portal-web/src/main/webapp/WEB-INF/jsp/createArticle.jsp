@@ -5,6 +5,8 @@
     <title>Create Article</title>
 </head>
 <body>
+<%@include file="/WEB-INF/include/header.jsp" %>
+<%@include file="/WEB-INF/include/menu.jsp" %>
 
 <form method="post" action="${pageContext.request.contextPath}/createArticle">
     <table>
@@ -25,6 +27,7 @@
         </tr>
     </table>
 </form>
+<%@include file="/WEB-INF/include/footer.jsp" %>
 
 </body>
 </html>
