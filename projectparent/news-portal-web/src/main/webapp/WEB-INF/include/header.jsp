@@ -10,17 +10,21 @@
     <div style="float: left">
         <h1 style="margin-top: 10px"><fmt:message key="header.title"/></h1>
     </div>
-    <div style="text-align: center; padding: 15px">
-        <fmt:message key="header.localisation"/>
-        <a href="?lang=en" ><fmt:message key="header.localisation.en"/> </a> |
-        <a href="?lang=ru" ><fmt:message key="header.localisation.ru"/> </a>
-    </div>
-    <div style="text-align: end; padding: 15px">
-        <c:if test="${user != null}">
-            <fmt:message key="header.hello"/><b>${user.username}</b>
-            <a href="${pageContext.request.contextPath}/logout">
-                <fmt:message key="header.logout"/></a></c:if>
-    </div>
+
+        <table style="text-align: left;">
+            <tr>
+                <td><fmt:message key="header.localisation"/></td>
+                <td><a href="?lang=en"><fmt:message key="header.localisation.en"/> </a> |
+                    <a href="?lang=ru"><fmt:message key="header.localisation.ru"/> </a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><c:if test="${user != null}">
+                    <fmt:message key="header.hello"/><b>${user.username}</b>
+                    <a href="${pageContext.request.contextPath}/logout">
+                        <fmt:message key="header.logout"/></a></c:if></td>
+            </tr>
+        </table>
 
 </div>
 
