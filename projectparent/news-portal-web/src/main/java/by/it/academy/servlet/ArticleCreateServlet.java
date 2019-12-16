@@ -29,7 +29,8 @@ public class ArticleCreateServlet extends HttpServlet {
         String section = req.getParameter("section");
         String title = req.getParameter("title");
         String text = req.getParameter("text");
-        Article article = new Article(null, section, title, text, new User("petya", "123", "author"), 0L, 0L, new ArrayList<>());
+        User user = (User) req.getSession().getAttribute("user");
+        Article article = new Article(null, section, title, text, user,0L,0L,new ArrayList<>());
         articleService.addNewArticle(article);
         resp.sendRedirect(req.getContextPath() + "/articleList");
     }

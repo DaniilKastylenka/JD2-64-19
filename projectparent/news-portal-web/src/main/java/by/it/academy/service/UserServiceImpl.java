@@ -14,14 +14,15 @@ public class UserServiceImpl implements UserService {
 
     private AtomicLong id = new AtomicLong();
 
-    private UserServiceImpl(){
-        users.put("admin", new User(1L,"admin", "admin","admin"));
+    private UserServiceImpl() {
+        users.put("admin", new User(1L, "admin", "admin", "admin"));
+        users.put("author", new User(2L, "author", "author", "author"));
     }
 
     @Override
     public Optional<User> findUser(String username, String password) {
         User user = users.get(username);
-        if (user != null && user.getPassword().equals(password)){
+        if (user != null && user.getPassword().equals(password)) {
             return Optional.of(user);
         }
         return Optional.empty();

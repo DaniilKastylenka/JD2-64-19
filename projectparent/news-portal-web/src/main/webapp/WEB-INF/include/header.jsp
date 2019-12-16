@@ -11,20 +11,27 @@
         <h1 style="margin-top: 10px"><fmt:message key="header.title"/></h1>
     </div>
 
-        <table style="text-align: left;">
-            <tr>
-                <td><fmt:message key="header.localisation"/></td>
-                <td><a href="?lang=en"><fmt:message key="header.localisation.en"/> </a> |
-                    <a href="?lang=ru"><fmt:message key="header.localisation.ru"/> </a>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"><c:if test="${user != null}">
+    <table>
+        <tr>
+            <td><fmt:message key="header.localisation"/></td>
+            <td><a href="?lang=en"><fmt:message key="header.localisation.en"/> </a> |
+                <a href="?lang=ru"><fmt:message key="header.localisation.ru"/> </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <c:if test="${session==null}">
+                    <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
+                </c:if>
+
+                <c:if test="${user != null}">
                     <fmt:message key="header.hello"/><b>${user.username}</b>
                     <a href="${pageContext.request.contextPath}/logout">
-                        <fmt:message key="header.logout"/></a></c:if></td>
-            </tr>
-        </table>
+                        <fmt:message key="header.logout"/></a>
+                </c:if>
+            </td>
+        </tr>
+    </table>
 
 </div>
 
