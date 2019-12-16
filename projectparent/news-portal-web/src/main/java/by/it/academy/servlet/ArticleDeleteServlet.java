@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/articleDelete")
 public class ArticleDeleteServlet extends HttpServlet {
 
-    private ArticleService articleService = ArticleServiceImpl.getService();
+    private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

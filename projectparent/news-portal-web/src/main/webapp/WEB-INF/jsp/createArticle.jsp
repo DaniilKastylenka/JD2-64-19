@@ -11,11 +11,19 @@
 <form method="post" action="${pageContext.request.contextPath}/createArticle">
     <table>
         <tr>
-            <td>Section</td>
-            <td><input type="text" name="section"></td>
+            <td><label for="section">Section</label></td>
+            <td>
+                <select id="section" name="sectionId">
+                    <c:forEach items="${sections}" var="section">
+                        <option value="${section.id}">
+                            ${section.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td>Ttile</td>
+            <td>Title</td>
             <td><input type="text" name="title"></td>
         </tr>
         <tr>

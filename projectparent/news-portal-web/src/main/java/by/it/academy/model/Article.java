@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Article {
 
     private Long id;
-    private String section;
+    private Section section;
     private String title;
     private String text;
     private User author;
@@ -24,7 +24,7 @@ public class Article {
     private Long dislikes;
     private List<Comment> comments;
 
-    public Article(Long id, String section, String title, String text, User author,
+    public Article(Long id, Section section, String title, String text, User author,
                    Long likes, Long dislikes, ArrayList<Comment> comments) {
         this.id = id;
         this.section = section;

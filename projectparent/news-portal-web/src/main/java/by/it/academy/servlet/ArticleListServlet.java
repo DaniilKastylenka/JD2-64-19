@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/articleList")
 public class ArticleListServlet extends HttpServlet {
 
-    private ArticleService articleService = ArticleServiceImpl.getService();
+    private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

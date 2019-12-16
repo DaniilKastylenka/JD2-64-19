@@ -43,6 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
     public void update(Article article) {
         for (Article a : articles) {
             if (a.getId().equals(article.getId())) {
+                a.setSection(article.getSection());
                 a.setTitle(article.getTitle());
                 a.setText(article.getText());
                 a.setAuthor_id(article.getAuthor_id());
@@ -55,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    public static ArticleService getService() {
+    public static ArticleService getINSTANCE() {
         return INSTANCE;
     }
 }

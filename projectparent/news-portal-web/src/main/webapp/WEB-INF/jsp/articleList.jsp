@@ -23,7 +23,7 @@
     <c:forEach items="${articleList}" var="article">
         <tr>
             <td><c:out value="${article.id}"/></td>
-            <td><c:out value="${article.section}"/></td>
+            <td><c:out value="${article.section.name}"/></td>
             <td><c:out value="${article.title}"/></td>
             <td><c:out value="${article.text}"/></td>
             <td><c:out value="${article.author.username}"/></td>
