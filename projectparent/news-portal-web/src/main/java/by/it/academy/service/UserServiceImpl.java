@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserServiceImpl() {
         users.put("admin", new User(1L, "admin", "admin", "admin"));
         users.put("author", new User(2L, "author", "author", "author"));
+        users.put("author1", new User(3L, "author1", "author1", "author"));
     }
 
     @Override

@@ -8,5 +8,8 @@
     <c:if test="${user != null && role == 'author'}">
         |
         <a href="${pageContext.request.contextPath}/createArticle"><fmt:message key="menu.create.article"/></a>
+        |
+        <a href="${pageContext.request.contextPath}/myArticles"><fmt:message key="menu.my.articles"/> </a>
     </c:if>
+
 </h2>
