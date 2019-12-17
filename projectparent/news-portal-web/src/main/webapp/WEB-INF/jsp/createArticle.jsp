@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Create Article</title>
+    <meta charset="UTF-8">
 </head>
 <body>
 <%@include file="/WEB-INF/include/header.jsp" %>
@@ -16,7 +17,7 @@
                 <select id="section" name="sectionId">
                     <c:forEach items="${sections}" var="section">
                         <option value="${section.id}">
-                            ${section.name}
+                                ${section.name}
                         </option>
                     </c:forEach>
                 </select>

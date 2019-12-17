@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             Optional<User> user = userService.findUser(username, password);
             if (user.isEmpty()) {
                 hasError = true;
-                errMsg = "Bad credentials";
+                errMsg = "Bad credentials.";
             } else {
                 req.getSession().setAttribute("user", user.get());
             }

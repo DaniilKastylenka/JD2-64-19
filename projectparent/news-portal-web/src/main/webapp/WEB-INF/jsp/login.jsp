@@ -13,6 +13,7 @@
 
 <p style="color: red">${errorString}</p>
 
+<div><a href="${pageContext.request.contextPath}/register">Registration</a></div>
 <form method="post" action="${pageContext.request.contextPath}/login">
     <table>
         <tr>

@@ -56,6 +56,16 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    @Override
+    public Article findArticleById(Long id) {
+        for (Article a : articles) {
+            if (a.getId().equals(id)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     public static ArticleService getINSTANCE() {
         return INSTANCE;
     }

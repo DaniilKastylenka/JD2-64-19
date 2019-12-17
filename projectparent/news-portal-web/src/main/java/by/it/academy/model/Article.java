@@ -38,4 +38,20 @@ public class Article {
         this.comments = comments;
     }
 
+    public void like(){
+        setLikes(getLikes() + 1);
+    }
+
+    public void dislike(){
+        setDislikes(getDislikes() + 1);
+    }
+
+    public void removeLike(){
+        setLikes(getLikes() - 1);
+    }
+
+    public void removeDislike(){
+        setDislikes(getDislikes() - 1);
+    }
+
 }

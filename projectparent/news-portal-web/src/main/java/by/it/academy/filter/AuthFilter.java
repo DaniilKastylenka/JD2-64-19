@@ -21,7 +21,7 @@ public class AuthFilter extends HttpFilter {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null && !req.getRequestURI().endsWith("/login")) {
+        if (user == null && (!req.getRequestURI().endsWith("/login") && !req.getRequestURI().endsWith("/register"))) {
             res.sendRedirect(req.getContextPath() + "/login");
         } else {
             super.doFilter(req, res, chain);

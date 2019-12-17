@@ -20,10 +20,9 @@
         </tr>
         <tr>
             <td colspan="2">
-                <c:if test="${sessionScope==null}">
+                <c:if test="${user == null}">
                     <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
                 </c:if>
-
                 <c:if test="${user != null}">
                     <fmt:message key="header.hello"/><b>${user.username}</b>
                     <a href="${pageContext.request.contextPath}/logout">

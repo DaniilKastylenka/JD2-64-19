@@ -27,7 +27,7 @@
             <tr>
                 <td><c:out value="${article.id}"/></td>
                 <td><c:out value="${article.section.name}"/></td>
-                <td><c:out value="${article.title}"/></td>
+                <td><a href="${pageContext.request.contextPath}/article?id=${article.id}">${article.title}</a></td>
                 <td><c:out value="${article.text}"/></td>
                 <td><c:out value="${article.author.username}"/></td>
                 <td><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>

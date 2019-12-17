@@ -2,10 +2,13 @@ package by.it.academy.service;
 
 import by.it.academy.model.User;
 
+import javax.servlet.annotation.WebServlet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static java.util.Objects.nonNull;
 
 public class UserServiceImpl implements UserService {
 
@@ -27,6 +30,11 @@ public class UserServiceImpl implements UserService {
             return Optional.of(user);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean findUserByName(String username) {
+        return nonNull(users.get(username));
     }
 
     @Override
