@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <c:if test="${session==null}">
+                <c:if test="${sessionScope==null}">
                     <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
                 </c:if>
 

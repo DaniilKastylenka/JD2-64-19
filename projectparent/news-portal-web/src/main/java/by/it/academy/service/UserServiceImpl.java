@@ -15,9 +15,9 @@ public class UserServiceImpl implements UserService {
     private AtomicLong id = new AtomicLong();
 
     private UserServiceImpl() {
-        users.put("admin", new User(1L, "admin", "admin", "admin"));
-        users.put("author", new User(2L, "author", "author", "author"));
-        users.put("author1", new User(3L, "author1", "author1", "author"));
+        users.put("admin", new User(id.incrementAndGet(), "admin", "admin", "admin"));
+        users.put("author", new User(id.incrementAndGet(), "author", "author", "author"));
+        users.put("author1", new User(id.incrementAndGet(), "author1", "author1", "author"));
     }
 
     @Override

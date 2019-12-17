@@ -5,7 +5,7 @@
     <a href="${pageContext.request.contextPath}/home"><fmt:message key="menu.home"/></a>
     |
     <a href="${pageContext.request.contextPath}/articleList"><fmt:message key="menu.article.list"/></a>
-    <c:if test="${user != null && role == 'author'}">
+    <c:if test="${user != null && user.role == 'author'}">
         |
         <a href="${pageContext.request.contextPath}/createArticle"><fmt:message key="menu.create.article"/></a>
         |

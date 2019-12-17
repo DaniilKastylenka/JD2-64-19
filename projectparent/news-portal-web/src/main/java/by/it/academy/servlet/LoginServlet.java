@@ -42,8 +42,6 @@ public class LoginServlet extends HttpServlet {
                 errMsg = "Bad credentials";
             } else {
                 req.getSession().setAttribute("user", user.get());
-                req.getSession().setAttribute("session", req.getSession());
-                req.getSession().setAttribute("role", user.get().getRole());
             }
         }
 
