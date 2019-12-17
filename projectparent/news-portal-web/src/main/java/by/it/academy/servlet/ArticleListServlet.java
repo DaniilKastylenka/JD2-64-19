@@ -1,8 +1,8 @@
-package by.it.academy.servlets;
+package by.it.academy.servlet;
 
 import by.it.academy.service.ArticleService;
 import by.it.academy.service.ArticleServiceImpl;
-import by.it.academy.type.Article;
+import by.it.academy.model.Article;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/articleList")
 public class ArticleListServlet extends HttpServlet {
 
-    private ArticleService articleService = ArticleServiceImpl.getService();
+    private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +23,7 @@ public class ArticleListServlet extends HttpServlet {
         List<Article> allArticles = articleService.getAllArticles();
         req.setAttribute("articleList", allArticles);
 
-        req.getRequestDispatcher("/WEB-INF/articleList.jsp")
+        req.getRequestDispatcher("/WEB-INF/jsp/articleList.jsp")
                 .forward(req,resp);
     }
 }

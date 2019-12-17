@@ -1,4 +1,4 @@
-package by.it.academy.type;
+package by.it.academy.model;
 
 import lombok.*;
 
@@ -9,8 +9,9 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 
-public class Author {
+public class Section {
 
-    private String nickname;
+    private Long id;
+    private String name;
 
 }
