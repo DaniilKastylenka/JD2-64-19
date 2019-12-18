@@ -7,11 +7,11 @@
 <body>
 <%@include file="/WEB-INF/include/header.jsp" %>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<h2 style="text-align: center">${article.title}</h2>
+<h2 style="text-align: center; font-size: 40px">${article.title}</h2>
 
-<p style="width: 80%; padding:50px">${article.text}</p>
+<p style="width: 80%; padding:115px">${article.text}</p>
 
-<div style="text-align: end">
+<div style="text-align: end; padding-right: 115px">
     Author: ${article.author.username},
     <fmt:formatDate pattern="dd:MM:yyy | HH:mm" value="${article.date}"/>
 </div>

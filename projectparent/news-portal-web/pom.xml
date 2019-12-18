@@ -16,6 +16,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>by.it.academy.project</groupId>
+            <artifactId>project-parent</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>

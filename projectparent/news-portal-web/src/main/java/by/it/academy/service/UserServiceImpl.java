@@ -2,7 +2,6 @@ package by.it.academy.service;
 
 import by.it.academy.model.User;
 
-import javax.servlet.annotation.WebServlet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,9 +17,10 @@ public class UserServiceImpl implements UserService {
     private AtomicLong id = new AtomicLong();
 
     private UserServiceImpl() {
-        users.put("admin", new User(id.incrementAndGet(), "admin", "admin", "admin"));
-        users.put("author", new User(id.incrementAndGet(), "author", "author", "author"));
-        users.put("author1", new User(id.incrementAndGet(), "author1", "author1", "author"));
+        users.put("admin", new User(id.getAndIncrement(), "admin", "admin", "admin"));
+        users.put("author", new User(id.getAndIncrement(), "author", "author", "author"));
+        users.put("author1", new User(id.getAndIncrement(), "author1", "author1", "author"));
+        users.put("user", new User(id.getAndIncrement(), "user", "user", "user"));
     }
 
     @Override

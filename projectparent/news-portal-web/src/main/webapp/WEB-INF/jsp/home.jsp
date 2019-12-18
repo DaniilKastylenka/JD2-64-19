@@ -7,9 +7,11 @@
     <title>Home</title>
 </head>
 <body>
-<%@include file="/WEB-INF/include/header.jsp" %>
+
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<h3>Home</h3>
+<%@include file="/WEB-INF/include/header.jsp" %>
+
+<h1 style="padding-top: 20px; padding-left: 115px">Home page</h1>
 
 <%@include file="/WEB-INF/include/footer.jsp" %>
 

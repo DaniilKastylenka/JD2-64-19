@@ -6,8 +6,10 @@
     <title>myArticles</title>
 </head>
 <body>
-<%@include file="/WEB-INF/include/header.jsp" %>
 <%@include file="/WEB-INF/include/menu.jsp" %>
+<%@include file="/WEB-INF/include/header.jsp" %>
+
+<h1 style="padding-top: 20px; padding-left: 115px">My articles</h1>
 
 <table border="1px" style="width: 100%; border: black">
     <tr>

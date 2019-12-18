@@ -6,8 +6,10 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<%@include file="/WEB-INF/include/header.jsp" %>
+
 <%@include file="/WEB-INF/include/menu.jsp" %>
+<%@include file="/WEB-INF/include/header.jsp" %>
+<h1 style="padding-top: 20px; padding-left: 115px">Create article</h1>
 
 <form method="post" action="${pageContext.request.contextPath}/createArticle">
     <table>

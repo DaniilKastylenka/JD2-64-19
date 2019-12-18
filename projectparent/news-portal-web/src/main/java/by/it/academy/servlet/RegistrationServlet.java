@@ -46,7 +46,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
         if (hasError) {
-            req.setAttribute("errorMessage", errorMessage);
+            req.setAttribute("errorString", errorMessage);
             req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
         } else {
             userService.addUser(new User(username, password));

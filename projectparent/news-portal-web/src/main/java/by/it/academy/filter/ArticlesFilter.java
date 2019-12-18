@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/createArticle")
+@WebFilter(urlPatterns = {"/createArticle", "/myArticles"})
 
-public class CreateArticleFilter extends HttpFilter {
+public class ArticlesFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         User user = (User) req.getSession().getAttribute("user");
-        if (user == null || !user.getRole().equals("author")) {
+        if (!user.getRole().equals("author")) {
             res.sendRedirect(req.getContextPath() + "/home");
         } else {
             super.doFilter(req, res, chain);
