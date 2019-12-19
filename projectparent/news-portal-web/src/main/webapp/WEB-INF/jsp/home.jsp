@@ -4,14 +4,16 @@
 
 <html lang="${param.lang}">
 <head>
-    <title>Home</title>
+    <title><fmt:message key="home.page.title"/></title>
+    <meta charset="UTF-8">
+
 </head>
 <body>
 
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 20px; padding-left: 115px">Home page</h1>
+<h1 style="padding-top: 20px; padding-left: 115px"><fmt:message key="home.page.title"/></h1>
 
 <%@include file="/WEB-INF/include/footer.jsp" %>
 

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>${article.title}</title>
+    <meta charset="UTF-8">
 </head>
 <body>
 <%@include file="/WEB-INF/include/header.jsp" %>
@@ -12,7 +13,7 @@
 <p style="width: 80%; padding:115px">${article.text}</p>
 
 <div style="text-align: end; padding-right: 115px">
-    Author: ${article.author.username},
+    <fmt:message key="article.author"/>: ${article.author.username}, <fmt:message key="article.date"/>:
     <fmt:formatDate pattern="dd:MM:yyy | HH:mm" value="${article.date}"/>
 </div>
 <%@include file="/WEB-INF/include/footer.jsp" %>
