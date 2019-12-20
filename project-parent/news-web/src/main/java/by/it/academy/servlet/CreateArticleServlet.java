@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/createArticle")
-public class ArticleCreateServlet extends HttpServlet {
+public class CreateArticleServlet extends HttpServlet {
 
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
 
@@ -47,6 +47,6 @@ public class ArticleCreateServlet extends HttpServlet {
 
         articleService.addNewArticle(article);
 
-        resp.sendRedirect(req.getContextPath() + "/articleList");
+        resp.sendRedirect(req.getContextPath() + "/myArticles");
     }
 }

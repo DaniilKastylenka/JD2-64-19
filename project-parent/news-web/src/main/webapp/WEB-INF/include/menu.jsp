@@ -1,21 +1,36 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<fmt:setLocale scope="session" value="${param.lang}"/>
-<fmt:setBundle basename="messages"/>
 
 <style>
     <%@include file="menu_style/style.css" %>
 </style>
 
-<c:if test="${user.role == 'author'}">
-    <%@include file="authorMenu.jsp" %>
-</c:if>
+<nav role='navigation'>
+    <ul>
+        <c:if test="${sessionScope.user.role != 'user'}">
+            <%@include file="menuForAdminAndAuthor.jsp" %>
+        </c:if>
+        <c:if test="${sessionScope.user.role == 'user'}">
+            <%@include file="menuForUser.jsp" %>
+        </c:if>
+        <li><a href="#"><fmt:message key="menu.localisation"/></a>
+            <ul>
+                <li><a href="?lang=en"><fmt:message key="menu.en"/></a></li>
+                <li><a href="?lang=ru"><fmt:message key="menu.ru"/></a></li>
+            </ul>
+        </li>
+        <li><a href="${pageContext.request.contextPath}/home"
+               style="color: green">Hello ${sessionScope.user.username}</a>
+            <ul>
 
-<c:if test="${user.role == 'admin'}">
-    <%@include file="adminMenu.jsp" %>
-</c:if>
+                <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="menu.home"/> </a></li>
 
-<c:if test="${user.role == 'user'}">
-    <%@include file="userMenu.jsp" %>
-</c:if>
+                <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff1d00"><fmt:message
+                        key="menu.logout"/></a></li>
+
+            </ul>
+        </li>
+
+    </ul>
+</nav>

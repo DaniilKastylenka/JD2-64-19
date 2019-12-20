@@ -62,7 +62,8 @@
 
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-                    <input class="input100" type="password" name="password" placeholder="<fmt:message key="login.password"/>">
+                    <input class="input100" type="password" name="password"
+                           placeholder="<fmt:message key="login.password"/>">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -84,9 +85,38 @@
                 </div>
 
             </form>
+            <table border="1px">
+                <tr>
+                    <td>Role</td>
+                    <td>Username</td>
+                    <td>Password</td>
+                </tr>
+                <tr>
+                    <td>SimpleUser</td>
+                    <td>User</td>
+                    <td>User</td>
+                </tr>
+                <tr>
+                    <td>Author</td>
+                    <td>Author</td>
+                    <td>Author</td>
+                </tr>
+                <tr>
+                    <td>Author</td>
+                    <td>Author1</td>
+                    <td>Author1</td>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
+
+
 
 
 <div id="dropDownSelect1"></div>

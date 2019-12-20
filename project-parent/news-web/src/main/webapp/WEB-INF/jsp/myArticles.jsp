@@ -40,8 +40,8 @@
                 <td><c:out value="${article.dislikes}"/></td>
                 <td><c:out value="${article.comments}"/></td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/articleDelete?id=${article.id}">Delete</a>
-                    <a href="${pageContext.request.contextPath}/updateArticle?id=${article.id}">Update</a>
+                    <a href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">Delete</a>
+                    <a href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">Update</a>
                 </td>
             </tr>
         </c:if>
