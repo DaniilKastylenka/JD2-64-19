@@ -16,6 +16,7 @@ public class ArticlesFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+
         User user = (User) req.getSession().getAttribute("user");
         if (!user.getRole().equals("author")) {
             res.sendRedirect(req.getContextPath() + "/home");
