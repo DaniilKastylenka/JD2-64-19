@@ -23,17 +23,15 @@ public class UpdateArticleServlet extends HttpServlet {
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
     private SectionService sectionService = SectionServiceImpl.getINSTANCE();
 
-    private Long articleId;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        articleId = Long.valueOf(req.getParameter("articleId"));
         req.setAttribute("sections", sectionService.getSections());
         req.getRequestDispatcher("/WEB-INF/jsp/updateArticle.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         String sectionId = req.getParameter("sectionId");
         Section section = sectionService.getSections().stream()
