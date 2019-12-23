@@ -1,0 +1,10 @@
+CREATE TABLE article (
+  id  INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR (255) NOT NULL ,
+  section_id INT NOT NULL,
+  author_id INT NOT NULL,
+  date DATETIME NOT NULL,
+  text TEXT NOT NULL,
+  likes INT NOT NULL,
+  dislikes INT NOT NULL,
+);

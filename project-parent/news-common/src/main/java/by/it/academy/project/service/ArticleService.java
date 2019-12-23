@@ -1,6 +1,7 @@
 package by.it.academy.project.service;
 
 import by.it.academy.project.model.Article;
+import by.it.academy.project.model.User;
 
 import java.util.List;
 

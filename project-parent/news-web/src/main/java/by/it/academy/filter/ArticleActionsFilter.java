@@ -7,8 +7,6 @@ import by.it.academy.project.service.ArticleServiceImpl;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -29,11 +27,12 @@ public class ArticleActionsFilter extends HttpFilter {
         User user = (User) req.getSession().getAttribute("user");
         Article article = articleService.findArticleById(articleId);
 
-        if (!user.equals(article.getAuthor())) {
+        if (!user.equals(article.getAuthor()) && !user.getRole().equals("admin")) {
             res.sendRedirect(req.getContextPath() + "/articleList");
         } else {
             super.doFilter(req, res, chain);
         }
-
     }
+
 }
+

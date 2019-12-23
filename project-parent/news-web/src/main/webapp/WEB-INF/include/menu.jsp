@@ -16,8 +16,8 @@
         </c:if>
         <li><a href="#"><fmt:message key="menu.localisation"/></a>
             <ul>
-                <li><a href="?lang=en"><fmt:message key="menu.en"/></a></li>
-                <li><a href="?lang=ru"><fmt:message key="menu.ru"/></a></li>
+                <li><a href="?lang=en">English</a></li>
+                <li><a href="?lang=ru">Русский</a></li>
             </ul>
         </li>
         <li><a href="${pageContext.request.contextPath}/home"
