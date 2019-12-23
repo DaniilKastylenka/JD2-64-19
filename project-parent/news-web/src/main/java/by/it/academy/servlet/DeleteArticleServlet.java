@@ -1,5 +1,6 @@
 package by.it.academy.servlet;
 
+import by.it.academy.project.model.User;
 import by.it.academy.project.service.ArticleService;
 import by.it.academy.project.service.ArticleServiceImpl;
 
@@ -25,7 +26,12 @@ public class DeleteArticleServlet extends HttpServlet {
 
         Long id = Long.valueOf(req.getParameter("articleId"));
         articleService.deleteArticle(id);
-        resp.sendRedirect(req.getContextPath() + "/myArticles");
 
+        User user = (User) req.getSession().getAttribute("user");
+        if (user.getRole().equals("author")) {
+            resp.sendRedirect(req.getContextPath() + "/myArticles");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/articleList");
+        }
     }
 }

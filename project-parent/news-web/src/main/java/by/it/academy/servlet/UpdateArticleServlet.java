@@ -3,6 +3,7 @@ package by.it.academy.servlet;
 import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.Section;
+import by.it.academy.project.model.User;
 import by.it.academy.project.service.ArticleService;
 import by.it.academy.project.service.ArticleServiceImpl;
 import by.it.academy.project.service.SectionService;
@@ -41,13 +42,17 @@ public class UpdateArticleServlet extends HttpServlet {
         String text = req.getParameter("text");
         Article oldArticle = articleService.findArticleById(articleId);
 
-        Article newArticle = new Article(articleId, section,title, text, oldArticle.getAuthor(), oldArticle.getLikes(),
-                oldArticle.getDislikes(), (ArrayList<Comment>)oldArticle.getComments());
+        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getLikes(),
+                oldArticle.getDislikes(), (ArrayList<Comment>) oldArticle.getComments());
 
         articleService.update(newArticle);
 
-        resp.sendRedirect(req.getContextPath() + "/myArticles");
-
+        User user = (User) req.getSession().getAttribute("user");
+        if (user.getRole().equals("admin")) {
+            resp.sendRedirect(req.getContextPath() + "/articleList");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/myArticles");
+        }
     }
 
 }

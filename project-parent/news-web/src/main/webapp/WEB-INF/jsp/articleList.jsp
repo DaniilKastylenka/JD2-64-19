@@ -26,6 +26,10 @@
         <td><fmt:message key="article.list.likes"/></td>
         <td><fmt:message key="article.list.dislikes"/></td>
         <td><fmt:message key="article.list.comments"/></td>
+        <c:if test="${sessionScope.user.role!='user'}">
+            <td>Actions</td>
+        </c:if>
+
     </tr>
     <c:forEach items="${articleList}" var="article">
         <tr>
@@ -38,6 +42,15 @@
             <td><c:out value="${article.likes}"/></td>
             <td><c:out value="${article.dislikes}"/></td>
             <td><c:out value="${article.comments}"/></td>
+            <c:if test="${sessionScope.user.role!='user'}">
+                <td>
+                    <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">
+                        <a href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">Delete</a>|
+                        <a href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">Update</a>
+                    </c:if>
+
+                </td>
+            </c:if>
         </tr>
     </c:forEach>
 </table>
