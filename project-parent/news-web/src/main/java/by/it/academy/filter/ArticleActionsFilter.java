@@ -12,6 +12,7 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebFilter(urlPatterns = {"/deleteArticle", "/updateArticle"})
 
@@ -25,9 +26,13 @@ public class ArticleActionsFilter extends HttpFilter {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         User user = (User) req.getSession().getAttribute("user");
-        Article article = articleService.findArticleById(articleId);
 
-        if (!user.equals(article.getAuthor()) && !user.getRole().equals("admin")) {
+        Optional<Article> optionalArticle = articleService.findArticleById(articleId);
+
+        Article article = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
+
+        if (!user.equals(article.getAuthor())
+                && !user.getRole().equals("admin")) {
             res.sendRedirect(req.getContextPath() + "/articleList");
         } else {
             super.doFilter(req, res, chain);

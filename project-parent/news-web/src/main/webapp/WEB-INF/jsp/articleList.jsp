@@ -25,7 +25,6 @@
         <td><fmt:message key="article.list.date"/></td>
         <td><fmt:message key="article.list.likes"/></td>
         <td><fmt:message key="article.list.dislikes"/></td>
-        <td><fmt:message key="article.list.comments"/></td>
         <c:if test="${sessionScope.user.role!='user'}">
             <td>Actions</td>
         </c:if>
@@ -35,13 +34,12 @@
         <tr>
             <td><c:out value="${article.id}"/></td>
             <td><c:out value="${article.section.name}"/></td>
-            <td><a href="${pageContext.request.contextPath}/article?id=${article.id}">${article.title}</a></td>
+            <td><a href="${pageContext.request.contextPath}/article?articleId=${article.id}">${article.title}</a></td>
             <td><c:out value="${article.text}"/></td>
             <td><c:out value="${article.author.username}"/></td>
             <td><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
             <td><c:out value="${article.likes}"/></td>
             <td><c:out value="${article.dislikes}"/></td>
-            <td><c:out value="${article.comments}"/></td>
             <c:if test="${sessionScope.user.role!='user'}">
                 <td>
                     <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">

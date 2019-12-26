@@ -24,7 +24,6 @@
         <td><fmt:message key="article.list.date"/></td>
         <td><fmt:message key="article.list.likes"/></td>
         <td><fmt:message key="article.list.dislikes"/></td>
-        <td><fmt:message key="article.list.comments"/></td>
         <td><fmt:message key="my.articles.actions"/></td>
     </tr>
     <c:forEach items="${articles}" var="article">
@@ -32,13 +31,12 @@
             <tr>
                 <td><c:out value="${article.id}"/></td>
                 <td><c:out value="${article.section.name}"/></td>
-                <td><a href="${pageContext.request.contextPath}/article?id=${article.id}">${article.title}</a></td>
+                <td><a href="${pageContext.request.contextPath}/article?articleId=${article.id}">${article.title}</a></td>
                 <td><c:out value="${article.text}"/></td>
                 <td><c:out value="${article.author.username}"/></td>
                 <td><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
                 <td><c:out value="${article.likes}"/></td>
                 <td><c:out value="${article.dislikes}"/></td>
-                <td><c:out value="${article.comments}"/></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">Delete</a>|
                     <a href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">Update</a>

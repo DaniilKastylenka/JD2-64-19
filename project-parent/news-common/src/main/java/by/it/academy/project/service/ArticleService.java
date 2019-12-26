@@ -1,9 +1,9 @@
 package by.it.academy.project.service;
 
 import by.it.academy.project.model.Article;
-import by.it.academy.project.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleService {
 
@@ -13,7 +13,7 @@ public interface ArticleService {
 
     void deleteArticle(Long id);
 
-    Article findArticleById(Long id);
+    Optional<Article> findArticleById(Long id);
 
     void update(Article article);
 

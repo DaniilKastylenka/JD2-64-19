@@ -8,4 +8,6 @@ public interface SectionService {
 
     Set<Section> getSections();
 
+    Section findSectionByID (Long id);
+
 }

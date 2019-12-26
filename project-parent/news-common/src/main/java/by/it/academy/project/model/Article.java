@@ -6,6 +6,7 @@ import java.util.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
@@ -14,6 +15,7 @@ public class Article {
 
     private Long id;
     private Section section;
+    private Long section_id;
     private String title;
     private String text;
     private User author;
@@ -21,35 +23,40 @@ public class Article {
     private Date date;
     private Long likes;
     private Long dislikes;
-    private List<Comment> comments;
 
-    public Article(Long id, Section section, String title, String text, User author,
-                   Long likes, Long dislikes, ArrayList<Comment> comments) {
+    public Article(Long id, String title, Section section, User author, String text) {
         this.id = id;
-        this.section = section;
         this.title = title;
+        this.section = section;
+        this.section_id = section.getId();
         this.text = text;
         this.author = author;
         this.author_id = author.getId();
         date = new Date();
-        this.likes = likes;
-        this.dislikes = dislikes;
-        this.comments = comments;
+        this.likes = 0L;
+        this.dislikes = 0L;
     }
 
-    public void like(){
+    public Article(Long id, String title, Section section, User author, Date date, String text, Long likes, Long dislikes) {
+        this(id, title, section, author, text);
+        this.likes = likes;
+        this.dislikes = dislikes;
+        this.date = date;
+    }
+
+    public void like() {
         setLikes(getLikes() + 1);
     }
 
-    public void dislike(){
+    public void dislike() {
         setDislikes(getDislikes() + 1);
     }
 
-    public void removeLike(){
+    public void removeLike() {
         setLikes(getLikes() - 1);
     }
 
-    public void removeDislike(){
+    public void removeDislike() {
         setDislikes(getDislikes() - 1);
     }
 

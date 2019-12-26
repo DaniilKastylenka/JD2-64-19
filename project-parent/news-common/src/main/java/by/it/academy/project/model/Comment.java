@@ -11,9 +11,11 @@ import lombok.*;
 
 public class Comment {
 
+    private Long id;
     private User user;
     private String text;
     private Long likes;
     private Long dislikes;
+    private Long article_id;
 
 }

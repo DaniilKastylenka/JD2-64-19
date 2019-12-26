@@ -1,14 +1,24 @@
 package by.it.academy.project.service;
 
+import by.it.academy.project.dao.ArticleDao;
+import by.it.academy.project.dao.ArticleDaoImpl;
 import by.it.academy.project.model.Article;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ArticleServiceImpl implements ArticleService {
 
     private static final ArticleService INSTANCE = new ArticleServiceImpl();
+
+    private static final ArticleDao articleDao = ArticleDaoImpl.getINSTANCE();
+
+    private static final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
     private final List<Article> articles;
 
@@ -20,50 +30,62 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> getAllArticles() {
-        return new ArrayList<>(articles);
+        logger.debug("get all articles");
+        ArrayList<Article> articles = null;
+        try {
+            articles = (ArrayList<Article>) articleDao.getAll();
+            logger.debug("result", articles);
+        } catch (SQLException e) {
+            logger.error("error while reading articles", e);
+        }
+        return articles;
     }
 
     @Override
     public void addNewArticle(Article article) {
-        article.setId(id.incrementAndGet());
-        articles.add(article);
+        logger.debug("add new article", article);
+        try {
+            Long id = articleDao.save(article);
+            article.setId(id);
+            logger.debug("result", id);
+        } catch (SQLException e) {
+            logger.error("error while creating article", e);
+        }
     }
 
     @Override
     public void deleteArticle(Long id) {
-        for (Article a : articles) {
-            if (a.getId().equals(id)) {
-                articles.remove(a);
-                break;
-            }
+        logger.debug("delete article", id);
+        try {
+            int delete = articleDao.delete(id);
+            logger.debug("result", delete);
+        } catch (SQLException e) {
+            logger.error("error while deleting article", e);
         }
     }
 
     @Override
     public void update(Article article) {
-        for (Article a : articles) {
-            if (a.getId().equals(article.getId())) {
-                a.setSection(article.getSection());
-                a.setTitle(article.getTitle());
-                a.setText(article.getText());
-                a.setAuthor_id(article.getAuthor_id());
-                a.setDate(article.getDate());
-                a.setLikes(article.getLikes());
-                a.setDislikes(article.getDislikes());
-                a.setComments(article.getComments());
-                break;
-            }
+        logger.debug("update article");
+        try {
+            int result = articleDao.update(article);
+            logger.debug("result" + result);
+        } catch (SQLException e) {
+            logger.error("error while updating");
         }
     }
 
     @Override
-    public Article findArticleById(Long id) {
-        for (Article a : articles) {
-            if (a.getId().equals(id)) {
-                return a;
-            }
+    public Optional<Article> findArticleById(Long id) {
+        logger.debug("find article by id", id);
+        try {
+            Optional<Article> article = articleDao.read(id);
+            logger.debug("result", id);
+            return article;
+        } catch (SQLException e) {
+            logger.error("error while finding article by id", e);
         }
-        return null;
+        return Optional.empty();
     }
 
     public static ArticleService getINSTANCE() {

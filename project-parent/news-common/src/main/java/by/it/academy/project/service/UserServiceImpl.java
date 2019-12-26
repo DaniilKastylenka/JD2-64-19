@@ -17,10 +17,10 @@ public class UserServiceImpl implements UserService {
     private AtomicLong id = new AtomicLong();
 
     private UserServiceImpl() {
-        users.put("admin", new User(id.getAndIncrement(), "admin", "admin", "admin"));
-        users.put("author", new User(id.getAndIncrement(), "author", "author", "author"));
-        users.put("author1", new User(id.getAndIncrement(), "author1", "author1", "author"));
-        users.put("user", new User(id.getAndIncrement(), "user", "user", "user"));
+        users.put("admin", new User(id.incrementAndGet(), "admin", "admin", "admin"));
+        users.put("author", new User(id.incrementAndGet(), "author", "author", "author"));
+        users.put("author1", new User(id.incrementAndGet(), "author1", "author1", "author"));
+        users.put("user", new User(id.incrementAndGet(), "user", "user", "user"));
     }
 
     @Override
@@ -35,6 +35,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean findUserByName(String username) {
         return nonNull(users.get(username));
+    }
+
+    @Override
+    public User findUserByID(Long id) {
+        for (Map.Entry<String, User> u:users.entrySet()) {
+            if (u.getValue().getId().equals(id)){
+                return u.getValue();
+            }
+        }
+        return null;
     }
 
     @Override
