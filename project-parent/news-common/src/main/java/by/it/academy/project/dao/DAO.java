@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface DAO <E> {
 
         Long save (E e) throws SQLException;
-        Optional<Article> read(Long id) throws SQLException;
+        Optional<E> read(Long id) throws SQLException;
         int update(E e) throws SQLException;
         int delete(Long id) throws SQLException;
         List<E> getAll() throws SQLException;
