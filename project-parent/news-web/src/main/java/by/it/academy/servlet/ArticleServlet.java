@@ -24,8 +24,8 @@ public class ArticleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long id = Long.valueOf(req.getParameter("id"));
-        Article article = articleService.findArticleById(id);
+        Long articleId = Long.valueOf(req.getParameter("articleId"));
+        Article article = articleService.findArticleById(articleId).orElseThrow(()->new RuntimeException("no article with id " + articleId));
         req.setAttribute("article", article);
         req.getRequestDispatcher("/WEB-INF/jsp/article.jsp").forward(req, resp);
     }

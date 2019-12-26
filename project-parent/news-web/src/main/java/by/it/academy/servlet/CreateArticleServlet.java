@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = "/createArticle")
 public class CreateArticleServlet extends HttpServlet {
@@ -39,11 +41,12 @@ public class CreateArticleServlet extends HttpServlet {
 
         User user = (User) req.getSession().getAttribute("user");
 
-        Section section = sectionService.getSections().stream()
+        Optional<Section> optionalSection = sectionService.getSections().stream()
                 .filter(section1 -> section1.getId().equals(Long.valueOf(sectionId)))
-                .findFirst().get();
+                .findFirst();
+        Section section = optionalSection.orElseThrow(()-> new RuntimeException("no section with id" + sectionId));
 
-        Article article = new Article(null, section, title, text, user, 0L, 0L, new ArrayList<>());
+        Article article = new Article(null, title, section, user, text);
 
         articleService.addNewArticle(article);
 

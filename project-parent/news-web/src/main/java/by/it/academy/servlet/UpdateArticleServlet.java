@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @WebServlet(urlPatterns = "/updateArticle")
 
@@ -35,15 +36,17 @@ public class UpdateArticleServlet extends HttpServlet {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         String sectionId = req.getParameter("sectionId");
-        Section section = sectionService.getSections().stream()
+        Optional<Section> optionalSection = sectionService.getSections().stream()
                 .filter(section1 -> section1.getId().equals(Long.valueOf(sectionId)))
-                .findFirst().get();
+                .findFirst();
+        Section section = optionalSection.orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
+
         String title = req.getParameter("title");
         String text = req.getParameter("text");
-        Article oldArticle = articleService.findArticleById(articleId);
-
-        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getLikes(),
-                oldArticle.getDislikes(), (ArrayList<Comment>) oldArticle.getComments());
+        Optional<Article> optionalArticle = articleService.findArticleById(articleId);
+        Article oldArticle = optionalArticle.orElseThrow(()-> new RuntimeException("no article with id " + articleId));
+        Article newArticle = new Article(articleId, title, section, oldArticle.getAuthor(), oldArticle.getDate(), text, oldArticle.getLikes(),
+                oldArticle.getDislikes());
 
         articleService.update(newArticle);
 

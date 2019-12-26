@@ -12,4 +12,6 @@ public interface UserService {
 
     boolean findUserByName(String username);
 
+    User findUserByID(Long id);
+
 }

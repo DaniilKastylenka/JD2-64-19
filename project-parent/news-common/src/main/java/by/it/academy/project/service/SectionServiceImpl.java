@@ -26,12 +26,22 @@ public class SectionServiceImpl implements SectionService {
         return INSTANCE;
     }
 
+
+
     @Override
     public Set<Section> getSections() {
         return sections;
     }
 
-
+    @Override
+    public Section findSectionByID(Long id) {
+        for (Section s:sections) {
+            if(s.getId().equals(id)){
+                return s;
+            }
+        }
+        return null;
+    }
 
 
 }
