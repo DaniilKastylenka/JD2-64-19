@@ -42,20 +42,25 @@ CREATE TABLE comment(
                       FOREIGN KEY (article_id) REFERENCES article(id)
 );
 
-INSERT INTO section (name) VALUE('People');
-INSERT INTO section (name) VALUE('Technology');
-INSERT INTO section (name) VALUE('Politics');
-INSERT INTO section (name) VALUE('Entertainment');
-INSERT INTO section (name) VALUE('Game');
-INSERT INTO section (name) VALUE('World');
-INSERT INTO section (name) VALUE('Education');
+INSERT INTO section (name) VALUES
+('People'),
+('Technology'),
+('Politics'),
+('Entertainment'),
+('Game'),
+('World'),
+('Education');
 
-INSERT INTO role (id, name) VALUE (1, 'admin');
-INSERT INTO role (id, name) VALUE (2, 'author');
-INSERT INTO role (id, name) VALUE (3, 'user');
 
-INSERT INTO user (username, password, salt, role_id) VALUE ('admin', 'admin', 'admin', 1);
-INSERT INTO user (username, password, salt, role_id) VALUE ('author', 'author', 'admin', 2);
-INSERT INTO user (username, password, salt, role_id) VALUE ('author1', 'author1', 'admin', 2);
-INSERT INTO user (username, password, salt, role_id) VALUE ('user', 'user', 'admin', 3);
+INSERT INTO role (id, name) VALUES
+(1, 'admin'),
+(2, 'author'),
+(3, 'user');
+
+
+INSERT INTO user (username, password, salt, role_id) VALUES
+('admin', 'admin', 'admin', 1),
+('author', 'author', 'admin', 2),
+('author1', 'author1', 'admin', 2),
+('user', 'user', 'admin', 3);
 
