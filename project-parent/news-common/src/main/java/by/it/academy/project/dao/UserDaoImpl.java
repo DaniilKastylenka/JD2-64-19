@@ -29,7 +29,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             "SELECT * FROM user LEFT JOIN role r on user.role_id = r.id WHERE username=? AND password = ?;";
 
     private final static String SELECT_BY_USERNAME =
-            "SELECT * FROM user WHERE username = ?;";
+            "SELECT * FROM user LEFT JOIN role r on user.role_id = r.id WHERE username = ?;";
 
     private final static String GET_SALT =
             "SELECT salt FROM user WHERE username = ?;";
@@ -148,30 +148,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return result;
     }
 
-    @Override
-    public String getSalt(String username) throws SQLException {
-
-        ResultSet resultSet = null;
-        String result = null;
-
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_SALT)) {
-
-            statement.setString(1, username);
-
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                result = resultSet.getString("salt");
-            }
-
-        } finally {
-            closeQuietly(resultSet);
-        }
-
-        return result;
-    }
-
     private User mapUser(ResultSet resultSet) throws SQLException {
 
         Long userId = resultSet.getLong("id");
@@ -179,8 +155,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         String username = resultSet.getString("username");
         String password = resultSet.getString("password");
 
-        String salt = resultSet.getString("salt");
         String role = resultSet.getString("role_name");
+        String salt = resultSet.getString("salt");
 
         return new User(userId, username, password, salt, role);
     }
