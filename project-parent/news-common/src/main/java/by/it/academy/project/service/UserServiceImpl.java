@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static java.util.Objects.nonNull;
-
 public class UserServiceImpl implements UserService {
 
     private static final UserService INSTANCE = new UserServiceImpl();
@@ -20,22 +18,24 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private UserServiceImpl() {}
+    private UserServiceImpl() {
+    }
 
     @Override
-    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
+    public Optional<User> findUser(String username, String password) {
 
         logger.debug("find user by username and password");
         Optional<User> optionalUser = Optional.empty();
         try {
 
-            String salt = userDao.getSalt(username);
-            if (nonNull(salt)) {
-                optionalUser = userDao
-                        .findUserByUsernameAndPassword(username, EncryptUtils.getSHA256(password, salt));
-            }
-            logger.debug("result" + optionalUser);
+            User user = userDao.findUserByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("unknown user"));
 
+            logger.debug("user " + user);
+
+            optionalUser = userDao.findUserByUsernameAndPassword(username, EncryptUtils.getSHA256(password, user.getSalt()));
+
+            logger.debug("result" + optionalUser);
 
         } catch (SQLException e) {
             logger.error("error while finding user by username and password" + e);
@@ -61,10 +61,10 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findUserByID(Long id) {
         logger.debug("find user by id");
         Optional<User> optionalUser = Optional.empty();
-        try{
+        try {
             optionalUser = userDao.read(id);
             logger.debug("result " + optionalUser);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("error while finding user by id " + e);
         }
         return optionalUser;
@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
             logger.error("error while adding user" + e);
         }
     }
+
 
     public static UserService getINSTANCE() {
         return INSTANCE;

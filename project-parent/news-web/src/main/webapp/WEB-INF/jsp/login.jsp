@@ -87,9 +87,9 @@
             </form>
             <table border="1px">
                 <tr>
-                    <td>Role</td>
-                    <td>Username</td>
-                    <td>Password</td>
+                    <th>Role</th>
+                    <th>Username</th>
+                    <th>Password</th>
                 </tr>
                 <tr>
                     <td>SimpleUser</td>
@@ -100,11 +100,6 @@
                     <td>Author</td>
                     <td>Author</td>
                     <td>Author</td>
-                </tr>
-                <tr>
-                    <td>Author</td>
-                    <td>Author1</td>
-                    <td>Author1</td>
                 </tr>
                 <tr>
                     <td>Admin</td>
