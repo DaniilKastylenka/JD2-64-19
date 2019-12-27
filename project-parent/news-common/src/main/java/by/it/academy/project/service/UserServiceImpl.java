@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import static by.it.academy.project.security.EncryptUtils.getSHA256;
+
 public class UserServiceImpl implements UserService {
 
     private static final UserService INSTANCE = new UserServiceImpl();
@@ -31,9 +33,9 @@ public class UserServiceImpl implements UserService {
             User user = userDao.findUserByUsername(username)
                     .orElseThrow(() -> new RuntimeException("unknown user"));
 
-            logger.debug("user " + user);
-
-            optionalUser = userDao.findUserByUsernameAndPassword(username, EncryptUtils.getSHA256(password, user.getSalt()));
+            if (user.getPassword().equals(getSHA256(password, user.getSalt()))) {
+                return Optional.of(user);
+            }
 
             logger.debug("result" + optionalUser);
 
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
             logger.error("error while finding user by username and password" + e);
         }
 
-        return optionalUser;
+        return Optional.empty();
     }
 
     @Override
@@ -74,8 +76,7 @@ public class UserServiceImpl implements UserService {
     public void addUser(User user) {
         logger.debug("add user");
         try {
-            user.setPassword(EncryptUtils
-                    .getSHA256(user.getPassword(), user.getSalt()));
+            user.setPassword(getSHA256(user.getPassword(), user.getSalt()));
             Long id = userDao.save(user);
             user.setId(id);
             logger.debug("result" + id);
