@@ -148,11 +148,12 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         String title = resultSet.getString("title");
 
-        Section section = SectionServiceImpl.getINSTANCE().findSectionByID(resultSet.getLong("section_id"));
+        Section section = SectionServiceImpl.getINSTANCE()
+                .findSectionByID(resultSet.getLong("section_id")).orElseThrow(() -> new RuntimeException("unknown section"));
 
         User author = UserServiceImpl.getINSTANCE()
                 .findUserByID(resultSet.getLong("author_id"))
-                .orElseThrow(()-> new RuntimeException("error map article, unknown author"));
+                .orElseThrow(() -> new RuntimeException("error map article, unknown author"));
 
         Timestamp timestamp = (Timestamp) resultSet.getObject("date");
         Date date = new Date(timestamp.getTime());
