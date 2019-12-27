@@ -22,7 +22,6 @@ public class Article {
     private Long author_id;
     private Date date;
     private Long likes;
-    private Long dislikes;
 
     public Article(Long id, String title, Section section, User author, String text) {
         this.id = id;
@@ -34,13 +33,11 @@ public class Article {
         this.author_id = author.getId();
         date = new Date();
         this.likes = 0L;
-        this.dislikes = 0L;
     }
 
-    public Article(Long id, String title, Section section, User author, Date date, String text, Long likes, Long dislikes) {
+    public Article(Long id, String title, Section section, User author, Date date, String text, Long likes) {
         this(id, title, section, author, text);
         this.likes = likes;
-        this.dislikes = dislikes;
         this.date = date;
     }
 

@@ -27,7 +27,6 @@ CREATE TABLE article(
                       date        DATETIME      NOT NULL,
                       text        TEXT          NOT NULL,
                       likes       INT           NOT NULL DEFAULT 0,
-                      dislikes    INT           NOT NULL DEFAULT 0,
                       FOREIGN KEY (section_id) REFERENCES section(id),
                       FOREIGN KEY (author_id) REFERENCES user(id)
 );
@@ -38,10 +37,9 @@ CREATE TABLE comment(
                       text        VARCHAR(255)  NOT NULL,
                       date        DATETIME      NOT NULL,
                       likes       INT           NOT NULL,
-                      dislikes    INT           NOT NULL,
                       article_id  BIGINT        NOT NULL,
                       FOREIGN KEY (user_id) REFERENCES user(id),
-                      FOREIGN KEY (article_id) REFERENCES article(id)
+                      FOREIGN KEY (article_id) REFERENCES article(id) ON DELETE CASCADE
 );
 
 INSERT INTO section (section_name) VALUES

@@ -4,6 +4,9 @@
 
 <style>
     <%@include file="menu_style/style.css" %>
+    a{
+        text-decoration: none;
+    }
 </style>
 
 <nav role='navigation'>

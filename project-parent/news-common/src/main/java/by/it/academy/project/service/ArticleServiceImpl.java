@@ -3,6 +3,7 @@ package by.it.academy.project.service;
 import by.it.academy.project.dao.ArticleDao;
 import by.it.academy.project.dao.ArticleDaoImpl;
 import by.it.academy.project.model.Article;
+import by.it.academy.project.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
-    private ArticleServiceImpl() {}
+    private ArticleServiceImpl() {
+    }
 
     @Override
     public List<Article> getAllArticles() {
@@ -79,6 +81,34 @@ public class ArticleServiceImpl implements ArticleService {
             logger.error("error while finding article by id", e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void like(Long article_id, Long user_id) {
+
+        logger.debug("like article " + article_id);
+
+        String result;
+
+        Article article = findArticleById(article_id)
+                .orElseThrow(() -> new RuntimeException("unknown article"));
+        try {
+            if (articleDao.findLike(article_id, user_id)) {
+
+                articleDao.deleteLike(article_id, user_id);
+                articleDao.updateLike(article_id, false);
+                result = "remove like";
+
+            } else {
+                articleDao.addLike(article_id, user_id);
+                articleDao.updateLike(article_id, true);
+                result = "add like";
+
+            }
+            logger.debug("result " + result);
+        } catch (SQLException e) {
+            logger.error("error while like " + e);
+        }
     }
 
     public static ArticleService getINSTANCE() {

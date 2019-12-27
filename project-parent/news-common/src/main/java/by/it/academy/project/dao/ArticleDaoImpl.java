@@ -33,7 +33,20 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "DELETE FROM article WHERE id = ?;";
 
     private static final String SELECT_ALL_ARTICLES =
-            "SELECT * FROM article;";
+            "SELECT * FROM article ORDER BY id DESC;";
+
+
+    private static final String INSERT_LIKE =
+            "INSERT INTO like_on_article (article_id, user_id)VALUE (?,?);";
+
+    private static final String DELETE_LIKE =
+            "DELETE FROM like_on_article WHERE article_id = ? AND user_id = ?;";
+
+    private static final String FIND_LIKE =
+            "SELECT * FROM like_on_article WHERE article_id = ? AND user_id = ?;";
+
+    private static final String UPDATE_LIKE =
+            "UPDATE article SET likes = ? WHERE id = ?;";
 
 
     public static ArticleDao getINSTANCE() {
@@ -162,8 +175,84 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         Long likes = resultSet.getLong("likes");
 
-        Long dislikes = resultSet.getLong("dislikes");
-
-        return new Article(article_id, title, section, author, date, text, likes, dislikes);
+        return new Article(article_id, title, section, author, date, text, likes);
     }
+
+    @Override
+    public Long addLike(Long article_id, Long user_id) throws SQLException {
+        ResultSet resultSet = null;
+        Long result = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_LIKE, Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setLong(1, article_id);
+            statement.setLong(2, user_id);
+
+            statement.executeUpdate();
+
+            resultSet = statement.getGeneratedKeys();
+
+            while (resultSet.next()) {
+                result = resultSet.getLong(1);
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteLike(Long article_id, Long user_id) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_LIKE)) {
+
+            statement.setLong(1, article_id);
+            statement.setLong(2, user_id);
+
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public int updateLike(Long article_id, boolean like) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
+
+            Article article = read(article_id)
+                    .orElseThrow(() -> new RuntimeException("unknown article"));
+
+            if (like) {
+                statement.setLong(1, article.getLikes() + 1);
+            } else {
+                statement.setLong(1, article.getLikes() - 1);
+            }
+            statement.setLong(2, article_id);
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean findLike(Long article_id, Long user_id) throws SQLException {
+        ResultSet resultSet = null;
+        boolean result = false;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_LIKE)) {
+
+            statement.setLong(1, article_id);
+            statement.setLong(2, user_id);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                result = true;
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+
+
+
 }
