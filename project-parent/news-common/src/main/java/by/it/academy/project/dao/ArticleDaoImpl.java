@@ -20,22 +20,33 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
     private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
-    public static final String INSERT_ARTICLE = "INSERT INTO article (title, section_id, author_id, date, text)" +
-            "VALUES (?,?,?,?,?);";
-    public static final String SELECT_ARTICLE_BY_ID = "SELECT * FROM article WHERE id=?;";
-    public static final String UPDATE_ARTICLE = "UPDATE article SET title = ?, section_id = ?, author_id = ?, text = ?" +
-            "WHERE id=?;";
-    public static final String DELETE_ARTICLE = "DELETE FROM article WHERE id = ?;";
-    public static final String SELECT_ALL_ARTICLES = "SELECT * FROM article;";
+    private static final String INSERT_ARTICLE =
+            "INSERT INTO article (title, section_id, author_id, date, text) VALUES (?,?,?,?,?);";
+
+    private static final String SELECT_ARTICLE_BY_ID =
+            "SELECT * FROM article WHERE id=?;";
+
+    private static final String UPDATE_ARTICLE =
+            "UPDATE article SET title = ?, section_id = ?, author_id = ?, text = ? WHERE id=?;";
+
+    private static final String DELETE_ARTICLE =
+            "DELETE FROM article WHERE id = ?;";
+
+    private static final String SELECT_ALL_ARTICLES =
+            "SELECT * FROM article;";
+
 
     public static ArticleDao getINSTANCE() {
         return INSTANCE;
     }
 
+
     @Override
     public Long save(Article article) throws SQLException {
+
         ResultSet resultSet = null;
         Long result = null;
+
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_ARTICLE)) {
 
@@ -85,6 +96,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
     @Override
     public int update(Article article) throws SQLException {
+
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ARTICLE)) {
 
@@ -110,8 +122,10 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
     @Override
     public List<Article> getAll() throws SQLException {
+
         ResultSet resultSet = null;
         List<Article> articles = new ArrayList<>();
+
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ARTICLES)) {
 
@@ -120,24 +134,35 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             while (resultSet.next()) {
                 articles.add(mapArticle(resultSet));
             }
+
         } finally {
             closeQuietly(resultSet);
         }
+
         return articles;
     }
 
     private Article mapArticle(ResultSet resultSet) throws SQLException {
+
         Long article_id = resultSet.getLong("id");
+
         String title = resultSet.getString("title");
+
         Section section = SectionServiceImpl.getINSTANCE().findSectionByID(resultSet.getLong("section_id"));
-        User author = UserServiceImpl.getINSTANCE().findUserByID(resultSet.getLong("author_id"));
+
+        User author = UserServiceImpl.getINSTANCE()
+                .findUserByID(resultSet.getLong("author_id"))
+                .orElseThrow(()-> new RuntimeException("error map article, unknown author"));
 
         Timestamp timestamp = (Timestamp) resultSet.getObject("date");
         Date date = new Date(timestamp.getTime());
 
         String text = resultSet.getString("text");
+
         Long likes = resultSet.getLong("likes");
+
         Long dislikes = resultSet.getLong("dislikes");
+
         return new Article(article_id, title, section, author, date, text, likes, dislikes);
     }
 }

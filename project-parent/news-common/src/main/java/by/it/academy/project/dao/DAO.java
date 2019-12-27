@@ -1,7 +1,5 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.model.Article;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;

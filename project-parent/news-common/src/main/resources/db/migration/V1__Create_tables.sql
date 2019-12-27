@@ -1,6 +1,6 @@
 CREATE TABLE role(
                    id          INT           NOT NULL PRIMARY KEY,
-                   name        VARCHAR (10)  NOT NULL
+                   role_name        VARCHAR (10)  NOT NULL
 );
 
 CREATE TABLE user(
@@ -12,9 +12,11 @@ CREATE TABLE user(
                    FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
+ALTER TABLE user AUTO_INCREMENT=101;
+
 CREATE TABLE section(
                       id          BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                      name        VARCHAR (30)  NOT NULL UNIQUE
+                      section_name        VARCHAR (30)  NOT NULL UNIQUE
 );
 
 CREATE TABLE article(
@@ -42,7 +44,7 @@ CREATE TABLE comment(
                       FOREIGN KEY (article_id) REFERENCES article(id)
 );
 
-INSERT INTO section (name) VALUES
+INSERT INTO section (section_name) VALUES
 ('People'),
 ('Technology'),
 ('Politics'),
@@ -52,15 +54,14 @@ INSERT INTO section (name) VALUES
 ('Education');
 
 
-INSERT INTO role (id, name) VALUES
+INSERT INTO role (id, role_name) VALUES
 (1, 'admin'),
 (2, 'author'),
 (3, 'user');
 
 
-INSERT INTO user (username, password, salt, role_id) VALUES
-('admin', 'admin', 'admin', 1),
-('author', 'author', 'admin', 2),
-('author1', 'author1', 'admin', 2),
-('user', 'user', 'admin', 3);
+INSERT INTO user (id, username, password, salt, role_id) VALUES
+(1,'admin', '2217d21c39f7b03316833358edba0a522bd2d1bd376d72e9e9b5e508b78d587e', '4qnkWutZlrTTbYbLfIkDJwIXzvg=', 1),
+(2,'author', '351862203494b4ff881b5eeef3a44d65ec2463814eaa597d6a7fbb0243a9905e', 'xDInfnnz9Wv9l1CA8VdD6wQBB4s=', 2),
+(3,'user', 'e6ca99ed04eb30b5039455929ec4541e0da075df9cd0b6feee033bd927401e17', '6P0x9K1p9Krle17iS2Y7GnMiRcM=', 3);
 

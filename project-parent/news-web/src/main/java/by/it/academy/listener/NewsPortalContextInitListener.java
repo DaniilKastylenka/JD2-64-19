@@ -39,5 +39,4 @@ public class NewsPortalContextInitListener implements ServletContextListener {
         logger.info("Context destroyed");
     }
 
-
 }

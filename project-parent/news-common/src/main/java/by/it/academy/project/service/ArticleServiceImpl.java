@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class ArticleServiceImpl implements ArticleService {
 
@@ -20,13 +19,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
-    private final List<Article> articles;
-
-    private AtomicLong id = new AtomicLong();
-
-    private ArticleServiceImpl() {
-        articles = new ArrayList<>();
-    }
+    private ArticleServiceImpl() {}
 
     @Override
     public List<Article> getAllArticles() {

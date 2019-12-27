@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
             hasError = true;
             errMsg = "Username and password should not be empty.";
         } else {
-            Optional<User> user = userService.findUser(username, password);
+            Optional<User> user = userService.findUserByUsernameAndPassword(username, password);
             if (user.isEmpty()) {
                 hasError = true;
                 errMsg = "Bad credentials.";
