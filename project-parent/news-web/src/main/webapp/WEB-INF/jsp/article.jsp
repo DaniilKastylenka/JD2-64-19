@@ -9,9 +9,12 @@
     <meta charset="UTF-8">
     <style>
         <%@include file="login_style/css/main.css" %>
-    </style>
-    <style>
         <%@include file="login_style/css/util.css" %>
+        <%@include file="style/style.css"%>
+        textarea {
+            height: 100px;
+            resize: none;
+        }
     </style>
 </head>
 <body>
@@ -36,24 +39,22 @@
 
 </div>
 
-
-
-<form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
-    <div>${sessionScope.user.username}, comment:</div>
-    <table border="1px">
+<table class="comment-tbl" border="1px">
+    <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
         <tr>
-            <td><input type="text" name="text"> </td>
-            <td><input type="submit"></td>
+            <td>${sessionScope.user.username}:</td>
+            <td><textarea name="text" placeholder="write your comment" required maxlength="255" style="width: 100%"></textarea></td>
+            <td><input type="submit" style="border-radius: 5px"></td>
         </tr>
-    </table>
-</form>
-<table border="1px" style="width: 60%;">
+    </form>
+</table>
+<table class="comment-tbl" border="1px">
     <c:forEach items="${commentList}" var="comment">
         <c:if test="${article.id == comment.article_id}">
             <tr>
-                <td style="width:10%">${comment.user.username}</td>
-                <td><c:out value="${comment.text}"/></td>
-                <td style="width: 10%">
+                <td>${comment.user.username}</td>
+                <td style="word-wrap: break-word"><c:out value="${comment.text}"/></td>
+                <td>
                     <c:if test="${sessionScope.user.role == 'admin' or sessionScope.user == comment.user}">
                         <a href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">Delete</a>
                     </c:if>

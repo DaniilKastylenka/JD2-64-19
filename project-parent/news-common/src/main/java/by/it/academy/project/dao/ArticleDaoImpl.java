@@ -24,7 +24,10 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "INSERT INTO article (title, section_id, author_id, date, text) VALUES (?,?,?,?,?);";
 
     private static final String SELECT_ARTICLE_BY_ID =
-            "SELECT * FROM article WHERE id=?;";
+            "SELECT a.*, s.section_name, u.*, r.role_name FROM article a " +
+                    "JOIN section s ON a.section_id = s.id " +
+                    "JOIN user u ON a.author_id = u.id " +
+                    "JOIN role r ON u.role_id = r.id WHERE a.id = ?";
 
     private static final String UPDATE_ARTICLE =
             "UPDATE article SET title = ?, section_id = ?, author_id = ?, text = ? WHERE id=?;";
@@ -33,7 +36,10 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "DELETE FROM article WHERE id = ?;";
 
     private static final String SELECT_ALL_ARTICLES =
-            "SELECT * FROM article ORDER BY id DESC;";
+            "SELECT a.*, s.section_name, u.*, r.role_name FROM article a " +
+                    "JOIN section s ON a.section_id = s.id " +
+                    "JOIN user u ON a.author_id = u.id " +
+                    "JOIN role r ON u.role_id = r.id ORDER BY a.id DESC;";
 
 
     private static final String INSERT_LIKE =
@@ -161,12 +167,11 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         String title = resultSet.getString("title");
 
-        Section section = SectionServiceImpl.getINSTANCE()
-                .findSectionByID(resultSet.getLong("section_id")).orElseThrow(() -> new RuntimeException("unknown section"));
+        Section section = new Section(resultSet.getLong("section_id"), resultSet.getString("section_name"));
 
-        User author = UserServiceImpl.getINSTANCE()
-                .findUserByID(resultSet.getLong("author_id"))
-                .orElseThrow(() -> new RuntimeException("error map article, unknown author"));
+        User author = new User(resultSet.getLong("author_id"),
+                resultSet.getString("username"), resultSet.getString("password"),
+                resultSet.getString("salt"), resultSet.getString("role_name"));
 
         Timestamp timestamp = (Timestamp) resultSet.getObject("date");
         Date date = new Date(timestamp.getTime());
@@ -214,24 +219,6 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int updateLike(Long article_id, boolean like) throws SQLException {
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
-
-            Article article = read(article_id)
-                    .orElseThrow(() -> new RuntimeException("unknown article"));
-
-            if (like) {
-                statement.setLong(1, article.getLikes() + 1);
-            } else {
-                statement.setLong(1, article.getLikes() - 1);
-            }
-            statement.setLong(2, article_id);
-            return statement.executeUpdate();
-        }
-    }
-
-    @Override
     public boolean findLike(Long article_id, Long user_id) throws SQLException {
         ResultSet resultSet = null;
         boolean result = false;
@@ -252,7 +239,23 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         return result;
     }
 
+    @Override
+    public int updateLikeInArticle(Long article_id, boolean like) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
 
+            Article article = read(article_id)
+                    .orElseThrow(() -> new RuntimeException("unknown article"));
+
+            if (like) {
+                statement.setLong(1, article.getLikes() + 1);
+            } else {
+                statement.setLong(1, article.getLikes() - 1);
+            }
+            statement.setLong(2, article_id);
+            return statement.executeUpdate();
+        }
+    }
 
 
 }

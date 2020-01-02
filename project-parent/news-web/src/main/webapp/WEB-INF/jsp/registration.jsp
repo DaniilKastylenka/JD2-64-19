@@ -8,19 +8,21 @@
 <!DOCTYPE html>
 <html lang="${param.lang}">
 <head>
-    <title><fmt:message key="registration.sign.up"/> </title>
+    <title><fmt:message key="registration.sign.up"/></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style><%@include file="login_style/css/main.css"%></style>
-    <style><%@include file="login_style/css/util.css"%></style>
-    <style><%@include file="login_style/vendor/daterangepicker/daterangepicker.css"%></style>
-    <style><%@include file="login_style/vendor/select2/select2.min.css"%></style>
-    <style><%@include file="login_style/vendor/animsition/css/animsition.min.css"%></style>
-    <style><%@include file="login_style/vendor/css-hamburgers/hamburgers.min.css"%></style>
-    <style><%@include file="login_style/vendor/animate/animate.css"%></style>
-    <style><%@include file="login_style/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"%></style>
-    <style><%@include file="login_style/fonts/font-awesome-4.7.0/css/font-awesome.min.css"%></style>
-    <style><%@include file="login_style/vendor/bootstrap/css/bootstrap.min.css"%></style>
+    <style>
+        <%@include file="login_style/css/main.css"%>
+        <%@include file="login_style/css/util.css"%>
+        <%@include file="login_style/vendor/daterangepicker/daterangepicker.css"%>
+        <%@include file="login_style/vendor/select2/select2.min.css"%>
+        <%@include file="login_style/vendor/animsition/css/animsition.min.css"%>
+        <%@include file="login_style/vendor/css-hamburgers/hamburgers.min.css"%>
+        <%@include file="login_style/vendor/animate/animate.css"%>
+        <%@include file="login_style/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"%>
+        <%@include file="login_style/fonts/font-awesome-4.7.0/css/font-awesome.min.css"%>
+        <%@include file="login_style/vendor/bootstrap/css/bootstrap.min.css" %>
+    </style>
 
 
 </head>
@@ -35,19 +37,22 @@
 					</span>
 
 
-                <div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
-                    <input class="input100" type="text" name="username" placeholder="<fmt:message key="registration.username"/>">
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
+                    <input class="input100" type="text" name="username"
+                           placeholder="<fmt:message key="registration.username"/>">
                     <span class="focus-input100"></span>
                 </div>
 
 
-                <div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
-                    <input class="input100" type="password" name="password" placeholder="<fmt:message key="registration.password"/>">
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
+                    <input class="input100" type="password" name="password"
+                           placeholder="<fmt:message key="registration.password"/>">
                     <span class="focus-input100"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
-                    <input class="input100" type="password" name="repeatPass" placeholder="<fmt:message key="registration.repeat.password"/>">
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
+                    <input class="input100" type="password" name="repeatPass"
+                           placeholder="<fmt:message key="registration.repeat.password"/>">
                     <span class="focus-input100"></span>
                 </div>
 

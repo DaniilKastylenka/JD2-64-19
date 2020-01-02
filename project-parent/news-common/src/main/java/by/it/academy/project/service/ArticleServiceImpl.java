@@ -3,7 +3,6 @@ package by.it.academy.project.service;
 import by.it.academy.project.dao.ArticleDao;
 import by.it.academy.project.dao.ArticleDaoImpl;
 import by.it.academy.project.model.Article;
-import by.it.academy.project.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,12 +95,12 @@ public class ArticleServiceImpl implements ArticleService {
             if (articleDao.findLike(article_id, user_id)) {
 
                 articleDao.deleteLike(article_id, user_id);
-                articleDao.updateLike(article_id, false);
+                articleDao.updateLikeInArticle(article_id, false);
                 result = "remove like";
 
             } else {
                 articleDao.addLike(article_id, user_id);
-                articleDao.updateLike(article_id, true);
+                articleDao.updateLikeInArticle(article_id, true);
                 result = "add like";
 
             }

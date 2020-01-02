@@ -29,7 +29,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             "INSERT INTO comment(user_id, text, date, likes, article_id) VALUE(?,?,?,?,?)";
 
     private final static String SELECT_COMMENT_BY_ID =
-            "SELECT * FROM comment WHERE id = ?;";
+            "SELECT c.*, u.*, r.role_name FROM comment c " +
+                    "JOIN user u ON c.user_id=u.id " +
+                    "JOIN role r ON u.role_id = r.id WHERE c.id = ?;";
 
     private final static String UPDATE_COMMENT =
             "UPDATE comment SET user_id = ?, text = ?, date = ?, likes = ?, article_id = ? WHERE id = ?;";
@@ -38,7 +40,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             "DELETE FROM comment WHERE id = ?;";
 
     private final static String SELECT_ALL =
-            "SELECT * FROM comment ORDER BY id DESC;";
+            "SELECT c.*, u.*, r.role_name FROM comment c " +
+                    "JOIN user u ON c.user_id = u.id " +
+                    "JOIN role r ON u.role_id = r.id ORDER BY c.id DESC;";
 
     @Override
     public Long save(Comment comment) throws SQLException {
@@ -146,9 +150,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
         Long id = resultSet.getLong("id");
 
-        Long user_id = resultSet.getLong("user_id");
-        User user = userService
-                .findUserByID(user_id).orElseThrow(() -> new RuntimeException("unknown user"));
+        User user = new User(resultSet.getLong("user_id"),
+                resultSet.getString("username"), resultSet.getString("password"),
+                resultSet.getString("salt"), resultSet.getString("role_name"));
 
         String text = resultSet.getString("text");
 
