@@ -14,32 +14,14 @@
 
     <style>
         <%@include file="login_style/css/main.css" %>
-    </style>
-    <style>
         <%@include file="login_style/css/util.css" %>
-    </style>
-    <style>
         <%@include file="login_style/vendor/daterangepicker/daterangepicker.css" %>
-    </style>
-    <style>
         <%@include file="login_style/vendor/select2/select2.min.css" %>
-    </style>
-    <style>
         <%@include file="login_style/vendor/animsition/css/animsition.min.css" %>
-    </style>
-    <style>
         <%@include file="login_style/vendor/css-hamburgers/hamburgers.min.css" %>
-    </style>
-    <style>
         <%@include file="login_style/vendor/animate/animate.css" %>
-    </style>
-    <style>
         <%@include file="login_style/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %>
-    </style>
-    <style>
         <%@include file="login_style/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %>
-    </style>
-    <style>
         <%@include file="login_style/vendor/bootstrap/css/bootstrap.min.css" %>
     </style>
 </head>
@@ -87,9 +69,9 @@
             </form>
             <table border="1px">
                 <tr>
-                    <td>Role</td>
-                    <td>Username</td>
-                    <td>Password</td>
+                    <th>Role</th>
+                    <th>Username</th>
+                    <th>Password</th>
                 </tr>
                 <tr>
                     <td>SimpleUser</td>
@@ -102,11 +84,6 @@
                     <td>Author</td>
                 </tr>
                 <tr>
-                    <td>Author</td>
-                    <td>Author1</td>
-                    <td>Author1</td>
-                </tr>
-                <tr>
                     <td>Admin</td>
                     <td>Admin</td>
                     <td>Admin</td>
@@ -115,8 +92,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <div id="dropDownSelect1"></div>

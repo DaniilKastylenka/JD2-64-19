@@ -10,8 +10,9 @@ public interface UserService {
 
     void addUser(User user);
 
-    boolean findUserByName(String username);
+    boolean findUserByUsername(String username);
 
-    User findUserByID(Long id);
+    Optional<User> findUserByID(Long id);
+
 
 }

@@ -36,7 +36,7 @@ public class RegistrationServlet extends HttpServlet {
                 repeatPass == null || repeatPass.length() == 0) {
             hasError = true;
             errorMessage = "Fields should not be empty.";
-        } else if (userService.findUserByName(username)) {
+        } else if (userService.findUserByUsername(username)) {
             hasError = true;
             errorMessage = "User with the same name already exists.";
         } else if (!password.equals(repeatPass)) {
@@ -52,5 +52,7 @@ public class RegistrationServlet extends HttpServlet {
             userService.addUser(new User(username, password));
             resp.sendRedirect(req.getContextPath() + "/login");
         }
+
     }
+
 }

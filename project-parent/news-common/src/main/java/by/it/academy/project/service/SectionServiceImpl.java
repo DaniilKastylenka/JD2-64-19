@@ -1,25 +1,23 @@
 package by.it.academy.project.service;
 
+import by.it.academy.project.dao.SectionDao;
+import by.it.academy.project.dao.SectionDaoImpl;
 import by.it.academy.project.model.Section;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.SQLException;
+import java.util.*;
 
 public class SectionServiceImpl implements SectionService {
 
     private static final SectionService INSTANCE = new SectionServiceImpl();
 
-    private Set<Section> sections;
+    private static final Logger logger = LoggerFactory.getLogger(SectionServiceImpl.class);
 
-    private SectionServiceImpl(){
-        sections = new HashSet<>();
-        sections.add(new Section(1L, "People"));
-        sections.add(new Section(2L, "Technology"));
-        sections.add(new Section(3L, "Politics"));
-        sections.add(new Section(4L, "Entertainment"));
-        sections.add(new Section(5L, "Game"));
-        sections.add(new Section(6L, "World"));
-        sections.add(new Section(7L, "Education"));
+    private static final SectionDao sectionDao = SectionDaoImpl.getINSTANCE();
+
+    private SectionServiceImpl() {
     }
 
     public static SectionService getINSTANCE() {
@@ -27,20 +25,30 @@ public class SectionServiceImpl implements SectionService {
     }
 
 
-
     @Override
     public Set<Section> getSections() {
-        return sections;
+        logger.debug("get sections");
+        Set<Section> result = new HashSet<>();
+        try {
+            result.addAll(sectionDao.getAll());
+            logger.debug("result " + result);
+        } catch (SQLException e) {
+            logger.error("error while getting sections");
+        }
+        return result;
     }
 
     @Override
-    public Section findSectionByID(Long id) {
-        for (Section s:sections) {
-            if(s.getId().equals(id)){
-                return s;
-            }
+    public Optional<Section> findSectionByID(Long id) {
+        logger.debug("find section by id");
+        Optional<Section> result = Optional.empty();
+        try {
+            result = sectionDao.read(id);
+            logger.debug("result " + result);
+        } catch (SQLException e) {
+            logger.error("error while finding section by id");
         }
-        return null;
+        return result;
     }
 
 

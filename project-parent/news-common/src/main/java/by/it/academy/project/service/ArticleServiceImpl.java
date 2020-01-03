@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class ArticleServiceImpl implements ArticleService {
 
@@ -20,12 +19,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
-    private final List<Article> articles;
-
-    private AtomicLong id = new AtomicLong();
-
     private ArticleServiceImpl() {
-        articles = new ArrayList<>();
     }
 
     @Override
@@ -86,6 +80,34 @@ public class ArticleServiceImpl implements ArticleService {
             logger.error("error while finding article by id", e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void like(Long article_id, Long user_id) {
+
+        logger.debug("like article " + article_id);
+
+        String result;
+
+        Article article = findArticleById(article_id)
+                .orElseThrow(() -> new RuntimeException("unknown article"));
+        try {
+            if (articleDao.findLike(article_id, user_id)) {
+
+                articleDao.deleteLike(article_id, user_id);
+                articleDao.updateLikeInArticle(article_id, false);
+                result = "remove like";
+
+            } else {
+                articleDao.addLike(article_id, user_id);
+                articleDao.updateLikeInArticle(article_id, true);
+                result = "add like";
+
+            }
+            logger.debug("result " + result);
+        } catch (SQLException e) {
+            logger.error("error while like " + e);
+        }
     }
 
     public static ArticleService getINSTANCE() {
