@@ -20,7 +20,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     private final static String INSERT_USER =
-            "INSERT INTO user (username, password, salt) VALUE (?,?,?)";
+            "INSERT INTO user(username, password, salt, role_id) VALUE (?,?,?,?)";
+
+    private final static String SELECT_ROLE = "SELECT id FROM role WHERE role_name = ?;";
 
     private final static String SELECT_USER_BY_ID =
             "SELECT * FROM user LEFT JOIN role r ON user.role_id = r.id WHERE user.id = ?;";
@@ -39,13 +41,26 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
         ResultSet resultSet = null;
         Long result = null;
+        Long roleId = null;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement statementRole = connection.prepareStatement(SELECT_ROLE)) {
+
+            statementRole.setString(1, user.getRole());
+            resultSet = statementRole.executeQuery();
+            if (resultSet.next()) {
+                roleId = resultSet.getLong(1);
+            }
+
+            if (roleId == null){
+                throw new RuntimeException("unknown user role");
+            }
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getSalt());
+            statement.setLong(4, roleId);
             statement.executeUpdate();
 
             resultSet = statement.getGeneratedKeys();

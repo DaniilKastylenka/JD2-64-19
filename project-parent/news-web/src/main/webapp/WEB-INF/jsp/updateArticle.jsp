@@ -12,7 +12,7 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp"%>
 <%@include file="/WEB-INF/include/header.jsp"%>
-<h1 style="padding-top: 20px; padding-left: 115px">Update article<article></article></h1>
+<h1 style="padding-top: 20px; padding-left: 115px">Update article</h1>
 <form method="post" action="${pageContext.request.contextPath}/updateArticle?articleId=${param.articleId}">
     <table>
         <tr>
