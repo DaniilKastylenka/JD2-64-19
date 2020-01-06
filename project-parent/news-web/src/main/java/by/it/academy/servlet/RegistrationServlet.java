@@ -24,14 +24,14 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
+        String username = req.getParameter("username").toLowerCase();
         String password = req.getParameter("password");
         String repeatPass = req.getParameter("repeatPass");
 
         String errorMessage = "";
         boolean hasError = false;
 
-        if (username == null || username.length() == 0 ||
+        if (username.length() == 0 ||
                 password == null || password.length() == 0 ||
                 repeatPass == null || repeatPass.length() == 0) {
             hasError = true;

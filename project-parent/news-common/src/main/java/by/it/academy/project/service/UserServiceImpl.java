@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static by.it.academy.project.security.EncryptUtils.getSHA256;
@@ -70,6 +72,19 @@ public class UserServiceImpl implements UserService {
             logger.error("error while finding user by id " + e);
         }
         return optionalUser;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        logger.debug("get all users");
+        List<User> users = new ArrayList<>();
+        try {
+            users = userDao.getAll();
+            logger.debug("result " + users);
+        } catch (SQLException e) {
+            logger.error("error while getting all users");
+        }
+        return users;
     }
 
     @Override

@@ -11,8 +11,11 @@
 
 <nav role='navigation'>
     <ul>
-        <c:if test="${sessionScope.user.role != 'user'}">
-            <%@include file="menuForAdminAndAuthor.jsp" %>
+        <c:if test="${sessionScope.user.role == 'author'}">
+            <%@include file="menuForAuthor.jsp" %>
+        </c:if>
+        <c:if test="${sessionScope.user.role == 'admin'}">
+            <%@include file="menuForAdmin.jsp" %>
         </c:if>
         <c:if test="${sessionScope.user.role == 'user'}">
             <%@include file="menuForUser.jsp" %>

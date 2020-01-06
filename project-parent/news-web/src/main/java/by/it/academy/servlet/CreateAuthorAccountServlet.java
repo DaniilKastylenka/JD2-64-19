@@ -25,14 +25,14 @@ public class CreateAuthorAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String username = req.getParameter("username");
+        String username = req.getParameter("username").toLowerCase();
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeatPassword");
 
         boolean hasError = false;
         String error = "";
 
-        if (username == null || username.length() == 0 ||
+        if (username.length() == 0 ||
                 password == null || password.length() == 0 ||
                 repeatPassword == null || repeatPassword.length() == 0) {
             hasError = true;
@@ -40,15 +40,17 @@ public class CreateAuthorAccountServlet extends HttpServlet {
         } else if (!password.equals(repeatPassword)) {
             hasError = true;
             error = "passwords do not match";
-        } else {
-            userService.addUser(new User(username, password, "author"));
+        } else if(userService.findUserByUsername(username)){
+            hasError = true;
+            error = "User with the same name already exists.";
         }
 
         if (hasError) {
             req.setAttribute("errorString", error);
             req.getRequestDispatcher("WEB-INF/jsp/createAuthorAccount.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/home");
+            userService.addUser(new User(username, password, "author"));
+            resp.sendRedirect(req.getContextPath() + "/userList");
         }
     }
 }

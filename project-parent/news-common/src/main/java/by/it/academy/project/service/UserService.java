@@ -2,6 +2,7 @@ package by.it.academy.project.service;
 
 import by.it.academy.project.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -13,6 +14,8 @@ public interface UserService {
     boolean findUserByUsername(String username);
 
     Optional<User> findUserByID(Long id);
+
+    List<User> getAllUsers();
 
 
 }
