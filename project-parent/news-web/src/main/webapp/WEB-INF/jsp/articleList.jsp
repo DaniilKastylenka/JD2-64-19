@@ -41,8 +41,8 @@
             <c:if test="${sessionScope.user.role!='user'}">
                 <td>
                     <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">
-                        <a href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">Delete</a>|
-                        <a href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">Update</a>
+                        <a style="color: red" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a>|
+                        <a style="color: #007bff" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
                     </c:if>
 
                 </td>

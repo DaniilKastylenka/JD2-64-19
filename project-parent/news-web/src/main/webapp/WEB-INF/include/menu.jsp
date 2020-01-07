@@ -32,6 +32,8 @@
 
                 <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="menu.home"/> </a></li>
 
+                <li><a href="${pageContext.request.contextPath}/userPage">Account</a></li>
+
                 <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff1d00"><fmt:message
                         key="menu.logout"/></a></li>
 

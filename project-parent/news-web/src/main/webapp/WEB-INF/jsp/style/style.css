@@ -1,4 +1,15 @@
 .comment-tbl {
     table-layout: fixed;
-    width:100%
+    width: 100%
 }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    background: #8664b5;
+    color: #fff;
+    width: 100%;
+}
+

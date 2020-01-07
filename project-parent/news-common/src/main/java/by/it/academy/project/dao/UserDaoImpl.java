@@ -37,6 +37,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     private final static String SELECT_ALL_USERS =
             "SELECT u.*, r.role_name FROM user u LEFT JOIN role r on u.role_id = r.id ORDER BY u.id";
 
+    private final static String DELETE_USER_BY_ID =
+            "DELETE FROM user WHERE id=?;";
+
     @Override
     public Long save(User user) throws SQLException {
 
@@ -107,7 +110,12 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public int delete(Long id) throws SQLException {
-        return 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_ID)) {
+            statement.setLong(1, id);
+
+            return statement.executeUpdate();
+        }
     }
 
     @Override

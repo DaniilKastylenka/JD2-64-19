@@ -29,14 +29,13 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findUser(String username, String password) {
 
         logger.debug("find user by username and password");
-        Optional<User> optionalUser = Optional.empty();
         try {
-
-            User user = userDao.findUserByUsername(username)
-                    .orElseThrow(() -> new RuntimeException("unknown user"));
-
-            if (user.getPassword().equals(getSHA256(password, user.getSalt()))) {
-                return Optional.of(user);
+            Optional<User> optionalUser = userDao.findUserByUsername(username);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                if (user.getPassword().equals(getSHA256(password, user.getSalt()))) {
+                    return Optional.of(user);
+                }
             }
 
             logger.debug("result" + optionalUser);
@@ -72,6 +71,18 @@ public class UserServiceImpl implements UserService {
             logger.error("error while finding user by id " + e);
         }
         return optionalUser;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        logger.debug("delete user by id");
+        int result;
+        try {
+            result = userDao.delete(id);
+            logger.debug("result " + result);
+        } catch (SQLException e) {
+            logger.error("error while deleting user", e);
+        }
     }
 
     @Override

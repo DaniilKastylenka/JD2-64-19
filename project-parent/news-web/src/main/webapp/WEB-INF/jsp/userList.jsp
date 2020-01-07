@@ -8,10 +8,11 @@
     <title>All users</title>
 </head>
 <body>
-<%@include file="/WEB-INF/include/menu.jsp"%>
-<%@include file="/WEB-INF/include/header.jsp"%>
+<%@include file="/WEB-INF/include/menu.jsp" %>
+<%@include file="/WEB-INF/include/header.jsp" %>
 
-<table style="width: 100%">
+<h1 style="padding-top: 20px; padding-left: 115px">All users</h1>
+<table border="1px" style="width: 100%; border: black">
     <tr>
         <td>User ID</td>
         <td>Username</td>
@@ -23,11 +24,16 @@
             <td><c:out value="${user.id}"/></td>
             <td><c:out value="${user.username}"/></td>
             <td><c:out value="${user.role}"/></td>
-            <td></td>
+            <td>
+                <c:if test="${user.role != 'admin'}">
+                    <a style="color: red"
+                       href="${pageContext.request.contextPath}/deleteUser?userId=${user.id}">DELETE</a>
+                </c:if>
+            </td>
         </tr>
     </c:forEach>
 </table>
 
-<%@include file="/WEB-INF/include/footer.jsp"%>
+<%@include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>
