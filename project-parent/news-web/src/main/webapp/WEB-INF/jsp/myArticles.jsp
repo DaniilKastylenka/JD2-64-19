@@ -12,9 +12,9 @@
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 20px; padding-left: 115px">My articles</h1>
+<h1 style="padding-top: 100px;">My articles</h1>
 
-<table border="1px" style="width: 100%; border: black">
+<table class="article-list-tbl" border="1px">
     <tr>
         <td><fmt:message key="article.list.id"/></td>
         <td><fmt:message key="article.list.section"/></td>
@@ -28,16 +28,16 @@
     <c:forEach items="${articles}" var="article">
         <c:if test="${article.author.username == user.username}">
             <tr>
-                <td><c:out value="${article.id}"/></td>
-                <td><c:out value="${article.section.name}"/></td>
-                <td><a href="${pageContext.request.contextPath}/article?articleId=${article.id}">${article.title}</a></td>
-                <td><c:out value="${article.text}"/></td>
-                <td><c:out value="${article.author.username}"/></td>
-                <td><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
-                <td><c:out value="${article.likes}"/></td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">Delete</a>|
-                    <a href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">Update</a>
+                <td valign="top"><c:out value="${article.id}"/></td>
+                <td valign="top"><c:out value="${article.section.name}"/></td>
+                <td valign="top"><a href="${pageContext.request.contextPath}/article?articleId=${article.id}"><p class="title-link">${article.title}</p></a></td>
+                <td valign="top"><p style="overflow:hidden; height: 90px"><c:out value="${article.text}"/></p></td>
+                <td valign="top"><c:out value="${article.author.username}"/></td>
+                <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
+                <td valign="top"><c:out value="${article.likes}"/></td>
+                <td valign="top">
+                    <a class="delete-button" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
+                    <a class="update-button" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
                 </td>
             </tr>
         </c:if>

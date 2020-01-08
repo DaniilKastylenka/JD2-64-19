@@ -13,9 +13,9 @@
 <%@include file="/WEB-INF/include/header.jsp" %>
 
 
-<h1 style="padding-top: 20px; padding-left: 115px"><fmt:message key="article.list.page.title"/></h1>
+<h1 style="padding-top: 100px;"><fmt:message key="article.list.page.title"/></h1>
 
-<table border="1px" style="width: 100%; border: black; padding-top: 24px">
+<table border="1px" class="article-list-tbl">
     <tr>
         <td><fmt:message key="article.list.id"/></td>
         <td><fmt:message key="article.list.section"/></td>
@@ -31,18 +31,18 @@
     </tr>
     <c:forEach items="${articleList}" var="article">
         <tr>
-            <td><c:out value="${article.id}"/></td>
-            <td><c:out value="${article.section.name}"/></td>
-            <td><a href="${pageContext.request.contextPath}/article?articleId=${article.id}">${article.title}</a></td>
-            <td><c:out value="${article.text}"/></td>
-            <td><c:out value="${article.author.username}"/></td>
-            <td><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
-            <td><c:out value="${article.likes}"/></td>
+            <td valign="top"><c:out value="${article.id}"/></td>
+            <td valign="top"><c:out value="${article.section.name}"/></td>
+            <td valign="top"><a href="${pageContext.request.contextPath}/article?articleId=${article.id}"><p class="title-link">${article.title}</p></a></td>
+            <td valign="top"><p style="overflow: hidden; height: 90px"><c:out value="${article.text}"/></p></td>
+            <td valign="top"><c:out value="${article.author.username}"/></td>
+            <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
+            <td valign="top"><c:out value="${article.likes}"/></td>
             <c:if test="${sessionScope.user.role!='user'}">
-                <td>
+                <td valign="top">
                     <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">
-                        <a style="color: red" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a>|
-                        <a style="color: #007bff" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
+                        <a class="delete-button" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
+                        <a class="update-button" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
                     </c:if>
 
                 </td>

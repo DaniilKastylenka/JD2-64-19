@@ -12,12 +12,12 @@
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 20px; padding-left: 115px">Add new author</h1>
+<h1 style="padding-top: 100px;">Add new author</h1>
 
 
 <div style="color: red">${errorString}</div>
 <form method="post" action="${pageContext.request.contextPath}/createAuthorAccount">
-    <table>
+    <table class="create-author-tbl" border="1px">
         <tr>
             <td>Username</td>
             <td><input type="text" name="username" placeholder="username"></td>

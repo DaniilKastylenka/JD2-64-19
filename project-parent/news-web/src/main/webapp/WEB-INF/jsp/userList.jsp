@@ -11,7 +11,7 @@
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 20px; padding-left: 115px">All users</h1>
+<h1 style="padding-top: 100px;">All users</h1>
 <table border="1px" style="width: 100%; border: black">
     <tr>
         <td>User ID</td>

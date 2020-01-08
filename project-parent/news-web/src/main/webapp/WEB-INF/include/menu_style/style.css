@@ -6,11 +6,6 @@
   font-family: 'Lato', sans-serif;
 }
 
-body{
-  padding-left: 8%;
-  padding-right: 8%;
-}
-
 /*| Navigation |*/
 nav {
   position: fixed;

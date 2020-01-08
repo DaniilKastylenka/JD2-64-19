@@ -11,7 +11,7 @@
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 20px; padding-left: 115px">My account</h1>
+<h1 style="padding-top: 100px;">My account</h1>
 
 <a href="${pageContext.request.contextPath}/deleteUser?userId=${sessionScope.user.id}" style="color: red">Delete my account</a>
 

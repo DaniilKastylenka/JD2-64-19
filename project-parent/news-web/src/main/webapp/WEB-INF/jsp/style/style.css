@@ -1,15 +1,121 @@
 .comment-tbl {
     table-layout: fixed;
-    width: 100%
+    width: 50%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: black;
 }
 
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
-    padding: 10px;
+    padding: 0;
     background: #8664b5;
     color: #fff;
     width: 100%;
 }
+
+.news-header {
+    position: fixed;
+    font-size: 60px;
+    color: #000;
+    transition: 0.15s;
+}
+
+.news-header:hover {
+    color: #a084d9;
+
+}
+
+.create-article-tbl {
+    border: black;
+    margin-bottom: 20px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-list-tbl {
+    table-layout: fixed;
+    border: black;
+    width: 100%;
+    word-wrap: break-word;
+    margin-bottom: 20px;
+    text-overflow: ellipsis;
+}
+
+.article-tbl {
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.create-author-tbl {
+    border: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    margin-left: 8%;
+    margin-right: 8%;
+}
+
+p {
+    color: #000;
+}
+
+.delete-button{
+    color: black;
+    transition: 0.15s;
+}
+
+.delete-button:hover{
+    color: red;
+}
+
+.update-button{
+    color: black;
+    transition: 0.15s;
+}
+
+.update-button:hover{
+    color: blue;
+}
+
+.title-link{
+    transition: 0.15s;
+    height: 90px;
+    overflow: hidden;
+}
+
+.title-link:hover{
+    color: #a256ab;
+}
+
+.comment-text-place {
+    height: 100px;
+    resize: none;
+    width: 100%;
+}
+
+.article-title-place {
+    resize: none;
+    height: 50px;
+    width: 100%;
+}
+
+.article-text-place {
+    resize: none;
+    height: 500px;
+    width: 100%;
+}
+
+
+
+
 
