@@ -10,17 +10,16 @@
     <title>Update article</title>
 </head>
 <body>
-<%@include file="/WEB-INF/include/menu.jsp"%>
-<%@include file="/WEB-INF/include/header.jsp"%>
-<h1 style="padding-top: 100px;">Update article</h1>
+<%@include file="/WEB-INF/include/menu.jsp" %>
+<h1>Update article</h1>
 <form method="post" action="${pageContext.request.contextPath}/updateArticle?articleId=${param.articleId}">
-    <table>
+    <table class="create-article-tbl" border="1px">
         <tr>
             <td><label for="section">Section</label></td>
             <td>
                 <select id="section" name="sectionId">
                     <c:forEach items="${sections}" var="section">
-                        <option value="${section.id}">
+                        <option <c:if test="${sectionId == section.id}">selected</c:if> value="${section.id}">
                                 ${section.name}
                         </option>
                     </c:forEach>
@@ -29,17 +28,19 @@
         </tr>
         <tr>
             <td><label>Title</label></td>
-            <td><input type="text" name="title"></td>
+            <td><label><textarea class="article-title-place" name="title" required
+                                 maxlength="255">${title}</textarea></label></td>
         </tr>
         <tr>
             <td><label>Text</label></td>
-            <td><input type="text" name="text"></td>
+            <td><label><textarea class="article-text-place" name="text" required
+                                 maxlength="65535">${text}</textarea></label></td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit"></td>
         </tr>
     </table>
 </form>
-<%@include file="/WEB-INF/include/footer.jsp"%>
+<%@include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

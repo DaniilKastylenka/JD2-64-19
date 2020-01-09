@@ -10,9 +10,8 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 100px;">My articles</h1>
+<h1>My articles</h1>
 
 <table class="article-list-tbl" border="1px">
     <tr>
@@ -36,8 +35,8 @@
                 <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
                 <td valign="top"><c:out value="${article.likes}"/></td>
                 <td valign="top">
-                    <a class="delete-button" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
-                    <a class="update-button" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
+                    <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
+                    <a class="update-btn" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
                 </td>
             </tr>
         </c:if>

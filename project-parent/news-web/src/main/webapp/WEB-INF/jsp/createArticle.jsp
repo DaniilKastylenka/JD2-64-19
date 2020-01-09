@@ -11,9 +11,8 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 100px;"><fmt:message key="create.article.page.title"/></h1>
+<h1><fmt:message key="create.article.page.title"/></h1>
 
 <form method="post" action="${pageContext.request.contextPath}/createArticle">
     <table class="create-article-tbl" border="1px">

@@ -11,9 +11,8 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 100px;"><fmt:message key="home.page.title"/></h1>
+<h1><fmt:message key="home.page.title"/></h1>
 
 <div style="word-wrap: break-word">Это проект студента it-academy - Костыленко Даниила. Проектом является новостной
     портал.
@@ -32,7 +31,8 @@
     <li>возможность оставить комментарий статье и удалить его;</li>
     <li>возможность поставить
         лайк;</li>
-    <li>удаление своего аккаунта;</li>
+    <li>изменение пароля;</li>
+    <li>удаление своего аккаунта.</li>
 </ul>
 
 <%@include file="/WEB-INF/include/footer.jsp" %>

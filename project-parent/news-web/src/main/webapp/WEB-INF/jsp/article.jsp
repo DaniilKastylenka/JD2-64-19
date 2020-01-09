@@ -10,19 +10,18 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
 <table class="article-tbl">
     <tr>
         <td colspan="2">
-            <h2 style="text-align: center; font-size: 40px; padding-top: 100px">
+            <h2 style="text-align: center; font-size: 40px;">
                 ${article.title}
             </h2>
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <p style="width: 80%; margin: auto; padding-top: 30px">${article.text}</p>
+            <p style="width: 75%; margin: auto; padding-top: 30px; text-align: justify; font-size: 18px">${article.text}</p>
         </td>
     </tr>
     <tr>
@@ -54,7 +53,8 @@
     <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
         <tr>
             <td style="text-align: center">${sessionScope.user.username}:</td>
-            <td><textarea class="comment-text-place" name="text" placeholder="write your comment" required maxlength="255"></textarea></td>
+            <td><textarea class="comment-text-place" name="text" placeholder="write your comment" required
+                          maxlength="255"></textarea></td>
             <td style="text-align: center"><input type="submit" style="border-radius: 5px"></td>
         </tr>
     </form>
@@ -70,7 +70,8 @@
                 <td style="word-wrap: break-word"><c:out value="${comment.text}"/></td>
                 <td style="text-align: center">
                     <c:if test="${sessionScope.user.role == 'admin' or sessionScope.user == comment.user}">
-                        <a style="color: red" href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">DELETE</a>
+                        <a class="delete-btn"
+                           href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">DELETE</a>
                     </c:if>
                 </td>
             </tr>

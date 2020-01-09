@@ -86,6 +86,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUser(User user) {
+        logger.debug("update user");
+        try {
+            userDao.update(user);
+            logger.debug("result " + user.getId());
+        } catch (SQLException e) {
+            logger.error("error while updating user " + e);
+        }
+    }
+
+    @Override
     public List<User> getAllUsers() {
         logger.debug("get all users");
         List<User> users = new ArrayList<>();

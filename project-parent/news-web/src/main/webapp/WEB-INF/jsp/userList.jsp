@@ -9,9 +9,8 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 100px;">All users</h1>
+<h1>All users</h1>
 <table border="1px" style="width: 100%; border: black">
     <tr>
         <td>User ID</td>
@@ -26,7 +25,7 @@
             <td><c:out value="${user.role}"/></td>
             <td>
                 <c:if test="${user.role != 'admin'}">
-                    <a style="color: red"
+                    <a class="delete-btn"
                        href="${pageContext.request.contextPath}/deleteUser?userId=${user.id}">DELETE</a>
                 </c:if>
             </td>

@@ -23,7 +23,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     private final static String INSERT_USER =
             "INSERT INTO user(username, password, salt, role_id) VALUE (?,?,?,?)";
 
-    private final static String SELECT_ROLE = "SELECT id FROM role WHERE role_name = ?;";
+    private final static String SELECT_ROLE_ID = "SELECT id FROM role WHERE role_name = ?;";
 
     private final static String SELECT_USER_BY_ID =
             "SELECT * FROM user LEFT JOIN role r ON user.role_id = r.id WHERE user.id = ?;";
@@ -40,6 +40,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     private final static String DELETE_USER_BY_ID =
             "DELETE FROM user WHERE id=?;";
 
+    private final static String UPDATE_USER =
+            "UPDATE user JOIN role SET username = ?, password = ?, salt = ?, role_id = ? WHERE user.id = ?";
+
     @Override
     public Long save(User user) throws SQLException {
 
@@ -49,7 +52,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement statementRole = connection.prepareStatement(SELECT_ROLE)) {
+             PreparedStatement statementRole = connection.prepareStatement(SELECT_ROLE_ID)) {
 
             statementRole.setString(1, user.getRole());
             resultSet = statementRole.executeQuery();
@@ -105,7 +108,30 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public int update(User user) throws SQLException {
-        return 0;
+        ResultSet resultSet = null;
+        Long roleId = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER);
+             PreparedStatement roleStatement = connection.prepareStatement(SELECT_ROLE_ID)) {
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getSalt());
+
+            roleStatement.setString(1, user.getRole());
+            resultSet = roleStatement.executeQuery();
+            if (resultSet.next()){
+                roleId = resultSet.getLong(1);
+            } else {
+                throw new RuntimeException("unknown user role");
+            }
+
+            statement.setLong(4, roleId);
+            statement.setLong(5, user.getId());
+
+
+
+            return statement.executeUpdate();
+        }
     }
 
     @Override

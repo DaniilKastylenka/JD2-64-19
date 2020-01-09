@@ -9,11 +9,10 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
-<h1 style="padding-top: 100px;">My account</h1>
-
-<a href="${pageContext.request.contextPath}/deleteUser?userId=${sessionScope.user.id}" style="color: red">Delete my account</a>
+<h1>My account</h1>
+<div><a class="update-btn" href="${pageContext.request.contextPath}/changePassword">CHANGE MY PASSWORD</a></div>
+<div><a class="delete-btn" href="${pageContext.request.contextPath}/deleteUser?userId=${sessionScope.user.id}">DELETE MY ACCOUNT</a></div>
 
 
 <%@include file="/WEB-INF/include/footer.jsp"%>

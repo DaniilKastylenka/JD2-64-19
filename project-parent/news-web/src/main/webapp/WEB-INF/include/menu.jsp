@@ -10,6 +10,7 @@
 </style>
 
 <nav role='navigation'>
+    <%@include file="/WEB-INF/include/header.jsp" %>
     <ul>
         <c:if test="${sessionScope.user.role == 'author'}">
             <%@include file="menuForAuthor.jsp" %>
@@ -42,3 +43,5 @@
 
     </ul>
 </nav>
+
+

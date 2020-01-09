@@ -10,10 +10,9 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
 
 
-<h1 style="padding-top: 100px;"><fmt:message key="article.list.page.title"/></h1>
+<h1><fmt:message key="article.list.page.title"/></h1>
 
 <table border="1px" class="article-list-tbl">
     <tr>
@@ -41,8 +40,8 @@
             <c:if test="${sessionScope.user.role!='user'}">
                 <td valign="top">
                     <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">
-                        <a class="delete-button" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
-                        <a class="update-button" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
+                        <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
+                        <a class="update-btn" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
                     </c:if>
 
                 </td>
