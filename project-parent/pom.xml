@@ -10,6 +10,7 @@
     <modules>
         <module>news-web</module>
         <module>news-common</module>
+        <module>common-hibernate</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -50,6 +51,7 @@
         <projectlombok.version>1.18.10</projectlombok.version>
         <slf4j.version>1.7.29</slf4j.version>
         <logback.version>1.2.3</logback.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
