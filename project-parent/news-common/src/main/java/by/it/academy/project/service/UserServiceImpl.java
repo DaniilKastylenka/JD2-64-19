@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUser(String username, String password) {
+    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
 
         logger.debug("find user by username and password");
         try {
