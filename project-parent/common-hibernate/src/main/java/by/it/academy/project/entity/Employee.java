@@ -35,4 +35,8 @@ public class Employee {
     @Access(AccessType.PROPERTY)
     private EmployeeAddress employeeAddress;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DEPARTMENT_ID")
+    private  Department department;
+
 }

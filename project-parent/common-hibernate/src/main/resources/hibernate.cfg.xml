@@ -16,5 +16,8 @@
         <property name="hbm2ddl.auto">create</property>
         <mapping class="by.it.academy.project.entity.Employee"/>
         <mapping class="by.it.academy.project.entity.EmployeeAddress"/>
+        <mapping class="by.it.academy.project.entity.Department"/>
+        <mapping class="by.it.academy.project.entity.Student"/>
+        <mapping class="by.it.academy.project.entity.Course"/>
     </session-factory>
 </hibernate-configuration>
