@@ -33,7 +33,7 @@ public class SectionServiceImpl implements SectionService {
             result.addAll(sectionDao.getAll());
             logger.debug("result " + result);
         } catch (SQLException e) {
-            logger.error("error while getting sections");
+            logger.error("error while getting sections", e);
         }
         return result;
     }
@@ -46,7 +46,7 @@ public class SectionServiceImpl implements SectionService {
             result = sectionDao.read(id);
             logger.debug("result " + result);
         } catch (SQLException e) {
-            logger.error("error while finding section by id");
+            logger.error("error while finding section by id", e);
         }
         return result;
     }

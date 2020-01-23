@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
             logger.debug("result" + optionalUser);
 
         } catch (SQLException e) {
-            logger.error("error while finding user by username and password" + e);
+            logger.error("error while finding user by username and password", e);
         }
 
         return Optional.empty();
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             optionalUser = userDao.findUserByUsername(username);
             logger.debug("result" + optionalUser);
         } catch (SQLException e) {
-            logger.error("error while finding user by username" + e);
+            logger.error("error while finding user by username", e);
         }
         return optionalUser.isPresent();
     }
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
             optionalUser = userDao.read(id);
             logger.debug("result " + optionalUser);
         } catch (SQLException e) {
-            logger.error("error while finding user by id " + e);
+            logger.error("error while finding user by id ", e);
         }
         return optionalUser;
     }
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
             userDao.update(user);
             logger.debug("result " + user.getId());
         } catch (SQLException e) {
-            logger.error("error while updating user " + e);
+            logger.error("error while updating user ", e);
         }
     }
 
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
             users = userDao.getAll();
             logger.debug("result " + users);
         } catch (SQLException e) {
-            logger.error("error while getting all users");
+            logger.error("error while getting all users", e);
         }
         return users;
     }
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
             user.setId(id);
             logger.debug("result" + id);
         } catch (SQLException e) {
-            logger.error("error while adding user" + e);
+            logger.error("error while adding user", e);
         }
     }
 
