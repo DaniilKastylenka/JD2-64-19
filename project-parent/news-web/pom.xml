@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>by.it.academy.project</groupId>
-            <artifactId>news-common</artifactId>
+            <artifactId>news-service</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

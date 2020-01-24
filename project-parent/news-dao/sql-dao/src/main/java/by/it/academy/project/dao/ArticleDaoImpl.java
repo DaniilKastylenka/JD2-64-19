@@ -3,8 +3,6 @@ package by.it.academy.project.dao;
 import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Section;
 import by.it.academy.project.model.User;
-import by.it.academy.project.service.SectionServiceImpl;
-import by.it.academy.project.service.UserServiceImpl;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;

@@ -1,12 +1,7 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
-import by.it.academy.project.service.ArticleService;
-import by.it.academy.project.service.ArticleServiceImpl;
-import by.it.academy.project.service.UserService;
-import by.it.academy.project.service.UserServiceImpl;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
@@ -18,8 +13,6 @@ import java.util.Optional;
 public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     private static CommentDaoImpl INSTANCE = new CommentDaoImpl();
-
-    private UserService userService = UserServiceImpl.getINSTANCE();
 
     protected CommentDaoImpl() {
         super(LoggerFactory.getLogger(CommentDaoImpl.class));
