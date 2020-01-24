@@ -25,7 +25,7 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
-    fetch = FetchType.LAZY)
+    fetch = FetchType.EAGER)
     private Set<Employee> employees = new HashSet<>();
 
     public Department(String name){

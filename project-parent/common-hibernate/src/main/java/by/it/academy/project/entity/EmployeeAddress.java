@@ -1,9 +1,6 @@
 package by.it.academy.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "EMPLOYEE_ADDRESS")
 public class EmployeeAddress {
@@ -36,6 +34,7 @@ public class EmployeeAddress {
     @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     @Access(AccessType.PROPERTY)
+    @ToString.Exclude
     private Employee employee;
 
 }
