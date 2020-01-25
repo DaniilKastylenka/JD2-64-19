@@ -3,6 +3,8 @@ package by.it.academy.project.model;
 import by.it.academy.project.security.EncryptUtils;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,7 +18,21 @@ public class User {
     private String username;
     private String password;
     private String salt = EncryptUtils.generateSalt();
+
+    //one-to-many +
     private Role role;
+
+    //many-to-one +
+    private Set<Article> ownArticles;
+
+    //many-to-many +
+    private Set<Article> likedArticles;
+
+    //many-to-one +
+    private Set<Comment> ownComments;
+
+    //many-to-many +
+    private Set<Comment> likedComments;
 
     public User(String username, String password) {
         this.username = username;

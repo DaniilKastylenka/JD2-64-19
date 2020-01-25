@@ -13,13 +13,24 @@ import java.util.*;
 public class Article {
 
     private Long id;
+
+    //one-to-many +
     private Section section;
+
     private String title;
     private String text;
+
+    //one-to-many +
     private User author;
     private Date publicationDate;
     private Date updatedDate;
     private Long numberOfLikes;
+
+    //many-to-many +
+    private Set<User> usersWhoLiked;
+
+    //many-to-one +
+    private Set<Comment> comments;
 
 
 
