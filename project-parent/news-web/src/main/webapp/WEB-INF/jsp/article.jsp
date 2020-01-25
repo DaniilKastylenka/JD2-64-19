@@ -30,7 +30,7 @@
 
                 <a href="${pageContext.request.contextPath}/likeArticle?articleId=${article.id}">
                     <button class="article-like-btn">
-                        LIKE ${article.likes}
+                        LIKE ${article.numberOfLikes}
                     </button>
                 </a>
 
@@ -40,7 +40,7 @@
         <td>
             <div style="text-align: end; padding-right: 115px">
                 <fmt:message key="article.author"/>: ${article.author.username}, <fmt:message key="article.date"/>:
-                <fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/>
+                <fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/>
             </div>
         </td>
     </tr>

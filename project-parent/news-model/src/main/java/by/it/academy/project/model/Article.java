@@ -6,7 +6,6 @@ import java.util.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
@@ -21,7 +20,7 @@ public class Article {
     private Date publicationDate;
     private Long numberOfLikes;
 
-    public Article(Long id, String title, Section section, User author, String text) {
+    public Article(Long id, Section section, String title, String text, User author) {
         this.id = id;
         this.title = title;
         this.section = section;
@@ -31,10 +30,10 @@ public class Article {
         this.numberOfLikes = 0L;
     }
 
-    public Article(Long id, String title, Section section, User author, Date date, String text, Long likes) {
-        this(id, title, section, author, text);
+    public Article(Long id, Section section, String title, String text, User author, Date publicationDate, Long likes) {
+        this(id, section, title, text, author);
         this.numberOfLikes = likes;
-        this.publicationDate = date;
+        this.publicationDate = publicationDate;
     }
 
 

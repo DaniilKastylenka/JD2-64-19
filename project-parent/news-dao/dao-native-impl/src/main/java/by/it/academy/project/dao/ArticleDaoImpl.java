@@ -50,7 +50,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "SELECT * FROM like_on_article WHERE article_id = ? AND user_id = ?;";
 
     private static final String UPDATE_LIKE =
-            "UPDATE article SET likes = ? WHERE id = ?;";
+            "UPDATE article SET number_of_likes = ? WHERE id = ?;";
 
 
     public static ArticleDao getINSTANCE() {
@@ -172,13 +172,13 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 resultSet.getString("salt"), resultSet.getString("role_name"));
 
         Timestamp timestamp = (Timestamp) resultSet.getObject("publication_date");
-        Date date = new Date(timestamp.getTime());
+        Date publicationDate = new Date(timestamp.getTime());
 
         String text = resultSet.getString("text");
 
-        Long likes = resultSet.getLong("number_of_likes");
+        Long numberOfLikes = resultSet.getLong("number_of_likes");
 
-        return new Article(article_id, title, section, author, date, text, likes);
+        return new Article(article_id, section, title, text, author, publicationDate, numberOfLikes);
     }
 
     @Override
