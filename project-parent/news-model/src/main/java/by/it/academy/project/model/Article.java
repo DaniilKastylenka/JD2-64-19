@@ -21,6 +21,8 @@ public class Article {
     private Date updatedDate;
     private Long numberOfLikes;
 
+
+
     public Article(Long id, Section section, String title, String text, User author) {
         this.id = id;
         this.title = title;
@@ -39,5 +41,7 @@ public class Article {
         this.numberOfLikes = likes;
     }
 
-
+    public Article(Long id) {
+        this.id = id;
+    }
 }

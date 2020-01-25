@@ -42,6 +42,12 @@
                 <fmt:message key="article.author"/>: ${article.author.username}, <fmt:message key="article.date"/>:
                 <fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/>
             </div>
+
+            <c:if test="${article.updatedDate != null}">
+                <div style="text-align: end; padding-right: 115px">
+                    Updated: <fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.updatedDate}"/>
+                </div>
+            </c:if>
         </td>
     </tr>
 </table>
@@ -64,7 +70,7 @@
     <col width="60%">
     <col width="20%">
     <c:forEach items="${commentList}" var="comment">
-        <c:if test="${article.id == comment.article_id}">
+        <c:if test="${article.id == comment.article.id}">
             <tr>
                 <td style="text-align: center">${comment.user.username}</td>
                 <td style="word-wrap: break-word"><c:out value="${comment.text}"/></td>

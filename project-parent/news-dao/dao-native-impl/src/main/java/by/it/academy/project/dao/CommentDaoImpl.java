@@ -1,5 +1,6 @@
 package by.it.academy.project.dao;
 
+import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     }
 
     private final static String INSERT_COMMENT =
-            "INSERT INTO comment(user_id, text, date, likes, article_id) VALUE(?,?,?,?,?)";
+            "INSERT INTO comment(user_id, text, date, number_of_likes, article_id) VALUE(?,?,?,?,?)";
 
     private final static String SELECT_COMMENT_BY_ID =
             "SELECT c.*, u.*, r.role_name FROM comment c " +
@@ -27,7 +28,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                     "JOIN role r ON u.role_id = r.id WHERE c.id = ?;";
 
     private final static String UPDATE_COMMENT =
-            "UPDATE comment SET user_id = ?, text = ?, date = ?, likes = ?, article_id = ? WHERE id = ?;";
+            "UPDATE comment SET user_id = ?, text = ?, date = ?, number_of_likes = ?, article_id = ? WHERE id = ?;";
 
     private final static String DELETE_COMMENT =
             "DELETE FROM comment WHERE id = ?;";
@@ -50,8 +51,8 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             Timestamp timestamp = new Timestamp(comment.getDate().getTime());
             statement.setObject(3, timestamp);
 
-            statement.setLong(4, comment.getLikes());
-            statement.setLong(5, comment.getArticle_id());
+            statement.setLong(4, comment.getNumberOfLikes());
+            statement.setLong(5, comment.getArticle().getId());
 
             statement.executeUpdate();
 
@@ -99,9 +100,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             Timestamp timestamp = new Timestamp(comment.getDate().getTime());
             statement.setObject(3, timestamp);
 
-            statement.setLong(4, comment.getLikes());
+            statement.setLong(4, comment.getNumberOfLikes());
 
-            statement.setLong(5, comment.getArticle_id());
+            statement.setLong(5, comment.getArticle().getId());
 
             statement.setLong(6, comment.getId());
 
@@ -152,11 +153,11 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
         Timestamp timestamp = (Timestamp) resultSet.getObject("date");
         Date date = new Date(timestamp.getTime());
 
-        Long likes = resultSet.getLong("likes");
+        Long likes = resultSet.getLong("number_of_likes");
 
         Long article_id = resultSet.getLong("article_id");
 
-        return new Comment(id, user, text, date, likes, article_id);
+        return new Comment(id, user, text, date, likes, new Article(article_id));
     }
 
     public static CommentDaoImpl getINSTANCE() {

@@ -33,12 +33,12 @@ CREATE TABLE article(
 );
 
 CREATE TABLE comment(
-                      id          BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                      user_id     BIGINT        NOT NULL,
-                      text        VARCHAR(255)  NOT NULL,
-                      date        DATETIME      NOT NULL,
-                      likes       INT           NOT NULL,
-                      article_id  BIGINT        NOT NULL,
+                      id              BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                      user_id         BIGINT        NOT NULL,
+                      text            VARCHAR(255)  NOT NULL,
+                      date            DATETIME      NOT NULL,
+                      number_of_likes INT           NOT NULL,
+                      article_id      BIGINT        NOT NULL,
                       FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ,
                       FOREIGN KEY (article_id) REFERENCES article(id) ON DELETE CASCADE
 );

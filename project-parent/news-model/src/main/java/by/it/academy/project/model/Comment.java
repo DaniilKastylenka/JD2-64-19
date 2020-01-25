@@ -17,15 +17,16 @@ public class Comment {
     private User user;
     private String text;
     private Date date;
-    private Long likes;
-    private Long article_id;
+    private Long numberOfLikes;
 
-    public Comment(User user, String text, Long article_id) {
+    private Article article;
+
+    public Comment(User user, String text, Article article) {
         this.user = user;
         this.text = text;
-        this.article_id = article_id;
+        this.article = article;
         this.date = new Date();
-        this.likes = 0L;
+        this.numberOfLikes = 0L;
     }
 
 }

@@ -21,7 +21,7 @@
         <td><fmt:message key="article.list.text"/></td>
         <td><fmt:message key="article.list.author"/></td>
         <td><fmt:message key="article.list.date"/></td>
-        <td>updated date</td>
+        <td>Updated date</td>
         <td><fmt:message key="article.list.likes"/></td>
         <td><fmt:message key="my.articles.actions"/></td>
     </tr>

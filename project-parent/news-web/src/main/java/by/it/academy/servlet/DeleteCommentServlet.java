@@ -29,7 +29,7 @@ public class DeleteCommentServlet extends HttpServlet {
         Long commentId = Long.valueOf(req.getParameter("commentId"));
 
         Optional<Comment> comment = commentService.findCommentById(commentId);
-        Long articleId = comment.orElseThrow(() -> new RuntimeException("unknown article id")).getArticle_id();
+        Long articleId = comment.orElseThrow(() -> new RuntimeException("unknown article id")).getArticle().getId();
 
         commentService.deleteComment(commentId);
 

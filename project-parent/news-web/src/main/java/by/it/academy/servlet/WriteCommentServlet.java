@@ -1,5 +1,6 @@
 package by.it.academy.servlet;
 
+import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
 import by.it.academy.project.service.CommentService;
@@ -32,7 +33,7 @@ public class WriteCommentServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         String text = req.getParameter("text");
 
-        Comment comment = new Comment(user, text, articleId);
+        Comment comment = new Comment(user, text, new Article(articleId));
 
         commentService.addComment(comment);
 
