@@ -15,11 +15,9 @@ public class Article {
 
     private Long id;
     private Section section;
-    private Long section_id;
     private String title;
     private String text;
     private User author;
-    private Long author_id;
     private Date date;
     private Long likes;
 
@@ -27,11 +25,9 @@ public class Article {
         this.id = id;
         this.title = title;
         this.section = section;
-        this.section_id = section.getId();
         this.text = text;
         this.author = author;
-        this.author_id = author.getId();
-        date = new Date();
+        this.date = new Date();
         this.likes = 0L;
     }
 

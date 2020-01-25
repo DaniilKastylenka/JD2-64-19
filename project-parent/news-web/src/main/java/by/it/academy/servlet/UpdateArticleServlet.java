@@ -28,7 +28,7 @@ public class UpdateArticleServlet extends HttpServlet {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
         Optional<Article> optionalArticle = articleService.findArticleById(articleId);
         Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
-        req.setAttribute("sectionId", oldArticle.getSection_id());
+        req.setAttribute("sectionId", oldArticle.getSection().getId());
         req.setAttribute("title", oldArticle.getTitle());
         req.setAttribute("text", oldArticle.getText());
         req.setAttribute("sections", sectionService.getSections());

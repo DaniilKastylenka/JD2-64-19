@@ -68,8 +68,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
              PreparedStatement statement = connection.prepareStatement(INSERT_ARTICLE)) {
 
             statement.setString(1, article.getTitle());
-            statement.setLong(2, article.getSection_id());
-            statement.setLong(3, article.getAuthor_id());
+            statement.setLong(2, article.getSection().getId());
+            statement.setLong(3, article.getAuthor().getId());
             statement.setObject(4, new Timestamp(article.getDate().getTime()));
             statement.setString(5, article.getText());
             statement.executeUpdate();
@@ -118,8 +118,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
              PreparedStatement statement = connection.prepareStatement(UPDATE_ARTICLE)) {
 
             statement.setString(1, article.getTitle());
-            statement.setLong(2, article.getSection_id());
-            statement.setLong(3, article.getAuthor_id());
+            statement.setLong(2, article.getSection().getId());
+            statement.setLong(3, article.getAuthor().getId());
             statement.setString(4, article.getText());
             statement.setLong(5, article.getId());
 
