@@ -1,5 +1,6 @@
 package by.it.academy.servlet;
 
+import by.it.academy.project.model.Role;
 import by.it.academy.project.model.User;
 import by.it.academy.project.service.UserService;
 import by.it.academy.project.service.UserServiceImpl;
@@ -40,7 +41,7 @@ public class CreateAuthorAccountServlet extends HttpServlet {
         } else if (!password.equals(repeatPassword)) {
             hasError = true;
             error = "passwords do not match";
-        } else if(userService.findUserByUsername(username)){
+        } else if (userService.findUserByUsername(username)) {
             hasError = true;
             error = "User with the same name already exists.";
         }
@@ -49,7 +50,7 @@ public class CreateAuthorAccountServlet extends HttpServlet {
             req.setAttribute("errorString", error);
             req.getRequestDispatcher("WEB-INF/jsp/createAuthorAccount.jsp").forward(req, resp);
         } else {
-            userService.addUser(new User(username, password, "author"));
+            userService.addUser(new User(username, password, new Role("author")));
             resp.sendRedirect(req.getContextPath() + "/userList");
         }
     }

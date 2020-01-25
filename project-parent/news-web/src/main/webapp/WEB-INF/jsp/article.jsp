@@ -75,7 +75,7 @@
                 <td style="text-align: center">${comment.user.username}</td>
                 <td style="word-wrap: break-word"><c:out value="${comment.text}"/></td>
                 <td style="text-align: center">
-                    <c:if test="${sessionScope.user.role == 'admin' or sessionScope.user == comment.user}">
+                    <c:if test="${comment.user == sessionScope.user or sessionScope.user.role.name == 'admin'}">
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">DELETE</a>
                     </c:if>

@@ -24,7 +24,7 @@
         <td><fmt:message key="article.list.date"/></td>
         <td>Updated date</td>
         <td><fmt:message key="article.list.likes"/></td>
-        <c:if test="${sessionScope.user.role!='user'}">
+        <c:if test="${sessionScope.user.role.name!='user'}">
             <td>Actions</td>
         </c:if>
 
@@ -40,9 +40,9 @@
             <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/></td>
             <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.updatedDate}"/></td>
             <td valign="top"><c:out value="${article.numberOfLikes}"/></td>
-            <c:if test="${sessionScope.user.role!='user'}">
+            <c:if test="${sessionScope.user.role.name!='user'}">
                 <td valign="top">
-                    <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">
+                    <c:if test="${(sessionScope.user.role.name=='admin' or sessionScope.user==article.author)}">
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
                         <a class="update-btn"

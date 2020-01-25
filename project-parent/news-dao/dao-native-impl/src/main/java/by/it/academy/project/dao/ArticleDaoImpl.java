@@ -1,6 +1,7 @@
 package by.it.academy.project.dao;
 
 import by.it.academy.project.model.Article;
+import by.it.academy.project.model.Role;
 import by.it.academy.project.model.Section;
 import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
@@ -171,7 +172,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         User author = new User(resultSet.getLong("author_id"),
                 resultSet.getString("username"), resultSet.getString("password"),
-                resultSet.getString("salt"), resultSet.getString("role_name"));
+                resultSet.getString("salt"), new Role(resultSet.getString("role_name")));
 
         Timestamp timestamp = resultSet.getTimestamp("publication_date");
 

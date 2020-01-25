@@ -2,6 +2,7 @@ package by.it.academy.project.dao;
 
 import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
+import by.it.academy.project.model.Role;
 import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
@@ -146,7 +147,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
         User user = new User(resultSet.getLong("user_id"),
                 resultSet.getString("username"), resultSet.getString("password"),
-                resultSet.getString("salt"), resultSet.getString("role_name"));
+                resultSet.getString("salt"), new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
 
         String text = resultSet.getString("text");
 
