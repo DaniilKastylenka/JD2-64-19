@@ -28,7 +28,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     "JOIN role r ON u.role_id = r.id WHERE a.id = ?";
 
     private static final String UPDATE_ARTICLE =
-            "UPDATE article SET title = ?, section_id = ?, author_id = ?, text = ? WHERE id=?;";
+            "UPDATE article SET title = ?, section_id = ?, author_id = ?, text = ?, updated_date = ? WHERE id=?;";
 
     private static final String DELETE_ARTICLE =
             "DELETE FROM article WHERE id = ?;";
@@ -121,7 +121,9 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             statement.setLong(2, article.getSection().getId());
             statement.setLong(3, article.getAuthor().getId());
             statement.setString(4, article.getText());
-            statement.setLong(5, article.getId());
+            java.util.Date date = new java.util.Date();
+            statement.setObject(5, new Timestamp(date.getTime()));
+            statement.setLong(6, article.getId());
 
             return statement.executeUpdate();
 
@@ -171,14 +173,22 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 resultSet.getString("username"), resultSet.getString("password"),
                 resultSet.getString("salt"), resultSet.getString("role_name"));
 
-        Timestamp timestamp = (Timestamp) resultSet.getObject("publication_date");
+        Timestamp timestamp = resultSet.getTimestamp("publication_date");
+
         Date publicationDate = new Date(timestamp.getTime());
 
+        Timestamp timestamp1 = resultSet.getTimestamp("updated_date");
+
+        java.util.Date updatedDate = null;
+
+        if (timestamp1 != null) {
+            updatedDate = new Date(timestamp1.getTime());
+        }
         String text = resultSet.getString("text");
 
         Long numberOfLikes = resultSet.getLong("number_of_likes");
 
-        return new Article(article_id, section, title, text, author, publicationDate, numberOfLikes);
+        return new Article(article_id, section, title, text, author, publicationDate, updatedDate, numberOfLikes);
     }
 
     @Override

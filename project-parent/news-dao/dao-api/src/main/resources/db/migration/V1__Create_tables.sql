@@ -25,6 +25,7 @@ CREATE TABLE article(
                       section_id        BIGINT        NOT NULL,
                       author_id         BIGINT        NOT NULL DEFAULT 0,
                       publication_date  DATETIME      NOT NULL,
+                      updated_date      DATETIME      DEFAULT NULL,
                       text              TEXT          NOT NULL,
                       number_of_likes   INT           NOT NULL DEFAULT 0,
                       FOREIGN KEY (section_id) REFERENCES section(id),

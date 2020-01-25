@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = "/updateArticle")
@@ -50,7 +51,7 @@ public class UpdateArticleServlet extends HttpServlet {
         Optional<Article> optionalArticle = articleService.findArticleById(articleId);
 
         Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
-        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getPublicationDate(), oldArticle.getNumberOfLikes());
+        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getPublicationDate(), new Date(), oldArticle.getNumberOfLikes());
 
         articleService.update(newArticle);
 

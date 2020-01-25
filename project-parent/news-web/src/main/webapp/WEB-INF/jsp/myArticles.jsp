@@ -21,6 +21,7 @@
         <td><fmt:message key="article.list.text"/></td>
         <td><fmt:message key="article.list.author"/></td>
         <td><fmt:message key="article.list.date"/></td>
+        <td>updated date</td>
         <td><fmt:message key="article.list.likes"/></td>
         <td><fmt:message key="my.articles.actions"/></td>
     </tr>
@@ -33,6 +34,7 @@
                 <td valign="top"><p style="overflow:hidden; height: 90px"><c:out value="${article.text}"/></p></td>
                 <td valign="top"><c:out value="${article.author.username}"/></td>
                 <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/></td>
+                <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.updatedDate}"/></td>
                 <td valign="top"><c:out value="${article.numberOfLikes}"/></td>
                 <td valign="top">
                     <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
