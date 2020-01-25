@@ -39,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
     public void addNewArticle(Article article) {
         logger.debug("add new article", article);
         try {
-            Long id = articleDao.save(article);
+            Long id = articleDao.create(article);
             article.setId(id);
             logger.debug("result", id);
         } catch (SQLException e) {

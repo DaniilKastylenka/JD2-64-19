@@ -11,8 +11,9 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>abstract-dao</module>
-        <module>sql-dao</module>
+        <module>dao-api</module>
+        <module>dao-native-impl</module>
+        <module>dao-hibernate-impl</module>
     </modules>
 
     <artifactId>news-dao</artifactId>

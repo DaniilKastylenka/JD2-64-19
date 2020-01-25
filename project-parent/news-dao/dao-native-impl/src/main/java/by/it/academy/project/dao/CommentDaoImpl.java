@@ -38,7 +38,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                     "JOIN role r ON u.role_id = r.id ORDER BY c.id DESC;";
 
     @Override
-    public Long save(Comment comment) throws SQLException {
+    public Long create(Comment comment) throws SQLException {
         ResultSet resultSet = null;
         Long result = null;
         try (Connection connection = getConnection();

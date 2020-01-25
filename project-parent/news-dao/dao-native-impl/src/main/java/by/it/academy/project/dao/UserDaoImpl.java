@@ -44,7 +44,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             "UPDATE user JOIN role SET username = ?, password = ?, salt = ?, role_id = ? WHERE user.id = ?";
 
     @Override
-    public Long save(User user) throws SQLException {
+    public Long create(User user) throws SQLException {
 
         ResultSet resultSet = null;
         Long result = null;

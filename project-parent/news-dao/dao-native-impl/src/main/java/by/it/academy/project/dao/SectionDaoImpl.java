@@ -29,7 +29,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
 
 
     @Override
-    public Long save(Section section) throws SQLException {
+    public Long create(Section section) throws SQLException {
         return null;
     }
 

@@ -3,7 +3,6 @@ package by.it.academy.project.service;
 import by.it.academy.project.dao.UserDao;
 import by.it.academy.project.dao.UserDaoImpl;
 import by.it.academy.project.model.User;
-import by.it.academy.project.security.EncryptUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,7 +113,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("add user");
         try {
             user.setPassword(getSHA256(user.getPassword(), user.getSalt()));
-            Long id = userDao.save(user);
+            Long id = userDao.create(user);
             user.setId(id);
             logger.debug("result" + id);
         } catch (SQLException e) {

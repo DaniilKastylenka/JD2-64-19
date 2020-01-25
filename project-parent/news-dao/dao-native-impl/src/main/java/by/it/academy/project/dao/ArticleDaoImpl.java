@@ -59,7 +59,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     @Override
-    public Long save(Article article) throws SQLException {
+    public Long create(Article article) throws SQLException {
 
         ResultSet resultSet = null;
         Long result = null;

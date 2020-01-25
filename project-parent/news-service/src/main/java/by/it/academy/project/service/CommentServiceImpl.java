@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     public void addComment(Comment comment) {
         logger.debug("add comment");
         try {
-            Long id = commentDao.save(comment);
+            Long id = commentDao.create(comment);
             comment.setId(id);
             logger.debug("result " + id);
         } catch (SQLException e) {

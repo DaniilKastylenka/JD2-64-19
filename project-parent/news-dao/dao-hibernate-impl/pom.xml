@@ -9,23 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <packaging>jar</packaging>
-
-    <artifactId>sql-dao</artifactId>
-
-    <name>sql-dao</name>
+    <artifactId>dao-hibernate-impl</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>by.it.academy.project</groupId>
-            <artifactId>abstract-dao</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
