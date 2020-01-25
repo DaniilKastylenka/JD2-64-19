@@ -149,7 +149,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
         String text = resultSet.getString("text");
 
-        Timestamp timestamp = (Timestamp) resultSet.getObject("date");
+        Timestamp timestamp = (Timestamp) resultSet.getObject("publicationDate");
         Date date = new Date(timestamp.getTime());
 
         Long likes = resultSet.getLong("numberOfLikes");

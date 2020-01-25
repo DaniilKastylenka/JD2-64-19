@@ -35,7 +35,7 @@
             <td valign="top"><a href="${pageContext.request.contextPath}/article?articleId=${article.id}"><p class="title-link">${article.title}</p></a></td>
             <td valign="top"><p style="overflow: hidden; height: 90px"><c:out value="${article.text}"/></p></td>
             <td valign="top"><c:out value="${article.author.username}"/></td>
-            <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
+            <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/></td>
             <td valign="top"><c:out value="${article.numberOfLikes}"/></td>
             <c:if test="${sessionScope.user.role!='user'}">
                 <td valign="top">

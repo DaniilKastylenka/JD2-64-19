@@ -19,7 +19,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
     private static final String INSERT_ARTICLE =
-            "INSERT INTO article (title, section_id, author_id, date, text) VALUES (?,?,?,?,?);";
+            "INSERT INTO article (title, section_id, author_id, publication_date, text) VALUES (?,?,?,?,?);";
 
     private static final String SELECT_ARTICLE_BY_ID =
             "SELECT a.*, s.section_name, u.*, r.role_name FROM article a " +
@@ -70,7 +70,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             statement.setString(1, article.getTitle());
             statement.setLong(2, article.getSection().getId());
             statement.setLong(3, article.getAuthor().getId());
-            statement.setObject(4, new Timestamp(article.getDate().getTime()));
+            statement.setObject(4, new Timestamp(article.getPublicationDate().getTime()));
             statement.setString(5, article.getText());
             statement.executeUpdate();
 
@@ -171,7 +171,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 resultSet.getString("username"), resultSet.getString("password"),
                 resultSet.getString("salt"), resultSet.getString("role_name"));
 
-        Timestamp timestamp = (Timestamp) resultSet.getObject("date");
+        Timestamp timestamp = (Timestamp) resultSet.getObject("publication_date");
         Date date = new Date(timestamp.getTime());
 
         String text = resultSet.getString("text");

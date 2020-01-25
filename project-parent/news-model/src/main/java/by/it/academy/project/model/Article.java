@@ -18,7 +18,7 @@ public class Article {
     private String title;
     private String text;
     private User author;
-    private Date date;
+    private Date publicationDate;
     private Long numberOfLikes;
 
     public Article(Long id, String title, Section section, User author, String text) {
@@ -27,14 +27,14 @@ public class Article {
         this.section = section;
         this.text = text;
         this.author = author;
-        this.date = new Date();
+        this.publicationDate = new Date();
         this.numberOfLikes = 0L;
     }
 
     public Article(Long id, String title, Section section, User author, Date date, String text, Long likes) {
         this(id, title, section, author, text);
         this.numberOfLikes = likes;
-        this.date = date;
+        this.publicationDate = date;
     }
 
 
