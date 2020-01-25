@@ -1,13 +1,13 @@
 package by.it.academy.project.dao;
 
+import by.it.academy.project.dao.mapping.EntityMapping;
+import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.Article;
-import by.it.academy.project.model.Role;
-import by.it.academy.project.model.Section;
+import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
@@ -16,47 +16,55 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         super(LoggerFactory.getLogger(ArticleDaoImpl.class));
     }
 
+    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
+
     private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
     private static final String INSERT_ARTICLE =
-            "INSERT INTO article (title, section_id, author_id, publication_date, text) VALUES (?,?,?,?,?);";
+            "INSERT INTO article (A_title, A_section_id, A_author_id, A_publication_date, A_text) VALUES (?,?,?,?,?);";
 
     private static final String SELECT_ARTICLE_BY_ID =
-            "SELECT a.*, s.section_name, u.*, r.role_name   FROM article a " +
-                    "JOIN section s ON a.section_id = s.id " +
-                    "JOIN user u ON a.author_id = u.id " +
-                    "JOIN role r ON u.role_id = r.id WHERE a.id = ?";
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_id = ?";
 
     private static final String UPDATE_ARTICLE =
-            "UPDATE article SET title = ?, section_id = ?, author_id = ?, text = ?, updated_date = ? WHERE id=?;";
+            "UPDATE article SET A_title = ?, A_section_id = ?, A_author_id = ?, A_text = ?, A_updated_date = ? WHERE A_id=?;";
 
     private static final String DELETE_ARTICLE =
-            "DELETE FROM article WHERE id = ?;";
+            "DELETE FROM article WHERE A_id = ?;";
 
     private static final String SELECT_ALL_ARTICLES =
-            "SELECT a.*, s.section_name, u.*, r.role_name FROM article a " +
-                    "JOIN section s ON a.section_id = s.id " +
-                    "JOIN user u ON a.author_id = u.id " +
-                    "JOIN role r ON u.role_id = r.id ORDER BY a.id DESC;";
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id ORDER BY a.A_id DESC;";
 
 
     private static final String SELECT_ALL_WHO_LIKED =
-            "SELECT l.*, u.*, r.* FROM like_on_article l " +
-                    "JOIN user u ON l.user_id = u.id " +
-                    "JOIN role r ON u.role_id = r.id WHERE article_id = ?;";
+            "SELECT * FROM like_on_article l " +
+                    "JOIN user u ON l.L_user_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE L_article_id = ?;";
+
+
+    private static final String SELECT_ALL_COMMENTS =
+            "SELECT *  FROM comment c " +
+                    "JOIN user u ON c.C_user_id = u.U_id " +
+                    "JOIN article a ON c.C_article_id = a.A_id WHERE c.C_article_id = ?;";
 
 
     private static final String INSERT_LIKE =
-            "INSERT INTO like_on_article (article_id, user_id)VALUE (?,?);";
+            "INSERT INTO like_on_article (L_article_id, L_user_id)VALUE (?,?);";
 
     private static final String DELETE_LIKE =
-            "DELETE FROM like_on_article WHERE article_id = ? AND user_id = ?;";
+            "DELETE FROM like_on_article WHERE L_article_id = ? AND L_user_id = ?;";
 
     private static final String FIND_LIKE =
-            "SELECT * FROM like_on_article WHERE article_id = ? AND user_id = ?;";
+            "SELECT * FROM like_on_article WHERE L_article_id = ? AND L_user_id = ?;";
 
     private static final String UPDATE_LIKE =
-            "UPDATE article SET number_of_likes = ? WHERE id = ?;";
+            "UPDATE article SET A_number_of_likes = ? WHERE A_id = ?;";
 
 
     public static ArticleDao getINSTANCE() {
@@ -82,7 +90,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
             resultSet = statement.getGeneratedKeys();
 
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 result = resultSet.getLong(1);
             }
 
@@ -107,8 +115,11 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapArticle(resultSet));
+                result = Optional.of(entityMapping.mapArticle(resultSet));
             }
+
+            Set<User> usersWhoLiked = getUsersWhoLiked(id);
+            result.ifPresent(article -> article.setUsersWhoLiked(usersWhoLiked));
 
         } finally {
             closeQuietly(resultSet);
@@ -157,7 +168,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                articles.add(mapArticle(resultSet));
+                articles.add(entityMapping.mapArticle(resultSet));
             }
 
         } finally {
@@ -165,38 +176,6 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         }
 
         return articles;
-    }
-
-    private Article mapArticle(ResultSet resultSet) throws SQLException {
-
-        Long article_id = resultSet.getLong("id");
-
-        String title = resultSet.getString("title");
-
-        Section section = new Section(resultSet.getLong("section_id"), resultSet.getString("section_name"));
-
-        User author = new User(resultSet.getLong("author_id"),
-                resultSet.getString("username"), resultSet.getString("password"),
-                resultSet.getString("salt"), new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
-
-        Timestamp timestamp = resultSet.getTimestamp("publication_date");
-
-        Date publicationDate = new Date(timestamp.getTime());
-
-        Timestamp timestamp1 = resultSet.getTimestamp("updated_date");
-
-        java.util.Date updatedDate = null;
-
-        if (timestamp1 != null) {
-            updatedDate = new Date(timestamp1.getTime());
-        }
-        String text = resultSet.getString("text");
-
-        Long numberOfLikes = resultSet.getLong("number_of_likes");
-
-        Set<User> usersWhoLiked = new HashSet<>(getUsersWhoLiked(article_id));
-
-        return new Article(article_id, section, title, text, author, publicationDate, updatedDate, numberOfLikes, usersWhoLiked);
     }
 
     @Override
@@ -208,7 +187,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             statement.setLong(1, articleId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(mapUser(resultSet));
+                result.add(entityMapping.mapUser(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -217,13 +196,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public User mapUser(ResultSet resultSet) throws SQLException {
-        Long userId = resultSet.getLong("user_id");
-        String username = resultSet.getString("username");
-        String password = resultSet.getString("password");
-        String salt = resultSet.getString("salt");
-        Role role = new Role(resultSet.getInt("role_id"), resultSet.getString("role_name"));
-        return new User(userId, username, password, salt, role);
+    public Set<Comment> getAllComments(Long articleId) {
+        return null;
     }
 
     @Override

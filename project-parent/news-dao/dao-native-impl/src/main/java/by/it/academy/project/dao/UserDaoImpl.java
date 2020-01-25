@@ -1,6 +1,7 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.model.Role;
+import by.it.academy.project.dao.mapping.EntityMapping;
+import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
@@ -17,30 +18,32 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     private static UserDaoImpl INSTANCE = new UserDaoImpl();
 
+    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
+
     public static UserDaoImpl getINSTANCE() {
         return INSTANCE;
     }
 
     private final static String INSERT_USER =
-            "INSERT INTO user(username, password, salt, role_id) VALUE (?,?,?,?)";
+            "INSERT INTO user(U_username, U_password, U_salt, U_role_id) VALUE (?,?,?,?)";
 
     private final static String SELECT_USER_BY_ID =
-            "SELECT * FROM user LEFT JOIN role r ON user.role_id = r.id WHERE user.id = ?;";
+            "SELECT * FROM user LEFT JOIN role r ON user.U_role_id = r.R_id WHERE user.U_id = ?;";
 
     private final static String SELECT_BY_USERNAME_AND_PASSWORD =
-            "SELECT * FROM user LEFT JOIN role r on user.role_id = r.id WHERE username=? AND password = ?;";
+            "SELECT * FROM user LEFT JOIN role r on user.U_role_id = r.R_id WHERE U_username=? AND U_password = ?;";
 
     private final static String SELECT_BY_USERNAME =
-            "SELECT * FROM user LEFT JOIN role r on user.role_id = r.id WHERE username = ?;";
+            "SELECT * FROM user LEFT JOIN role r on user.U_role_id = r.R_id WHERE U_username = ?;";
 
     private final static String SELECT_ALL_USERS =
-            "SELECT u.*, r.role_name FROM user u LEFT JOIN role r on u.role_id = r.id ORDER BY u.id";
+            "SELECT * FROM user u LEFT JOIN role r on u.U_role_id = r.R_id ORDER BY u.U_id";
 
     private final static String DELETE_USER_BY_ID =
-            "DELETE FROM user WHERE id=?;";
+            "DELETE FROM user WHERE U_id=?;";
 
     private final static String UPDATE_USER =
-            "UPDATE user JOIN role SET username = ?, password = ?, salt = ?, role_id = ? WHERE user.id = ?";
+            "UPDATE user SET U_username = ?, U_password = ?, U_salt = ?, U_role_id = ? WHERE user.U_id = ?";
 
     @Override
     public Long create(User user) throws SQLException {
@@ -83,7 +86,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapUser(resultSet));
+                result = Optional.of(entityMapping.mapUser(resultSet));
             }
 
         } finally {
@@ -126,7 +129,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_USERS)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(mapUser(resultSet));
+                result.add(entityMapping.mapUser(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -149,7 +152,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapUser(resultSet));
+                result = Optional.of(entityMapping.mapUser(resultSet));
             }
 
         } finally {
@@ -173,7 +176,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapUser(resultSet));
+                result = Optional.of(entityMapping.mapUser(resultSet));
             }
 
         } finally {
@@ -183,16 +186,4 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return result;
     }
 
-    private User mapUser(ResultSet resultSet) throws SQLException {
-
-        Long userId = resultSet.getLong("id");
-
-        String username = resultSet.getString("username");
-        String password = resultSet.getString("password");
-
-        Role role = new Role(resultSet.getInt("role_id"),resultSet.getString("role_name"));
-        String salt = resultSet.getString("salt");
-
-        return new User(userId, username, password, salt, role);
-    }
 }

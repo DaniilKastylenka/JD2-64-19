@@ -1,5 +1,7 @@
 package by.it.academy.project.dao;
 
+import by.it.academy.project.dao.mapping.EntityMapping;
+import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.Section;
 import org.slf4j.LoggerFactory;
 
@@ -15,12 +17,14 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
 
     private static SectionDaoImpl INSTANCE = new SectionDaoImpl();
 
+    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
+
     public static SectionDao getINSTANCE() {
         return INSTANCE;
     }
 
     private final static String SELECT_ALL = "SELECT * FROM section;";
-    private final static String SELECT_BY_ID = "SELECT * FROM section WHERE id=?";
+    private final static String SELECT_BY_ID = "SELECT * FROM section WHERE S_id=?";
 
 
     protected SectionDaoImpl() {
@@ -47,7 +51,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapSection(resultSet));
+                result = Optional.of(entityMapping.mapSection(resultSet));
             }
 
         } finally {
@@ -78,7 +82,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                result.add(mapSection(resultSet));
+                result.add(entityMapping.mapSection(resultSet));
             }
 
         } finally {
@@ -87,9 +91,4 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
         return result;
     }
 
-    private Section mapSection(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
-        String name = resultSet.getString("section_name");
-        return new Section(id, name);
-    }
 }

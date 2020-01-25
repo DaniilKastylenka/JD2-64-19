@@ -1,14 +1,12 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.model.Article;
+import by.it.academy.project.dao.mapping.EntityMapping;
+import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.Comment;
-import by.it.academy.project.model.Role;
-import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,28 +14,30 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     private static CommentDaoImpl INSTANCE = new CommentDaoImpl();
 
+    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
+
     protected CommentDaoImpl() {
         super(LoggerFactory.getLogger(CommentDaoImpl.class));
     }
 
     private final static String INSERT_COMMENT =
-            "INSERT INTO comment(user_id, text, date, number_of_likes, article_id) VALUE(?,?,?,?,?)";
+            "INSERT INTO comment(C_user_id, C_text, C_date, C_number_of_likes, C_article_id) VALUE(?,?,?,?,?)";
 
     private final static String SELECT_COMMENT_BY_ID =
-            "SELECT c.*, u.*, r.role_name FROM comment c " +
-                    "JOIN user u ON c.user_id=u.id " +
-                    "JOIN role r ON u.role_id = r.id WHERE c.id = ?;";
+            "SELECT * FROM comment c " +
+                    "JOIN user u ON c.C_user_id=u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE c.C_id = ?;";
 
     private final static String UPDATE_COMMENT =
-            "UPDATE comment SET user_id = ?, text = ?, date = ?, number_of_likes = ?, article_id = ? WHERE id = ?;";
+            "UPDATE comment SET C_user_id = ?, C_text = ?, C_date = ?, C_number_of_likes = ?, C_article_id = ? WHERE C_id = ?;";
 
     private final static String DELETE_COMMENT =
-            "DELETE FROM comment WHERE id = ?;";
+            "DELETE FROM comment WHERE C_id = ?;";
 
     private final static String SELECT_ALL =
-            "SELECT c.*, u.*, r.role_name FROM comment c " +
-                    "JOIN user u ON c.user_id = u.id " +
-                    "JOIN role r ON u.role_id = r.id ORDER BY c.id DESC;";
+            "SELECT * FROM comment c " +
+                    "JOIN user u ON c.C_user_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id ORDER BY c.C_id DESC;";
 
     @Override
     public Long create(Comment comment) throws SQLException {
@@ -82,7 +82,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapComment(resultSet));
+                result = Optional.of(entityMapping.mapComment(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -132,33 +132,13 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                result.add(mapComment(resultSet));
+                result.add(entityMapping.mapComment(resultSet));
             }
 
         } finally {
             closeQuietly(resultSet);
         }
         return result;
-    }
-
-    private Comment mapComment(ResultSet resultSet) throws SQLException {
-
-        Long id = resultSet.getLong("id");
-
-        User user = new User(resultSet.getLong("user_id"),
-                resultSet.getString("username"), resultSet.getString("password"),
-                resultSet.getString("salt"), new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
-
-        String text = resultSet.getString("text");
-
-        Timestamp timestamp = (Timestamp) resultSet.getObject("date");
-        Date date = new Date(timestamp.getTime());
-
-        Long likes = resultSet.getLong("number_of_likes");
-
-        Long article_id = resultSet.getLong("article_id");
-
-        return new Comment(id, user, text, date, likes, new Article(article_id));
     }
 
     public static CommentDaoImpl getINSTANCE() {
