@@ -14,19 +14,19 @@ public class Article {
 
     private Long id;
 
-    //one-to-many +
+    //one-to-many +++
     private Section section;
 
     private String title;
     private String text;
 
-    //one-to-many +
+    //one-to-many +++
     private User author;
     private Date publicationDate;
     private Date updatedDate;
     private Long numberOfLikes;
 
-    //many-to-many +
+    //many-to-many +++
     private Set<User> usersWhoLiked;
 
     //many-to-one +
@@ -54,5 +54,19 @@ public class Article {
 
     public Article(Long id) {
         this.id = id;
+    }
+
+
+    //temp
+    public Article(Long id, Section section, String title, String text, User author, Date publicationDate, Date updatedDate, Long numberOfLikes, Set<User> usersWhoLiked) {
+        this.id = id;
+        this.section = section;
+        this.title = title;
+        this.text = text;
+        this.author = author;
+        this.publicationDate = publicationDate;
+        this.updatedDate = updatedDate;
+        this.numberOfLikes = numberOfLikes;
+        this.usersWhoLiked = usersWhoLiked;
     }
 }

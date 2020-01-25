@@ -19,4 +19,8 @@ public class Section {
     //many-to-one +
     private Set<Article> articles;
 
+    public Section(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

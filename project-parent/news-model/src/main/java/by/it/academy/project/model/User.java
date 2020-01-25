@@ -50,6 +50,14 @@ public class User {
         this.id = id;
     }
 
+    public User(Long id, String username, String password, String salt, Role role) {
+        this(id, username, password, role);
+        this.salt = salt;
+    }
 
+    public User(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 }
 

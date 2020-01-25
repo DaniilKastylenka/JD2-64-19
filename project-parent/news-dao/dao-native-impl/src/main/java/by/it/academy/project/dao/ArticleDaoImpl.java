@@ -7,9 +7,8 @@ import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Date;
+import java.util.*;
 
 public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
@@ -23,7 +22,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "INSERT INTO article (title, section_id, author_id, publication_date, text) VALUES (?,?,?,?,?);";
 
     private static final String SELECT_ARTICLE_BY_ID =
-            "SELECT a.*, s.section_name, u.*, r.role_name FROM article a " +
+            "SELECT a.*, s.section_name, u.*, r.role_name   FROM article a " +
                     "JOIN section s ON a.section_id = s.id " +
                     "JOIN user u ON a.author_id = u.id " +
                     "JOIN role r ON u.role_id = r.id WHERE a.id = ?";
@@ -39,6 +38,12 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     "JOIN section s ON a.section_id = s.id " +
                     "JOIN user u ON a.author_id = u.id " +
                     "JOIN role r ON u.role_id = r.id ORDER BY a.id DESC;";
+
+
+    private static final String SELECT_ALL_WHO_LIKED =
+            "SELECT l.*, u.*, r.* FROM like_on_article l " +
+                    "JOIN user u ON l.user_id = u.id " +
+                    "JOIN role r ON u.role_id = r.id WHERE article_id = ?;";
 
 
     private static final String INSERT_LIKE =
@@ -172,7 +177,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         User author = new User(resultSet.getLong("author_id"),
                 resultSet.getString("username"), resultSet.getString("password"),
-                resultSet.getString("salt"), new Role(resultSet.getString("role_name")));
+                resultSet.getString("salt"), new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
 
         Timestamp timestamp = resultSet.getTimestamp("publication_date");
 
@@ -189,7 +194,36 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         Long numberOfLikes = resultSet.getLong("number_of_likes");
 
-        return new Article(article_id, section, title, text, author, publicationDate, updatedDate, numberOfLikes);
+        Set<User> usersWhoLiked = new HashSet<>(getUsersWhoLiked(article_id));
+
+        return new Article(article_id, section, title, text, author, publicationDate, updatedDate, numberOfLikes, usersWhoLiked);
+    }
+
+    @Override
+    public Set<User> getUsersWhoLiked(Long articleId) throws SQLException {
+        ResultSet resultSet = null;
+        Set<User> result = new HashSet<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_WHO_LIKED)) {
+            statement.setLong(1, articleId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(mapUser(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public User mapUser(ResultSet resultSet) throws SQLException {
+        Long userId = resultSet.getLong("user_id");
+        String username = resultSet.getString("username");
+        String password = resultSet.getString("password");
+        String salt = resultSet.getString("salt");
+        Role role = new Role(resultSet.getInt("role_id"), resultSet.getString("role_name"));
+        return new User(userId, username, password, salt, role);
     }
 
     @Override

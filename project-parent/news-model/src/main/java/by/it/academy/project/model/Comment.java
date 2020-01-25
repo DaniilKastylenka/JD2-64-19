@@ -37,4 +37,10 @@ public class Comment {
         this.numberOfLikes = 0L;
     }
 
+    public Comment(Long id, User user, String text, Date date, Long numberOfLikes, Article article) {
+        this(user, text, article);
+        this.id = id;
+        this.date = date;
+        this.numberOfLikes = numberOfLikes;
+    }
 }
