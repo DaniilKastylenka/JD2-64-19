@@ -65,7 +65,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         Long result = null;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_ARTICLE)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_ARTICLE, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, article.getTitle());
             statement.setLong(2, article.getSection().getId());
@@ -176,7 +176,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
         String text = resultSet.getString("text");
 
-        Long likes = resultSet.getLong("likes");
+        Long likes = resultSet.getLong("number_of_likes");
 
         return new Article(article_id, title, section, author, date, text, likes);
     }
@@ -246,9 +246,9 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     .orElseThrow(() -> new RuntimeException("unknown article"));
 
             if (like) {
-                statement.setLong(1, article.getLikes() + 1);
+                statement.setLong(1, article.getNumberOfLikes() + 1);
             } else {
-                statement.setLong(1, article.getLikes() - 1);
+                statement.setLong(1, article.getNumberOfLikes() - 1);
             }
             statement.setLong(2, article_id);
             return statement.executeUpdate();

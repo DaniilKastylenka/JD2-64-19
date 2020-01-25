@@ -20,13 +20,13 @@ CREATE TABLE section(
 );
 
 CREATE TABLE article(
-                      id          BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                      title       VARCHAR(255)  NOT NULL,
-                      section_id  BIGINT        NOT NULL,
-                      author_id   BIGINT        NOT NULL DEFAULT 0,
-                      date        DATETIME      NOT NULL,
-                      text        TEXT          NOT NULL,
-                      likes       INT           NOT NULL DEFAULT 0,
+                      id              BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                      title           VARCHAR(255)  NOT NULL,
+                      section_id      BIGINT        NOT NULL,
+                      author_id       BIGINT        NOT NULL DEFAULT 0,
+                      date            DATETIME      NOT NULL,
+                      text            TEXT          NOT NULL,
+                      number_of_likes INT           NOT NULL DEFAULT 0,
                       FOREIGN KEY (section_id) REFERENCES section(id),
                       FOREIGN KEY (author_id) REFERENCES user(id) ON DELETE CASCADE
 );

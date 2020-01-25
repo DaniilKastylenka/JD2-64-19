@@ -19,7 +19,7 @@ public class Article {
     private String text;
     private User author;
     private Date date;
-    private Long likes;
+    private Long numberOfLikes;
 
     public Article(Long id, String title, Section section, User author, String text) {
         this.id = id;
@@ -28,12 +28,12 @@ public class Article {
         this.text = text;
         this.author = author;
         this.date = new Date();
-        this.likes = 0L;
+        this.numberOfLikes = 0L;
     }
 
     public Article(Long id, String title, Section section, User author, Date date, String text, Long likes) {
         this(id, title, section, author, text);
-        this.likes = likes;
+        this.numberOfLikes = likes;
         this.date = date;
     }
 
