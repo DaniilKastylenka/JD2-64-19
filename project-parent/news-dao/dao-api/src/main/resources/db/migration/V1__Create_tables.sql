@@ -45,10 +45,18 @@ CREATE TABLE comment(
 
 CREATE TABLE like_on_article
 (
-                      L_article_id      BIGINT        NOT NULL,
-                      L_user_id         BIGINT        NOT NULL,
-                      FOREIGN KEY (L_article_id) REFERENCES article(A_id) ON DELETE CASCADE ,
-                      FOREIGN KEY (L_user_id) REFERENCES user(U_id) ON DELETE CASCADE
+                      LA_article_id      BIGINT        NOT NULL,
+                      LA_user_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (LA_article_id) REFERENCES article(A_id) ON DELETE CASCADE ,
+                      FOREIGN KEY (LA_user_id) REFERENCES user(U_id) ON DELETE CASCADE
+);
+
+CREATE TABLE like_on_comment
+(
+                      LC_comment_id      BIGINT        NOT NULL,
+                      LC_user_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (LC_comment_id) REFERENCES comment(C_id) ON DELETE CASCADE,
+                      FOREIGN KEY (LC_user_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
 INSERT INTO section (S_name) VALUES

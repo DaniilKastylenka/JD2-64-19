@@ -38,6 +38,19 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                     "JOIN article a on c.C_article_id = a.A_id " +
                     "JOIN section s on a.A_section_id = s.S_id ORDER BY c.C_id DESC;";
 
+
+    private final static String INSERT_LIKE =
+            "INSERT INTO like_on_comment VALUE(?,?);";
+
+    private final static String DELETE_LIKE =
+            "DELETE FROM like_on_comment WHERE LC_comment_id = ? AND LC_user_id = ?;";
+
+    private final static String UPDATE_LIKE =
+            "UPDATE comment SET C_number_of_likes = ? WHERE C_id = ?";
+
+    private final static String SELECT_LIKE =
+            "SELECT * FROM like_on_comment WHERE LC_comment_id = ? AND LC_user_id = ?;";
+
     @Override
     public Long create(Comment comment) throws SQLException {
         ResultSet resultSet = null;
@@ -142,5 +155,65 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     public static CommentDaoImpl getINSTANCE() {
         return INSTANCE;
+    }
+
+    @Override
+    public void addLike(Long commentId, Long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_LIKE)) {
+
+            statement.setLong(1, commentId);
+            statement.setLong(2, userId);
+
+            statement.executeUpdate();
+
+        }
+    }
+
+    @Override
+    public int deleteLike(Long commentId, Long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_LIKE)) {
+            statement.setLong(1, commentId);
+            statement.setLong(2, userId);
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public int updateLikeInComment(Long commentId, boolean isLiked) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
+            Comment comment = read(commentId)
+                    .orElseThrow(() -> new RuntimeException("no comment with id " + commentId));
+            if (isLiked) {
+                statement.setLong(1, comment.getNumberOfLikes() - 1);
+            } else {
+                statement.setLong(1, comment.getNumberOfLikes() + 1);
+            }
+            statement.setLong(2, commentId);
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean findLike(Long commentId, Long userId) throws SQLException {
+        ResultSet resultSet = null;
+        boolean result = false;
+        try(Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(SELECT_LIKE)){
+
+            statement.setLong(1, commentId);
+            statement.setLong(2, userId);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                result = true;
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
     }
 }

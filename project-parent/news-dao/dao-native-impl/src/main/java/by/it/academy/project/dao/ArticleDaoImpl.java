@@ -40,8 +40,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
     private static final String SELECT_ALL_WHO_LIKED =
             "SELECT * FROM like_on_article l " +
-                    "JOIN user u ON l.L_user_id = u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id WHERE L_article_id = ?;";
+                    "JOIN user u ON l.LA_user_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE LA_article_id = ?;";
 
 
     private static final String SELECT_ALL_COMMENTS =
@@ -53,13 +53,13 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     private static final String INSERT_LIKE =
-            "INSERT INTO like_on_article (L_article_id, L_user_id)VALUE (?,?);";
+            "INSERT INTO like_on_article VALUE (?,?);";
 
     private static final String DELETE_LIKE =
-            "DELETE FROM like_on_article WHERE L_article_id = ? AND L_user_id = ?;";
+            "DELETE FROM like_on_article WHERE LA_article_id = ? AND LA_user_id = ?;";
 
-    private static final String FIND_LIKE =
-            "SELECT * FROM like_on_article WHERE L_article_id = ? AND L_user_id = ?;";
+    private static final String SELECT_LIKE =
+            "SELECT * FROM like_on_article WHERE LA_article_id = ? AND LA_user_id = ?;";
 
     private static final String UPDATE_LIKE =
             "UPDATE article SET A_number_of_likes = ? WHERE A_id = ?;";
@@ -177,7 +177,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         return articles;
     }
 
-    private  Set<User> getUsersWhoLiked(Long articleId) throws SQLException {
+    private Set<User> getUsersWhoLiked(Long articleId) throws SQLException {
         ResultSet resultSet = null;
         Set<User> result = new HashSet<>();
         try (Connection connection = getConnection();
@@ -196,11 +196,11 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     private Set<Comment> getAllComments(Long articleId) throws SQLException {
         ResultSet resultSet = null;
         Set<Comment> result = new HashSet<>();
-        try(Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(SELECT_ALL_COMMENTS)){
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_COMMENTS)) {
             statement.setLong(1, articleId);
             resultSet = statement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 result.add(Mapper.mapComment(resultSet));
             }
         } finally {
@@ -210,35 +210,25 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public Long addLike(Long article_id, Long user_id) throws SQLException {
-        ResultSet resultSet = null;
-        Long result = null;
+    public void addLike(Long articleId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_LIKE, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_LIKE)) {
 
-            statement.setLong(1, article_id);
-            statement.setLong(2, user_id);
+            statement.setLong(1, articleId);
+            statement.setLong(2, userId);
 
             statement.executeUpdate();
 
-            resultSet = statement.getGeneratedKeys();
-
-            while (resultSet.next()) {
-                result = resultSet.getLong(1);
-            }
-        } finally {
-            closeQuietly(resultSet);
         }
-        return result;
     }
 
     @Override
-    public int deleteLike(Long article_id, Long user_id) throws SQLException {
+    public int deleteLike(Long articleId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_LIKE)) {
 
-            statement.setLong(1, article_id);
-            statement.setLong(2, user_id);
+            statement.setLong(1, articleId);
+            statement.setLong(2, userId);
 
             return statement.executeUpdate();
         }
@@ -249,7 +239,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         ResultSet resultSet = null;
         boolean result = false;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_LIKE)) {
+             PreparedStatement statement = connection.prepareStatement(SELECT_LIKE)) {
 
             statement.setLong(1, articleId);
             statement.setLong(2, userId);
