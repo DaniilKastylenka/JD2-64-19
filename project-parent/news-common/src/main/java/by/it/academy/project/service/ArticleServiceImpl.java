@@ -65,7 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
             int result = articleDao.update(article);
             logger.debug("result" + result);
         } catch (SQLException e) {
-            logger.error("error while updating");
+            logger.error("error while updating" + e);
         }
     }
 

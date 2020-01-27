@@ -23,12 +23,12 @@ CREATE TABLE article(
                       id          BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       title       VARCHAR(255)  NOT NULL,
                       section_id  BIGINT        NOT NULL,
-                      author_id   BIGINT        NOT NULL,
+                      author_id   BIGINT        NOT NULL DEFAULT 0,
                       date        DATETIME      NOT NULL,
                       text        TEXT          NOT NULL,
                       likes       INT           NOT NULL DEFAULT 0,
                       FOREIGN KEY (section_id) REFERENCES section(id),
-                      FOREIGN KEY (author_id) REFERENCES user(id)
+                      FOREIGN KEY (author_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comment(
@@ -38,7 +38,7 @@ CREATE TABLE comment(
                       date        DATETIME      NOT NULL,
                       likes       INT           NOT NULL,
                       article_id  BIGINT        NOT NULL,
-                      FOREIGN KEY (user_id) REFERENCES user(id),
+                      FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ,
                       FOREIGN KEY (article_id) REFERENCES article(id) ON DELETE CASCADE
 );
 

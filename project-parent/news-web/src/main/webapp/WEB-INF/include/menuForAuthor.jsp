@@ -9,5 +9,4 @@
         <li><a href="${pageContext.request.contextPath}/createArticle"><fmt:message
                 key="menu.create.article"/></a></li>
     </ul>
-
 </li>

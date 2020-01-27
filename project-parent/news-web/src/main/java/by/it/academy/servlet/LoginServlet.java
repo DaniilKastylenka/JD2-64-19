@@ -16,40 +16,57 @@ import java.util.Optional;
 
 public class LoginServlet extends HttpServlet {
 
-    private UserService userService = UserServiceImpl.getINSTANCE();
+    private UserService userService;
+
+    public LoginServlet(){
+        userService = UserServiceImpl.getINSTANCE();
+    }
+
+    public LoginServlet(UserService userService){
+        this.userService = userService;
+    }
+
+    public static final String LOGIN_JSP = "/WEB-INF/jsp/login.jsp";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+    public static final String SHOULD_NOT_BE_EMPTY = "Username and password should not be empty.";
+    public static final String BAD_CREDENTIALS = "Bad credentials";
+    public static final String ERROR_STRING_ATTRIBUTE = "errorString";
+    public static final String USER_ATTRIBUTE = "user";
+    public static final String HOME = "/home";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
+        req.getRequestDispatcher(LOGIN_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = req.getParameter(USERNAME);
+        String password = req.getParameter(PASSWORD);
 
         String errMsg = "";
         boolean hasError = false;
 
         if (username == null || password == null || username.length() == 0 || password.length() == 0) {
             hasError = true;
-            errMsg = "Username and password should not be empty.";
+            errMsg = SHOULD_NOT_BE_EMPTY;
         } else {
-            Optional<User> user = userService.findUser(username, password);
+            Optional<User> user = userService.findUserByUsernameAndPassword(username, password);
             if (user.isEmpty()) {
                 hasError = true;
-                errMsg = "Bad credentials.";
+                errMsg = BAD_CREDENTIALS;
             } else {
-                req.getSession().setAttribute("user", user.get());
+                req.getSession().setAttribute(USER_ATTRIBUTE, user.get());
             }
         }
 
         if (hasError) {
-            req.setAttribute("errorString", errMsg);
-            req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
+            req.setAttribute(ERROR_STRING_ATTRIBUTE, errMsg);
+            req.getRequestDispatcher(LOGIN_JSP).forward(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/home");
+            resp.sendRedirect(req.getContextPath() + HOME);
         }
     }
 }

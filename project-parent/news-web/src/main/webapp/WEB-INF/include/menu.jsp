@@ -4,15 +4,19 @@
 
 <style>
     <%@include file="menu_style/style.css" %>
-    a{
-        text-decoration: none;
-    }
+    <%@include file="/WEB-INF/jsp/login_style/css/main.css" %>
+    <%@include file="/WEB-INF/jsp/login_style/css/util.css" %>
+    <%@include file="/WEB-INF/jsp/style/style.css"%>
 </style>
 
 <nav role='navigation'>
+    <%@include file="/WEB-INF/include/header.jsp" %>
     <ul>
-        <c:if test="${sessionScope.user.role != 'user'}">
-            <%@include file="menuForAdminAndAuthor.jsp" %>
+        <c:if test="${sessionScope.user.role == 'author'}">
+            <%@include file="menuForAuthor.jsp" %>
+        </c:if>
+        <c:if test="${sessionScope.user.role == 'admin'}">
+            <%@include file="menuForAdmin.jsp" %>
         </c:if>
         <c:if test="${sessionScope.user.role == 'user'}">
             <%@include file="menuForUser.jsp" %>
@@ -29,6 +33,8 @@
 
                 <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="menu.home"/> </a></li>
 
+                <li><a href="${pageContext.request.contextPath}/userPage">Account</a></li>
+
                 <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff1d00"><fmt:message
                         key="menu.logout"/></a></li>
 
@@ -37,3 +43,5 @@
 
     </ul>
 </nav>
+
+

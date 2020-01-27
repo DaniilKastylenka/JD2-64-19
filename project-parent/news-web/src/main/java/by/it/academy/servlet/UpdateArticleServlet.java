@@ -25,8 +25,14 @@ public class UpdateArticleServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long articleId = Long.valueOf(req.getParameter("articleId"));
+        Optional<Article> optionalArticle = articleService.findArticleById(articleId);
+        Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
+        req.setAttribute("sectionId", oldArticle.getSection_id());
+        req.setAttribute("title", oldArticle.getTitle());
+        req.setAttribute("text", oldArticle.getText());
         req.setAttribute("sections", sectionService.getSections());
-        req.getRequestDispatcher("/WEB-INF/jsp/updateArticle.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/updateArticle.jsp").forward(req, resp);
     }
 
     @Override
@@ -40,8 +46,10 @@ public class UpdateArticleServlet extends HttpServlet {
 
         String title = req.getParameter("title");
         String text = req.getParameter("text");
+
         Optional<Article> optionalArticle = articleService.findArticleById(articleId);
-        Article oldArticle = optionalArticle.orElseThrow(()-> new RuntimeException("no article with id " + articleId));
+
+        Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
         Article newArticle = new Article(articleId, title, section, oldArticle.getAuthor(), oldArticle.getDate(), text, oldArticle.getLikes());
 
         articleService.update(newArticle);

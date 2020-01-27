@@ -6,5 +6,5 @@
 <fmt:setLocale scope="session" value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<h1 style="padding-top: 80px; font-size: 60px; padding-left: 115px"><fmt:message key="header.title"/></h1>
+<a href="${pageContext.request.contextPath}/home"><h1 class="news-header"><fmt:message key="header.title"/></h1></a>
 

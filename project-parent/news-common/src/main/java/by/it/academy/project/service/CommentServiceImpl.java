@@ -25,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
             comment.setId(id);
             logger.debug("result " + id);
         } catch (SQLException e) {
-            logger.error("error while adding comment " + e);
+            logger.error("error while adding comment ", e);
         }
     }
 
@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
             int result = commentDao.update(comment);
             logger.debug("result " + result);
         } catch (SQLException e) {
-            logger.debug("error while updating comment " + e);
+            logger.debug("error while updating comment ", e);
         }
     }
 
@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
             int result = commentDao.delete(id);
             logger.debug("result " + result);
         } catch (SQLException e) {
-            logger.error("error while deleting comment " + e);
+            logger.error("error while deleting comment ", e);
         }
     }
 
@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
             result = (ArrayList<Comment>) commentDao.getAll();
             logger.debug("result " + result);
         } catch (SQLException e) {
-            logger.error("error while getting all comments " + e);
+            logger.error("error while getting all comments ", e);
         }
         return result;
     }
@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
             result = commentDao.read(id);
             logger.debug("result " + result);
         } catch (SQLException e) {
-            logger.error("error while finding comment " + e);
+            logger.error("error while finding comment ", e);
         }
         return result;
     }

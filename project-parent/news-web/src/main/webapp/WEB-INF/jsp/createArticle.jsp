@@ -10,13 +10,12 @@
 ">
 </head>
 <body>
-
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<%@include file="/WEB-INF/include/header.jsp" %>
-<h1 style="padding-top: 20px; padding-left: 115px"><fmt:message key="create.article.page.title"/></h1>
+
+<h1><fmt:message key="create.article.page.title"/></h1>
 
 <form method="post" action="${pageContext.request.contextPath}/createArticle">
-    <table>
+    <table class="create-article-tbl" border="1px">
         <tr>
             <td><label for="section"><fmt:message key="create.article.section"/></label></td>
             <td>
@@ -31,11 +30,11 @@
         </tr>
         <tr>
             <td><fmt:message key="create.article.title"/></td>
-            <td><input type="text" name="title"></td>
+            <td><textarea class="article-title-place" name="title" placeholder="Title" required maxlength="255"></textarea></td>
         </tr>
         <tr>
             <td><fmt:message key="create.article.text"/></td>
-            <td><input type="text" name="text"></td>
+            <td><textarea class="article-text-place" name="text" placeholder="Text" required maxlength="65535"></textarea></td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit"></td>

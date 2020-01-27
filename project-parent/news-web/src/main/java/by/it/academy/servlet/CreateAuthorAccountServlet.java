@@ -11,48 +11,46 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/register")
+@WebServlet(urlPatterns = "/createAuthorAccount")
 
-public class RegistrationServlet extends HttpServlet {
+public class CreateAuthorAccountServlet extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/createAuthorAccount.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String username = req.getParameter("username").toLowerCase();
         String password = req.getParameter("password");
-        String repeatPass = req.getParameter("repeatPass");
+        String repeatPassword = req.getParameter("repeatPassword");
 
-        String errorMessage = "";
         boolean hasError = false;
+        String error = "";
 
         if (username.length() == 0 ||
                 password == null || password.length() == 0 ||
-                repeatPass == null || repeatPass.length() == 0) {
+                repeatPassword == null || repeatPassword.length() == 0) {
             hasError = true;
-            errorMessage = "Fields should not be empty.";
-        } else if (userService.findUserByUsername(username)) {
+            error = "fields should not be empty";
+        } else if (!password.equals(repeatPassword)) {
             hasError = true;
-            errorMessage = "User with the same name already exists.";
-        } else if (!password.equals(repeatPass)) {
+            error = "passwords do not match";
+        } else if(userService.findUserByUsername(username)){
             hasError = true;
-            errorMessage = "Passwords do not match.";
+            error = "User with the same name already exists.";
         }
-
 
         if (hasError) {
-            req.setAttribute("errorString", errorMessage);
-            req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
+            req.setAttribute("errorString", error);
+            req.getRequestDispatcher("WEB-INF/jsp/createAuthorAccount.jsp").forward(req, resp);
         } else {
-            userService.addUser(new User(username, password));
-            resp.sendRedirect(req.getContextPath() + "/login");
+            userService.addUser(new User(username, password, "author"));
+            resp.sendRedirect(req.getContextPath() + "/userList");
         }
-
     }
-
 }
