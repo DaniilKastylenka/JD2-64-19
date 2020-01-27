@@ -15,14 +15,14 @@ CREATE TABLE user(
 ALTER TABLE user AUTO_INCREMENT=101;
 
 CREATE TABLE section(
-                      S_id          BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                      S_id          INT           PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       S_name        VARCHAR (30)  NOT NULL UNIQUE
 );
 
 CREATE TABLE article(
                       A_id                BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       A_title             VARCHAR(255)  NOT NULL,
-                      A_section_id        BIGINT        NOT NULL,
+                      A_section_id        INT        NOT NULL,
                       A_author_id         BIGINT        NOT NULL DEFAULT 0,
                       A_publication_date  DATETIME      NOT NULL,
                       A_updated_date      DATETIME      DEFAULT NULL,

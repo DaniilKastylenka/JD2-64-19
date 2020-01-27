@@ -27,6 +27,7 @@ public class Comment {
     private Article article;
 
     //many-to-many +
+    @ToString.Exclude
     private Set<User> usersWhoLiked;
 
     public Comment(User user, String text, Article article) {

@@ -1,7 +1,5 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.dao.mapping.EntityMapping;
-import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +16,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     private static UserDaoImpl INSTANCE = new UserDaoImpl();
 
-    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
 
     public static UserDaoImpl getINSTANCE() {
         return INSTANCE;
@@ -57,7 +54,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getSalt());
-            statement.setLong(4, user.getRole().getId());
+            statement.setInt(4, user.getRole().getId());
             statement.executeUpdate();
 
             resultSet = statement.getGeneratedKeys();
@@ -86,7 +83,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(entityMapping.mapUser(resultSet));
+                result = Optional.of(Mapper.mapUser(resultSet));
             }
 
         } finally {
@@ -129,7 +126,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_USERS)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(entityMapping.mapUser(resultSet));
+                result.add(Mapper.mapUser(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -152,7 +149,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(entityMapping.mapUser(resultSet));
+                result = Optional.of(Mapper.mapUser(resultSet));
             }
 
         } finally {
@@ -176,7 +173,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(entityMapping.mapUser(resultSet));
+                result = Optional.of(Mapper.mapUser(resultSet));
             }
 
         } finally {

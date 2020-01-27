@@ -23,21 +23,25 @@ public class User {
     private Role role;
 
     //many-to-one +
+    @ToString.Exclude
     private Set<Article> ownArticles;
 
     //many-to-many +
+    @ToString.Exclude
     private Set<Article> likedArticles;
 
     //many-to-one +
+    @ToString.Exclude
     private Set<Comment> ownComments;
 
     //many-to-many +
+    @ToString.Exclude
     private Set<Comment> likedComments;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = new Role(3, "user");
+        this.role = new Role("user");
     }
 
     public User(String username, String password, Role role) {

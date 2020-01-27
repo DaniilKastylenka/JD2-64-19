@@ -1,7 +1,5 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.dao.mapping.EntityMapping;
-import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
@@ -15,8 +13,6 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     private ArticleDaoImpl() {
         super(LoggerFactory.getLogger(ArticleDaoImpl.class));
     }
-
-    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
 
     private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
@@ -37,7 +33,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
     private static final String SELECT_ALL_ARTICLES =
             "SELECT * FROM article a " +
-                    "JOIN section s ON a.A_id = s.S_id " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
                     "JOIN user u ON a.A_author_id = u.U_id " +
                     "JOIN role r ON u.U_role_id = r.R_id ORDER BY a.A_id DESC;";
 
@@ -115,7 +111,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(entityMapping.mapArticle(resultSet));
+                result = Optional.of(Mapper.mapArticle(resultSet));
             }
 
             Set<User> usersWhoLiked = getUsersWhoLiked(id);
@@ -135,7 +131,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
              PreparedStatement statement = connection.prepareStatement(UPDATE_ARTICLE)) {
 
             statement.setString(1, article.getTitle());
-            statement.setLong(2, article.getSection().getId());
+            statement.setInt(2, article.getSection().getId());
             statement.setLong(3, article.getAuthor().getId());
             statement.setString(4, article.getText());
             java.util.Date date = new java.util.Date();
@@ -168,7 +164,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                articles.add(entityMapping.mapArticle(resultSet));
+                articles.add(Mapper.mapArticle(resultSet));
             }
 
         } finally {
@@ -187,7 +183,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             statement.setLong(1, articleId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(entityMapping.mapUser(resultSet));
+                result.add(Mapper.mapUser(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -236,14 +232,14 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public boolean findLike(Long article_id, Long user_id) throws SQLException {
+    public boolean findLike(Long articleId, Long userId) throws SQLException {
         ResultSet resultSet = null;
         boolean result = false;
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_LIKE)) {
 
-            statement.setLong(1, article_id);
-            statement.setLong(2, user_id);
+            statement.setLong(1, articleId);
+            statement.setLong(2, userId);
 
             resultSet = statement.executeQuery();
 
@@ -257,19 +253,19 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int updateLikeInArticle(Long article_id, boolean like) throws SQLException {
+    public int updateLikeInArticle(Long articleId, boolean isLiked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
 
-            Article article = read(article_id)
+            Article article = read(articleId)
                     .orElseThrow(() -> new RuntimeException("unknown article"));
 
-            if (like) {
+            if (isLiked) {
                 statement.setLong(1, article.getNumberOfLikes() + 1);
             } else {
                 statement.setLong(1, article.getNumberOfLikes() - 1);
             }
-            statement.setLong(2, article_id);
+            statement.setLong(2, articleId);
             return statement.executeUpdate();
         }
     }

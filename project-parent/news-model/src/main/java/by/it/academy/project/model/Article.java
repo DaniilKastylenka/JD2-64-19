@@ -18,6 +18,8 @@ public class Article {
     private Section section;
 
     private String title;
+
+    @ToString.Exclude
     private String text;
 
     //one-to-many +++
@@ -27,9 +29,11 @@ public class Article {
     private Long numberOfLikes;
 
     //many-to-many +++
+    @ToString.Exclude
     private Set<User> usersWhoLiked;
 
     //many-to-one +
+    @ToString.Exclude
     private Set<Comment> comments;
 
 

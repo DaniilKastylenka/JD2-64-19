@@ -39,7 +39,7 @@ public class CreateArticleServlet extends HttpServlet {
         User author = (User) req.getSession().getAttribute("user");
 
         Section section = sectionService.getSections().stream()
-                .filter(section1 -> section1.getId().equals(Long.valueOf(sectionId)))
+                .filter(section1 -> section1.getId().equals(Integer.valueOf(sectionId)))
                 .findFirst().orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
 
         Article article = new Article(null, section, title, text, author);

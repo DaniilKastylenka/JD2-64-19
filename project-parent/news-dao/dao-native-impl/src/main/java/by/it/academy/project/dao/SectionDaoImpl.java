@@ -1,7 +1,5 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.dao.mapping.EntityMapping;
-import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.Section;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +14,6 @@ import java.util.Optional;
 public class SectionDaoImpl extends AbstractDao implements SectionDao {
 
     private static SectionDaoImpl INSTANCE = new SectionDaoImpl();
-
-    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
 
     public static SectionDao getINSTANCE() {
         return INSTANCE;
@@ -51,7 +47,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(entityMapping.mapSection(resultSet));
+                result = Optional.of(Mapper.mapSection(resultSet));
             }
 
         } finally {
@@ -82,7 +78,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                result.add(entityMapping.mapSection(resultSet));
+                result.add(Mapper.mapSection(resultSet));
             }
 
         } finally {

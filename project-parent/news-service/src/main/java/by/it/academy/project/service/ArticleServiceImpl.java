@@ -83,24 +83,22 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void like(Long article_id, Long user_id) {
+    public void like(Long articleId, Long userId) {
 
-        logger.debug("like article" + article_id);
+        logger.debug("like article" + articleId);
 
         String result;
 
-        Article article = findArticleById(article_id)
-                .orElseThrow(() -> new RuntimeException("unknown article"));
         try {
-            if (articleDao.findLike(article_id, user_id)) {
+            if (articleDao.findLike(articleId, userId)) {
 
-                articleDao.deleteLike(article_id, user_id);
-                articleDao.updateLikeInArticle(article_id, false);
+                articleDao.deleteLike(articleId, userId);
+                articleDao.updateLikeInArticle(articleId, false);
                 result = "remove like";
 
             } else {
-                articleDao.addLike(article_id, user_id);
-                articleDao.updateLikeInArticle(article_id, true);
+                articleDao.addLike(articleId, userId);
+                articleDao.updateLikeInArticle(articleId, true);
                 result = "add like";
 
             }

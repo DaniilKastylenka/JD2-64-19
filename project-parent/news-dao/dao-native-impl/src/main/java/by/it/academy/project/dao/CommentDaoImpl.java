@@ -1,7 +1,5 @@
 package by.it.academy.project.dao;
 
-import by.it.academy.project.dao.mapping.EntityMapping;
-import by.it.academy.project.dao.mapping.EntityMappingImpl;
 import by.it.academy.project.model.Comment;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +12,6 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     private static CommentDaoImpl INSTANCE = new CommentDaoImpl();
 
-    private EntityMapping entityMapping = EntityMappingImpl.getINSTANCE();
 
     protected CommentDaoImpl() {
         super(LoggerFactory.getLogger(CommentDaoImpl.class));
@@ -82,7 +79,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(entityMapping.mapComment(resultSet));
+                result = Optional.of(Mapper.mapComment(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -132,7 +129,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                result.add(entityMapping.mapComment(resultSet));
+                result.add(Mapper.mapComment(resultSet));
             }
 
         } finally {

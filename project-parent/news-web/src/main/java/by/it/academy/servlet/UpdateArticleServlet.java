@@ -42,7 +42,7 @@ public class UpdateArticleServlet extends HttpServlet {
 
         String sectionId = req.getParameter("sectionId");
         Section section = sectionService.getSections().stream()
-                .filter(section1 -> section1.getId().equals(Long.valueOf(sectionId)))
+                .filter(section1 -> section1.getId().equals(Integer.valueOf(sectionId)))
                 .findFirst().orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
 
         String title = req.getParameter("title");
@@ -56,7 +56,7 @@ public class UpdateArticleServlet extends HttpServlet {
         articleService.update(newArticle);
 
         User user = (User) req.getSession().getAttribute("user");
-        if (user.getRole().equals("admin")) {
+        if (user.getRole().getName().equals("admin")) {
             resp.sendRedirect(req.getContextPath() + "/articleList");
         } else {
             resp.sendRedirect(req.getContextPath() + "/myArticles");
