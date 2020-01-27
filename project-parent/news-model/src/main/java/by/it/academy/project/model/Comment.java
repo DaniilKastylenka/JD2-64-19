@@ -16,14 +16,14 @@ public class Comment {
 
     private Long id;
 
-    //one-to-many +
+    //one-to-many +++
     private User user;
 
     private String text;
     private Date date;
     private Long numberOfLikes;
 
-    //one-to-many +
+    //one-to-many +++
     private Article article;
 
     //many-to-many +

@@ -48,7 +48,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "SELECT * FROM comment c " +
                     "JOIN user u ON c.C_user_id = u.U_id " +
                     "JOIN role r ON u.U_role_id = r.R_id " +
-                    "JOIN article a ON c.C_article_id = a.A_id WHERE c.C_article_id = ?;";
+                    "JOIN article a ON c.C_article_id = a.A_id " +
+                    "JOIN section s on a.A_section_id = s.S_id WHERE c.C_article_id = ?;";
 
 
     private static final String INSERT_LIKE =

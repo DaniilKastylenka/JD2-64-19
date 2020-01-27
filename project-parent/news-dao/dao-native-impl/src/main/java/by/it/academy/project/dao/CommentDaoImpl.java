@@ -34,7 +34,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     private final static String SELECT_ALL =
             "SELECT * FROM comment c " +
                     "JOIN user u ON c.C_user_id = u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id ORDER BY c.C_id DESC;";
+                    "JOIN role r ON u.U_role_id = r.R_id " +
+                    "JOIN article a on c.C_article_id = a.A_id " +
+                    "JOIN section s on a.A_section_id = s.S_id ORDER BY c.C_id DESC;";
 
     @Override
     public Long create(Comment comment) throws SQLException {

@@ -54,11 +54,11 @@ public class Mapper {
         Timestamp timestamp = (Timestamp) resultSet.getObject("C_date");
         java.util.Date date = new java.util.Date(timestamp.getTime());
 
-        Long likes = resultSet.getLong("C_number_of_likes");
+        Long numberOfLikes = resultSet.getLong("C_number_of_likes");
 
-        Long article_id = resultSet.getLong("C_article_id");
+        Article article = mapArticle(resultSet);
 
-        return new Comment(id, user, text, date, likes, new Article(article_id));
+        return new Comment(id, user, text, date, numberOfLikes, article);
     }
 
     public static Section mapSection(ResultSet resultSet) throws SQLException {

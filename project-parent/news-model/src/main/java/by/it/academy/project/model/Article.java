@@ -32,7 +32,7 @@ public class Article {
     @ToString.Exclude
     private Set<User> usersWhoLiked;
 
-    //many-to-one +
+    //many-to-one +++
     @ToString.Exclude
     private Set<Comment> comments;
 
