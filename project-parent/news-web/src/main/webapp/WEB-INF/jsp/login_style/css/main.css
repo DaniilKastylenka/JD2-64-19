@@ -325,7 +325,7 @@ iframe {
   flex-wrap: wrap;
 }
 
-.article-like-btn{
+.like-btn{
   font-family: 'Lato', sans-serif;
   font-size: 16px;
   color: #fff;
@@ -351,7 +351,7 @@ iframe {
   transition: all 0.4s;
 }
 
-.article-like-btn:hover{
+.like-btn:hover{
   background-color: #0f4c0d;
 }
 

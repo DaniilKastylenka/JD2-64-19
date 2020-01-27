@@ -23,7 +23,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     private final static String SELECT_COMMENT_BY_ID =
             "SELECT * FROM comment c " +
                     "JOIN user u ON c.C_user_id=u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id WHERE c.C_id = ?;";
+                    "JOIN role r ON u.U_role_id = r.R_id " +
+                    "JOIN article a ON c.C_article_id = a.A_id " +
+                    "JOIN section s on a.A_section_id = s.S_id WHERE c.C_id = ?;";
 
     private final static String UPDATE_COMMENT =
             "UPDATE comment SET C_user_id = ?, C_text = ?, C_date = ?, C_number_of_likes = ?, C_article_id = ? WHERE C_id = ?;";
