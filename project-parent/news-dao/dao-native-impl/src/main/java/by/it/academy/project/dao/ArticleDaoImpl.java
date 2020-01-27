@@ -45,8 +45,9 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     private static final String SELECT_ALL_COMMENTS =
-            "SELECT *  FROM comment c " +
+            "SELECT * FROM comment c " +
                     "JOIN user u ON c.C_user_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id " +
                     "JOIN article a ON c.C_article_id = a.A_id WHERE c.C_article_id = ?;";
 
 
@@ -116,11 +117,12 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
             Set<User> usersWhoLiked = getUsersWhoLiked(id);
             result.ifPresent(article -> article.setUsersWhoLiked(usersWhoLiked));
+            Set<Comment> comments = getAllComments(id);
+            result.ifPresent(article -> article.setComments(comments));
 
         } finally {
             closeQuietly(resultSet);
         }
-
         return result;
     }
 
@@ -174,8 +176,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         return articles;
     }
 
-    @Override
-    public Set<User> getUsersWhoLiked(Long articleId) throws SQLException {
+    private  Set<User> getUsersWhoLiked(Long articleId) throws SQLException {
         ResultSet resultSet = null;
         Set<User> result = new HashSet<>();
         try (Connection connection = getConnection();
@@ -191,9 +192,20 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         return result;
     }
 
-    @Override
-    public Set<Comment> getAllComments(Long articleId) {
-        return null;
+    private Set<Comment> getAllComments(Long articleId) throws SQLException {
+        ResultSet resultSet = null;
+        Set<Comment> result = new HashSet<>();
+        try(Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(SELECT_ALL_COMMENTS)){
+            statement.setLong(1, articleId);
+            resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                result.add(Mapper.mapComment(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
     }
 
     @Override
