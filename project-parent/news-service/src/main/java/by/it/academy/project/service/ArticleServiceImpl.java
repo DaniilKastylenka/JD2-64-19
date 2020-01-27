@@ -104,7 +104,7 @@ public class ArticleServiceImpl implements ArticleService {
             }
             logger.debug("result {} ", result);
         } catch (SQLException e) {
-            logger.error("error while like ", e);
+            logger.error("error while like article ", e);
         }
     }
 

@@ -77,6 +77,28 @@ public class CommentServiceImpl implements CommentService {
         return result;
     }
 
+    @Override
+    public void like(Long commentId, Long userId) {
+
+        logger.debug("like comment");
+        String result;
+        try {
+            if (commentDao.findLike(commentId, userId)) {
+                commentDao.deleteLike(commentId, userId);
+                commentDao.updateLikeInComment(commentId, true);
+                result = "remove like by user with id " + userId;
+            } else {
+                commentDao.addLike(commentId, userId);
+                commentDao.updateLikeInComment(commentId, false);
+                result = "add like by user with id " + userId;
+            }
+            logger.debug("resulr{}", result);
+        } catch (SQLException e) {
+            logger.debug("error while like comment", e);
+        }
+
+    }
+
     public static CommentServiceImpl getINSTANCE() {
         return INSTANCE;
     }
