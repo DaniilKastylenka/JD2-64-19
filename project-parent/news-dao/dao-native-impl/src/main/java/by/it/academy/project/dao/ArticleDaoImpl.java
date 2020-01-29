@@ -116,11 +116,6 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 result = Optional.of(Mapper.mapArticle(resultSet));
             }
 
-            Set<User> usersWhoLiked = getUsersWhoLiked(id);
-            result.ifPresent(article -> article.setUsersWhoLiked(usersWhoLiked));
-            Set<Comment> comments = getAllComments(id);
-            result.ifPresent(article -> article.setComments(comments));
-
         } finally {
             closeQuietly(resultSet);
         }

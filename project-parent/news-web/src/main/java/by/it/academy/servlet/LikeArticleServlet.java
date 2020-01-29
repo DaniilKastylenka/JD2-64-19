@@ -1,5 +1,6 @@
 package by.it.academy.servlet;
 
+import by.it.academy.project.model.Article;
 import by.it.academy.project.model.User;
 import by.it.academy.project.service.ArticleService;
 import by.it.academy.project.service.ArticleServiceImpl;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(urlPatterns = "/likeArticle")
 
@@ -19,11 +21,6 @@ public class LikeArticleServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
@@ -31,7 +28,19 @@ public class LikeArticleServlet extends HttpServlet {
 
         articleService.like(articleId, user.getId());
 
-        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
+        Optional<Article> article = articleService.findArticleById(articleId);
+
+        Long likes = null;
+
+        if (article.isPresent()) {
+            likes = article.get().getNumberOfLikes();
+        }
+
+        String response = likes + " like(s)";
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(response);
 
     }
+
 }

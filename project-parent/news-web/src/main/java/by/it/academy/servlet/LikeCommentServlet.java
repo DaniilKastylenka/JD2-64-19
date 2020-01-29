@@ -1,6 +1,7 @@
 package by.it.academy.servlet;
 
 
+import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
 import by.it.academy.project.service.CommentService;
@@ -21,24 +22,18 @@ public class LikeCommentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Long commentId = Long.valueOf(req.getParameter("commentId"));
-
-        Optional<Comment> comment = commentService.findCommentById(commentId);
-
-        Long articleId = comment.
-                orElseThrow(() -> new RuntimeException("unknown article")).getArticle().getId();
 
         User user = (User) req.getSession().getAttribute("user");
 
         commentService.like(commentId, user.getId());
 
-        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
+        Optional<Comment> comment = commentService.findCommentById(commentId);
+
+        Article article = comment.orElseThrow(()->new RuntimeException("unknown article")).getArticle();
+
+        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + article.getId());
 
     }
 }

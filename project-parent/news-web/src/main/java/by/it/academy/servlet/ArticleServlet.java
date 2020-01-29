@@ -1,6 +1,7 @@
 package by.it.academy.servlet;
 
 import by.it.academy.project.model.Article;
+import by.it.academy.project.model.Comment;
 import by.it.academy.project.service.ArticleService;
 import by.it.academy.project.service.ArticleServiceImpl;
 import by.it.academy.project.service.CommentService;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/article")
 
@@ -28,8 +30,9 @@ public class ArticleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
-        req.setAttribute("commentList", commentService.getAllComments());
-        Article article = articleService.findArticleById(articleId).orElseThrow(()->new RuntimeException("no article with id " + articleId));
+        List<Comment> allComments = commentService.getAllComments();
+        req.setAttribute("commentList", allComments);
+        Article article = articleService.findArticleById(articleId).orElseThrow(() -> new RuntimeException("no article with id " + articleId));
         req.setAttribute("article", article);
         req.getRequestDispatcher("/WEB-INF/jsp/article.jsp").forward(req, resp);
     }

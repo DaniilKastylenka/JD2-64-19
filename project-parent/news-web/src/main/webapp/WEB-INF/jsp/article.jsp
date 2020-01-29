@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="${param.lang}">
 <head>
@@ -7,6 +8,16 @@
     <fmt:setBundle basename="messages"/>
     <title>${article.title}</title>
     <meta charset="UTF-8">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+
+        $(document).on("click", ".article-like-btn", function () {
+            $.get("${pageContext.request.contextPath}/likeArticle?articleId=${article.id}", function (responseText) {
+                $("#article-likes").text(responseText)
+            });
+        });
+
+    </script>
 </head>
 <body>
 
@@ -43,8 +54,8 @@
 </table>
 
 <div style="margin-left: 140px;">
-    <a href="${pageContext.request.contextPath}/likeArticle?articleId=${article.id}" class="article-like-btn">Like</a>
-    <div style="font-size: 14px">${article.numberOfLikes} like<c:if test="${article.numberOfLikes>1}">s</c:if></div>
+    <button class="article-like-btn">Like</button>
+    <div id="article-likes" style="font-size: 14px">${article.numberOfLikes} like(s)</div>
 </div>
 
 <table class="comment-tbl">
@@ -72,12 +83,12 @@
             <tr>
                 <td align="right" valign="top">${comment.user.username}:</td>
                 <td style="word-wrap: break-word" valign="top"><c:out value="${comment.text}"/></td>
+
                 <td valign="middle" align="center">
-                    <a href="${pageContext.request.contextPath}/likeComment?commentId=${comment.id}" class="comment-like-btn">
-                            Like
-                    </a>
-                    <div style="font-size: 12px">${comment.numberOfLikes} like</div>
+                    <a id="comment-btn${comment.id}" class="comment-like-btn" href="${pageContext.request.contextPath}/likeComment?commentId=${comment.id}">Like</a>
+                    <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.numberOfLikes} like(s)</div>
                 </td>
+
                 <td style="text-align: center">
                     <c:if test="${comment.user == sessionScope.user or sessionScope.user.role.name == 'admin'}">
                         <a class="delete-btn"
