@@ -11,7 +11,7 @@ public class Mapper {
 
     public static Article mapArticle(ResultSet resultSet) throws SQLException {
 
-        Long article_id = resultSet.getLong("A_id");
+        Long articleId = resultSet.getLong("A_id");
 
         Section section = mapSection(resultSet);
 
@@ -25,14 +25,14 @@ public class Mapper {
         Date publicationDate = new Date(timestamp.getTime());
 
         Timestamp timestamp1 = resultSet.getTimestamp("A_updated_date");
-        java.util.Date updatedDate = null;
+        Date updatedDate = null;
         if (timestamp1 != null) {
             updatedDate = new Date(timestamp1.getTime());
         }
 
         Long numberOfLikes = resultSet.getLong("A_number_of_likes");
 
-        return new Article(article_id, section, title, text, author, publicationDate, updatedDate, numberOfLikes);
+        return new Article(articleId, section, title, text, author, publicationDate, updatedDate, numberOfLikes);
     }
 
     public static User mapUser(ResultSet resultSet) throws SQLException {
@@ -52,7 +52,7 @@ public class Mapper {
         String text = resultSet.getString("C_text");
 
         Timestamp timestamp = (Timestamp) resultSet.getObject("C_date");
-        java.util.Date date = new java.util.Date(timestamp.getTime());
+        Date date = new Date(timestamp.getTime());
 
         Long numberOfLikes = resultSet.getLong("C_number_of_likes");
 

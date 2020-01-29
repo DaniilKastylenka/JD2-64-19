@@ -16,7 +16,7 @@ public class Role {
     private Integer id;
     private String name;
 
-    //many-to-one +
+    //one-to-many
     @ToString.Exclude
     private Set<User> users;
 

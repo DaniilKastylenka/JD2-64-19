@@ -19,22 +19,22 @@ public class User {
     private String password;
     private String salt = EncryptUtils.generateSalt();
 
-    //one-to-many +
+    //many-to-one
     private Role role;
 
-    //many-to-one +
+    //one-to-many
     @ToString.Exclude
     private Set<Article> ownArticles;
 
-    //many-to-many +
+    //many-to-many
     @ToString.Exclude
     private Set<Article> likedArticles;
 
-    //many-to-one +
+    //one-to-many
     @ToString.Exclude
     private Set<Comment> ownComments;
 
-    //many-to-many +
+    //many-to-many
     @ToString.Exclude
     private Set<Comment> likedComments;
 

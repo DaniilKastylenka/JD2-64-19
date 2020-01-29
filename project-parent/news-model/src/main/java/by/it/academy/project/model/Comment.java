@@ -16,17 +16,17 @@ public class Comment {
 
     private Long id;
 
-    //one-to-many +++
+    //many-to-one
     private User user;
 
     private String text;
     private Date date;
     private Long numberOfLikes;
 
-    //one-to-many +++
+    //many-to-one
     private Article article;
 
-    //many-to-many +
+    //many-to-many
     @ToString.Exclude
     private Set<User> usersWhoLiked;
 
