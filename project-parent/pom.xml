@@ -9,8 +9,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>news-web</module>
-        <module>news-common</module>
-        <module>common-hibernate</module>
+        <module>news-service</module>
+        <module>news-dao</module>
+        <module>news-model</module>
     </modules>
     <packaging>pom</packaging>
 
