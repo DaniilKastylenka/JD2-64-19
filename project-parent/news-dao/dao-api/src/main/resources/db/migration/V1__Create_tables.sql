@@ -35,7 +35,7 @@ CREATE TABLE article(
 CREATE TABLE comment(
                       C_id              BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       C_user_id         BIGINT        NOT NULL,
-                      C_text            VARCHAR(255)  NOT NULL,
+                      C_text            VARCHAR(500)  NOT NULL,
                       C_date            DATETIME      NOT NULL,
                       C_number_of_likes INT           NOT NULL,
                       C_article_id      BIGINT        NOT NULL,

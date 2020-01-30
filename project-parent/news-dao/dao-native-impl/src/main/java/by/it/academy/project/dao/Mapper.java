@@ -51,7 +51,7 @@ public class Mapper {
 
         String text = resultSet.getString("C_text");
 
-        Timestamp timestamp = (Timestamp) resultSet.getObject("C_date");
+        Timestamp timestamp = resultSet.getTimestamp("C_date");
         Date date = new Date(timestamp.getTime());
 
         Long numberOfLikes = resultSet.getLong("C_number_of_likes");

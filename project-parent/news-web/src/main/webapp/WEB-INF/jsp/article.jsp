@@ -38,15 +38,15 @@
         </td>
     </tr>
     <tr>
-        <td align="right">
+        <td align="right" style="padding-right: 145px; color: #878b8f">
             <div>
-                <fmt:message key="article.author"/>: ${article.author.username}, <fmt:message key="article.date"/>:
-                <fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/>
+                <fmt:message key="article.author"/>: ${article.author.username}
+                <fmt:formatDate pattern="dd.MM.yyy 'at' HH:mm" value="${article.publicationDate}"/>
             </div>
 
             <c:if test="${article.updatedDate != null}">
                 <div>
-                    Updated: <fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.updatedDate}"/>
+                    Updated <fmt:formatDate pattern="dd.MM.yyy 'at' HH:mm" value="${article.updatedDate}"/>
                 </div>
             </c:if>
         </td>
@@ -54,47 +54,54 @@
 </table>
 
 <div style="margin-left: 140px;">
-    <button class="article-like-btn">Like</button>
+    <button id="article-like-btn" class="article-like-btn">Like</button>
     <div id="article-likes" style="font-size: 14px">${article.numberOfLikes} like(s)</div>
 </div>
 
+<h2 align="center">Write your comment</h2>
+
 <table class="comment-tbl">
-    <col width="20%">
-    <col width="50%">
-    <col width="30%">
     <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
         <tr>
-            <td style="text-align: center">${sessionScope.user.username}:</td>
-            <td><textarea class="comment-text-place" name="text" placeholder="write your comment" required
-                          maxlength="255"></textarea></td>
-            <td style="text-align: center"><input type="submit" class="submit-btn" placeholder="submit"></td>
+            <td align="left">${sessionScope.user.username}:</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place" name="text" placeholder="write your comment" required
+                                                                                maxlength="500"></textarea></td>
+        </tr>
+        <tr>
+            <td align="left"><input type="submit" class="submit-btn" placeholder="submit"></td>
         </tr>
     </form>
 </table>
 
+<h2 align="center">Comments</h2>
 
 <table class="comment-tbl">
-    <col width="20%">
-    <col width="50%">
+    <col width="70%">
     <col width="15%">
     <col width="15%">
     <c:forEach items="${commentList}" var="comment">
         <c:if test="${article.id == comment.article.id}">
             <tr>
-                <td align="right" valign="top">${comment.user.username}:</td>
-                <td style="word-wrap: break-word" valign="top"><c:out value="${comment.text}"/></td>
-
-                <td valign="middle" align="center">
-                    <a id="comment-btn${comment.id}" class="comment-like-btn" href="${pageContext.request.contextPath}/likeComment?commentId=${comment.id}">Like</a>
-                    <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.numberOfLikes} like(s)</div>
+                <td align="left" style="color: #5e5e5e;">${comment.user.username} • <fmt:formatDate
+                        pattern="dd.MM.yyy 'at' HH:mm" value="${comment.date}"/>
                 </td>
-
-                <td style="text-align: center">
+                <td style="color: #5e5e5e; text-align: center">
                     <c:if test="${comment.user == sessionScope.user or sessionScope.user.role.name == 'admin'}">
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">DELETE</a>
                     </c:if>
                 </td>
+                <td valign="middle" align="right" style="color: #5e5e5e;">
+                    <a id="comment-btn${comment.id}" class="comment-like-btn"
+                       href="${pageContext.request.contextPath}/likeComment?commentId=${comment.id}">Like</a>
+                    <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.numberOfLikes} like(s)</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="word-wrap: break-word; padding-bottom: 15px; color: #565656;" valign="center" colspan="3"><c:out
+                        value="${comment.text}"/></td>
             </tr>
         </c:if>
     </c:forEach>
