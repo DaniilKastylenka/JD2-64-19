@@ -63,7 +63,7 @@
 <table class="comment-tbl">
     <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
         <tr>
-            <td align="left">${sessionScope.user.username}:</td>
+            <td align="left"><div style="font-size: 20px">${sessionScope.user.username}:</div></td>
         </tr>
         <tr>
             <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place" name="text" placeholder="write your comment" required
@@ -100,7 +100,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="word-wrap: break-word; padding-bottom: 15px; color: #565656;" valign="center" colspan="3"><c:out
+                <td style="word-wrap: break-word; padding-bottom: 30px; color: #565656;" valign="center" colspan="3"><c:out
                         value="${comment.text}"/></td>
             </tr>
         </c:if>
