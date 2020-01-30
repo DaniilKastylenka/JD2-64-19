@@ -22,19 +22,6 @@ public class Role {
 
     public Role(String name) {
         this.name = name;
-        switch (name) {
-            case "admin":
-                id = 1;
-                break;
-            case "author":
-                id = 2;
-                break;
-            case "user":
-                id = 3;
-                break;
-            default:
-                id = null;
-        }
     }
 
     @Override
