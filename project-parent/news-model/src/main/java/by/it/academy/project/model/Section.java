@@ -35,33 +35,8 @@ public class Section {
 
     public Section(String name) {
         this.name = name;
-        switch (name) {
-            case "People":
-                id = 1;
-                break;
-            case "Technology":
-                id = 2;
-                break;
-            case "Politics":
-                id = 3;
-                break;
-            case "Entertainment":
-                id = 4;
-                break;
-            case "Game":
-                id = 5;
-                break;
-            case "World":
-                id = 6;
-                break;
-            case "Education":
-                id = 7;
-                break;
-            default:
-                id = null;
-        }
-
-
-
     }
+
+
 }
+
