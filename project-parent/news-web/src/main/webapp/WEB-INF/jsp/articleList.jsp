@@ -22,8 +22,9 @@
         <td><fmt:message key="article.list.text"/></td>
         <td><fmt:message key="article.list.author"/></td>
         <td><fmt:message key="article.list.date"/></td>
+        <td>Updated date</td>
         <td><fmt:message key="article.list.likes"/></td>
-        <c:if test="${sessionScope.user.role!='user'}">
+        <c:if test="${sessionScope.user.role.name!='user'}">
             <td>Actions</td>
         </c:if>
 
@@ -32,16 +33,20 @@
         <tr>
             <td valign="top"><c:out value="${article.id}"/></td>
             <td valign="top"><c:out value="${article.section.name}"/></td>
-            <td valign="top"><a href="${pageContext.request.contextPath}/article?articleId=${article.id}"><p class="title-link">${article.title}</p></a></td>
+            <td valign="top"><a href="${pageContext.request.contextPath}/article?articleId=${article.id}"><p
+                    class="title-link">${article.title}</p></a></td>
             <td valign="top"><p style="overflow: hidden; height: 90px"><c:out value="${article.text}"/></p></td>
             <td valign="top"><c:out value="${article.author.username}"/></td>
-            <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.date}"/></td>
-            <td valign="top"><c:out value="${article.likes}"/></td>
-            <c:if test="${sessionScope.user.role!='user'}">
+            <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/></td>
+            <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.updatedDate}"/></td>
+            <td valign="top"><c:out value="${article.numberOfLikes}"/></td>
+            <c:if test="${sessionScope.user.role.name!='user'}">
                 <td valign="top">
-                    <c:if test="${(sessionScope.user.role=='admin' or sessionScope.user==article.author)}">
-                        <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
-                        <a class="update-btn" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
+                    <c:if test="${(sessionScope.user.role.name=='admin' or sessionScope.user==article.author)}">
+                        <a class="delete-btn"
+                           href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
+                        <a class="update-btn"
+                           href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
                     </c:if>
 
                 </td>

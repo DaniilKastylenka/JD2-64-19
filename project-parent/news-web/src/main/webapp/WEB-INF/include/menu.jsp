@@ -12,13 +12,13 @@
 <nav role='navigation'>
     <%@include file="/WEB-INF/include/header.jsp" %>
     <ul>
-        <c:if test="${sessionScope.user.role == 'author'}">
+        <c:if test="${sessionScope.user.role.name == 'author'}">
             <%@include file="menuForAuthor.jsp" %>
         </c:if>
-        <c:if test="${sessionScope.user.role == 'admin'}">
+        <c:if test="${sessionScope.user.role.name == 'admin'}">
             <%@include file="menuForAdmin.jsp" %>
         </c:if>
-        <c:if test="${sessionScope.user.role == 'user'}">
+        <c:if test="${sessionScope.user.role.name == 'user'}">
             <%@include file="menuForUser.jsp" %>
         </c:if>
         <li><a href="#"><fmt:message key="menu.localisation"/></a>

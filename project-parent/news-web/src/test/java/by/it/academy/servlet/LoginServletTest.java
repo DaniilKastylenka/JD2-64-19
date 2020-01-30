@@ -1,5 +1,6 @@
 package by.it.academy.servlet;
 
+import by.it.academy.project.model.Role;
 import by.it.academy.project.model.User;
 import by.it.academy.project.service.UserService;
 import org.junit.Before;
@@ -24,7 +25,7 @@ public class LoginServletTest {
     public static final String USER_NAME = "TEST_USER_NAME";
     public static final String USER_PASSWORD = "TEST_USER_PASSWORD";
     public static final Long USER_ID = 101L;
-    public static final String USER_ROLE = "USER";
+    public static final Role USER_ROLE = new Role("USER_ROLE");
     public static final String CONTEXT_PATH = "";
 
     @Mock

@@ -12,6 +12,7 @@ public interface CommentService {
     void deleteComment(Long id);
     List<Comment> getAllComments();
     Optional<Comment> findCommentById(Long id);
+    void like(Long commentId, Long userId);
 
 
 }

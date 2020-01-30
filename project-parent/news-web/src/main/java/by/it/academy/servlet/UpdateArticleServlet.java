@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = "/updateArticle")
@@ -28,7 +29,7 @@ public class UpdateArticleServlet extends HttpServlet {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
         Optional<Article> optionalArticle = articleService.findArticleById(articleId);
         Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
-        req.setAttribute("sectionId", oldArticle.getSection_id());
+        req.setAttribute("sectionId", oldArticle.getSection().getId());
         req.setAttribute("title", oldArticle.getTitle());
         req.setAttribute("text", oldArticle.getText());
         req.setAttribute("sections", sectionService.getSections());
@@ -41,7 +42,7 @@ public class UpdateArticleServlet extends HttpServlet {
 
         String sectionId = req.getParameter("sectionId");
         Section section = sectionService.getSections().stream()
-                .filter(section1 -> section1.getId().equals(Long.valueOf(sectionId)))
+                .filter(section1 -> section1.getId().equals(Integer.valueOf(sectionId)))
                 .findFirst().orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
 
         String title = req.getParameter("title");
@@ -50,12 +51,12 @@ public class UpdateArticleServlet extends HttpServlet {
         Optional<Article> optionalArticle = articleService.findArticleById(articleId);
 
         Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
-        Article newArticle = new Article(articleId, title, section, oldArticle.getAuthor(), oldArticle.getDate(), text, oldArticle.getLikes());
+        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getPublicationDate(), new Date(), oldArticle.getNumberOfLikes());
 
         articleService.update(newArticle);
 
         User user = (User) req.getSession().getAttribute("user");
-        if (user.getRole().equals("admin")) {
+        if (user.getRole().getName().equals("admin")) {
             resp.sendRedirect(req.getContextPath() + "/articleList");
         } else {
             resp.sendRedirect(req.getContextPath() + "/myArticles");

@@ -1,5 +1,6 @@
 package by.it.academy.servlet;
 
+
 import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
@@ -12,32 +13,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
-@WebServlet(urlPatterns = "/writeComment")
-
-public class WriteCommentServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/likeComment")
+public class LikeCommentServlet extends HttpServlet {
 
     private CommentService commentService = CommentServiceImpl.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/jsp/article.jsp").forward(req, resp);
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-        Long articleId = Long.valueOf(req.getParameter("articleId"));
+        Long commentId = Long.valueOf(req.getParameter("commentId"));
 
         User user = (User) req.getSession().getAttribute("user");
-        String text = req.getParameter("text");
 
-        Comment comment = new Comment(user, text, new Article(articleId));
+        commentService.like(commentId, user.getId());
 
-        commentService.addComment(comment);
+        Optional<Comment> comment = commentService.findCommentById(commentId);
 
-        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
+        Article article = comment.orElseThrow(()->new RuntimeException("unknown article")).getArticle();
+
+        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + article.getId());
 
     }
 }

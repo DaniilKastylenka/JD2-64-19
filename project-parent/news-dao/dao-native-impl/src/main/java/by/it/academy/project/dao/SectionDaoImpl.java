@@ -20,7 +20,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
     }
 
     private final static String SELECT_ALL = "SELECT * FROM section;";
-    private final static String SELECT_BY_ID = "SELECT * FROM section WHERE id=?";
+    private final static String SELECT_BY_ID = "SELECT * FROM section WHERE S_id=?";
 
 
     protected SectionDaoImpl() {
@@ -47,7 +47,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapSection(resultSet));
+                result = Optional.of(Mapper.mapSection(resultSet));
             }
 
         } finally {
@@ -78,7 +78,7 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                result.add(mapSection(resultSet));
+                result.add(Mapper.mapSection(resultSet));
             }
 
         } finally {
@@ -87,9 +87,4 @@ public class SectionDaoImpl extends AbstractDao implements SectionDao {
         return result;
     }
 
-    private Section mapSection(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
-        String name = resultSet.getString("section_name");
-        return new Section(id, name);
-    }
 }
