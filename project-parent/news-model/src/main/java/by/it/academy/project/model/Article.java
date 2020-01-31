@@ -14,7 +14,7 @@ public class Article {
 
     private Long id;
 
-    //one-to-many +++
+    // many-to-one
     private Section section;
 
     private String title;
@@ -22,17 +22,17 @@ public class Article {
     @ToString.Exclude
     private String text;
 
-    //one-to-many +++
+    //many-to-one
     private User author;
     private Date publicationDate;
     private Date updatedDate;
     private Long numberOfLikes;
 
-    //many-to-many +++
+    //many-to-many
     @ToString.Exclude
     private Set<User> usersWhoLiked;
 
-    //many-to-one +++
+    //one-to-many
     @ToString.Exclude
     private Set<Comment> comments;
 
