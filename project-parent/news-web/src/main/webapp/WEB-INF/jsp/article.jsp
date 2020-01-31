@@ -10,13 +10,7 @@
     <meta charset="UTF-8">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-
-        $(document).on("click", ".article-like-btn", function () {
-            $.get("${pageContext.request.contextPath}/likeArticle?articleId=${article.id}", function (responseText) {
-                $("#article-likes").text(responseText)
-            });
-        });
-
+        <%@include file="js/ajax/ajax_like_article.js" %>
     </script>
 </head>
 <body>
@@ -53,24 +47,29 @@
     </tr>
 </table>
 
-<div style="margin-left: 140px;">
+<div style="margin-left: 140px; width: 60px; height: 30px" align="center">
     <button id="article-like-btn" class="article-like-btn">Like</button>
-    <div id="article-likes" style="font-size: 14px">${article.numberOfLikes} like(s)</div>
 </div>
+<div id="article-likes" style="font-size: 14px; margin-left: 140px  ">${article.numberOfLikes} like(s)</div>
+
 
 <h2 align="center">Write your comment</h2>
 
 <table class="comment-tbl">
     <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
         <tr>
-            <td align="left"><div style="font-size: 20px">${sessionScope.user.username}:</div></td>
+            <td align="left">
+                <div style="font-size: 20px">${sessionScope.user.username}:</div>
+            </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place" name="text" placeholder="write your comment" required
-                                                                                maxlength="500"></textarea></td>
+            <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place" name="text"
+                                                                                 placeholder="write your comment"
+                                                                                 required
+                                                                                 maxlength="500"></textarea></td>
         </tr>
         <tr>
-            <td align="left"><input type="submit" class="submit-btn" placeholder="submit"></td>
+            <td align="left" style="width: 100px; height: 35px"><input type="submit" class="submit-btn" placeholder="submit"></td>
         </tr>
     </form>
 </table>
@@ -94,14 +93,19 @@
                     </c:if>
                 </td>
                 <td valign="middle" align="right" style="color: #5e5e5e;">
-                    <a id="comment-btn${comment.id}" class="comment-like-btn"
-                       href="${pageContext.request.contextPath}/likeComment?commentId=${comment.id}">Like</a>
+                    <script>
+                        <%@include file="js/ajax/ajax_like_comment.js" %>
+                    </script>
+                    <div style="height: 20px; width: 40px;" align="center">
+                        <button id="comment-btn${comment.id}" class="comment-like-btn">Like</button>
+                    </div>
                     <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.numberOfLikes} like(s)</div>
                 </td>
             </tr>
             <tr>
-                <td style="word-wrap: break-word; padding-bottom: 30px; color: #565656;" valign="center" colspan="3"><c:out
-                        value="${comment.text}"/></td>
+                <td style="word-wrap: break-word; padding-bottom: 30px; color: #565656;" valign="center" colspan="3">
+                    <c:out
+                            value="${comment.text}"/></td>
             </tr>
         </c:if>
     </c:forEach>

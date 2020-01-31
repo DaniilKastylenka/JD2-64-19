@@ -1,7 +1,6 @@
 package by.it.academy.servlet;
 
 
-import by.it.academy.project.model.Article;
 import by.it.academy.project.model.Comment;
 import by.it.academy.project.model.User;
 import by.it.academy.project.service.CommentService;
@@ -31,9 +30,20 @@ public class LikeCommentServlet extends HttpServlet {
 
         Optional<Comment> comment = commentService.findCommentById(commentId);
 
-        Article article = comment.orElseThrow(()->new RuntimeException("unknown article")).getArticle();
+        //Article article = comment.orElseThrow(()->new RuntimeException("unknown article")).getArticle();
 
-        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + article.getId());
+        Long likes = null;
+
+        if(comment.isPresent()){
+            likes = comment.get().getNumberOfLikes();
+        }
+
+        String result = likes + " like(s)";
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("plain/text");
+        resp.getWriter().write(result);
+
+        //resp.sendRedirect(req.getContextPath() + "/article?articleId=" + article.getId());
 
     }
 }
