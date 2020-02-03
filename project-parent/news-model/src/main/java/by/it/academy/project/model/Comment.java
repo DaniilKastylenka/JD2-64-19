@@ -3,6 +3,7 @@ package by.it.academy.project.model;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,18 +15,33 @@ import java.util.Date;
 public class Comment {
 
     private Long id;
+
+    //many-to-one
     private User user;
+
     private String text;
     private Date date;
-    private Long likes;
-    private Long article_id;
+    private Long numberOfLikes;
 
-    public Comment(User user, String text, Long article_id) {
+    //many-to-one
+    private Article article;
+
+    //many-to-many
+    @ToString.Exclude
+    private Set<User> usersWhoLiked;
+
+    public Comment(User user, String text, Article article) {
         this.user = user;
         this.text = text;
-        this.article_id = article_id;
+        this.article = article;
         this.date = new Date();
-        this.likes = 0L;
+        this.numberOfLikes = 0L;
     }
 
+    public Comment(Long id, User user, String text, Date date, Long numberOfLikes, Article article) {
+        this(user, text, article);
+        this.id = id;
+        this.date = date;
+        this.numberOfLikes = numberOfLikes;
+    }
 }

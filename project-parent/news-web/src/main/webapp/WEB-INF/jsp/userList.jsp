@@ -22,9 +22,9 @@
         <tr>
             <td><c:out value="${user.id}"/></td>
             <td><c:out value="${user.username}"/></td>
-            <td><c:out value="${user.role}"/></td>
+            <td><c:out value="${user.role.name}"/></td>
             <td>
-                <c:if test="${user.role != 'admin'}">
+                <c:if test="${user.role.name != 'admin'}">
                     <a class="delete-btn"
                        href="${pageContext.request.contextPath}/deleteUser?userId=${user.id}">DELETE</a>
                 </c:if>

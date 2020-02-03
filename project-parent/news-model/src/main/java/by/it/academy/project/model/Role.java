@@ -11,21 +11,25 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 
-public class Section {
+public class Role {
 
     private Integer id;
     private String name;
 
     //one-to-many
     @ToString.Exclude
-    private Set<Article> articles;
+    private Set<User> users;
+
+    public Role(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Section section = (Section) o;
-        return Objects.equals(name, section.name);
+        Role role = (Role) o;
+        return Objects.equals(name, role.name);
     }
 
     @Override
@@ -33,10 +37,5 @@ public class Section {
         return Objects.hash(name);
     }
 
-    public Section(String name) {
-        this.name = name;
-    }
-
 
 }
-

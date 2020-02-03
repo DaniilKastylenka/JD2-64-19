@@ -16,58 +16,45 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     private static UserDaoImpl INSTANCE = new UserDaoImpl();
 
+
     public static UserDaoImpl getINSTANCE() {
         return INSTANCE;
     }
 
     private final static String INSERT_USER =
-            "INSERT INTO user(username, password, salt, role_id) VALUE (?,?,?,?)";
-
-    private final static String SELECT_ROLE_ID = "SELECT id FROM role WHERE role_name = ?;";
+            "INSERT INTO user(U_username, U_password, U_salt, U_role_id) VALUE (?,?,?,?)";
 
     private final static String SELECT_USER_BY_ID =
-            "SELECT * FROM user LEFT JOIN role r ON user.role_id = r.id WHERE user.id = ?;";
+            "SELECT * FROM user LEFT JOIN role r ON user.U_role_id = r.R_id WHERE user.U_id = ?;";
 
     private final static String SELECT_BY_USERNAME_AND_PASSWORD =
-            "SELECT * FROM user LEFT JOIN role r on user.role_id = r.id WHERE username=? AND password = ?;";
+            "SELECT * FROM user LEFT JOIN role r on user.U_role_id = r.R_id WHERE U_username=? AND U_password = ?;";
 
     private final static String SELECT_BY_USERNAME =
-            "SELECT * FROM user LEFT JOIN role r on user.role_id = r.id WHERE username = ?;";
+            "SELECT * FROM user LEFT JOIN role r on user.U_role_id = r.R_id WHERE U_username = ?;";
 
     private final static String SELECT_ALL_USERS =
-            "SELECT u.*, r.role_name FROM user u LEFT JOIN role r on u.role_id = r.id ORDER BY u.id";
+            "SELECT * FROM user u LEFT JOIN role r on u.U_role_id = r.R_id ORDER BY u.U_id";
 
     private final static String DELETE_USER_BY_ID =
-            "DELETE FROM user WHERE id=?;";
+            "DELETE FROM user WHERE U_id=?;";
 
     private final static String UPDATE_USER =
-            "UPDATE user JOIN role SET username = ?, password = ?, salt = ?, role_id = ? WHERE user.id = ?";
+            "UPDATE user SET U_username = ?, U_password = ?, U_salt = ?, U_role_id = ? WHERE user.U_id = ?";
 
     @Override
     public Long create(User user) throws SQLException {
 
         ResultSet resultSet = null;
         Long result = null;
-        Long roleId = null;
 
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement statementRole = connection.prepareStatement(SELECT_ROLE_ID)) {
-
-            statementRole.setString(1, user.getRole());
-            resultSet = statementRole.executeQuery();
-            if (resultSet.next()) {
-                roleId = resultSet.getLong(1);
-            }
-
-            if (roleId == null) {
-                throw new RuntimeException("unknown user role");
-            }
+             PreparedStatement statement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getSalt());
-            statement.setLong(4, roleId);
+            statement.setInt(4, user.getRole().getId());
             statement.executeUpdate();
 
             resultSet = statement.getGeneratedKeys();
@@ -96,7 +83,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapUser(resultSet));
+                result = Optional.of(Mapper.mapUser(resultSet));
             }
 
         } finally {
@@ -108,26 +95,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public int update(User user) throws SQLException {
-        ResultSet resultSet = null;
-        Long roleId = null;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_USER);
-             PreparedStatement roleStatement = connection.prepareStatement(SELECT_ROLE_ID)) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getSalt());
-
-            roleStatement.setString(1, user.getRole());
-            resultSet = roleStatement.executeQuery();
-            if (resultSet.next()){
-                roleId = resultSet.getLong(1);
-            } else {
-                throw new RuntimeException("unknown user role");
-            }
-
-            statement.setLong(4, roleId);
+            statement.setLong(4, user.getRole().getId());
             statement.setLong(5, user.getId());
-
 
 
             return statement.executeUpdate();
@@ -152,7 +126,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_USERS)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(mapUser(resultSet));
+                result.add(Mapper.mapUser(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -175,7 +149,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapUser(resultSet));
+                result = Optional.of(Mapper.mapUser(resultSet));
             }
 
         } finally {
@@ -199,7 +173,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                result = Optional.of(mapUser(resultSet));
+                result = Optional.of(Mapper.mapUser(resultSet));
             }
 
         } finally {
@@ -209,16 +183,4 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         return result;
     }
 
-    private User mapUser(ResultSet resultSet) throws SQLException {
-
-        Long userId = resultSet.getLong("id");
-
-        String username = resultSet.getString("username");
-        String password = resultSet.getString("password");
-
-        String role = resultSet.getString("role_name");
-        String salt = resultSet.getString("salt");
-
-        return new User(userId, username, password, salt, role);
-    }
 }

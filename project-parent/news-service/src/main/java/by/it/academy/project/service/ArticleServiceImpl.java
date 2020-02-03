@@ -28,7 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArrayList<Article> articles = null;
         try {
             articles = (ArrayList<Article>) articleDao.getAll();
-            logger.debug("result", articles);
+            logger.debug("result {}", articles);
         } catch (SQLException e) {
             logger.error("error while reading articles", e);
         }
@@ -41,7 +41,7 @@ public class ArticleServiceImpl implements ArticleService {
         try {
             Long id = articleDao.create(article);
             article.setId(id);
-            logger.debug("result", id);
+            logger.debug("result {}", id);
         } catch (SQLException e) {
             logger.error("error while creating article", e);
         }
@@ -52,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
         logger.debug("delete article", id);
         try {
             int delete = articleDao.delete(id);
-            logger.debug("result", delete);
+            logger.debug("result {}", delete);
         } catch (SQLException e) {
             logger.error("error while deleting article", e);
         }
@@ -63,9 +63,9 @@ public class ArticleServiceImpl implements ArticleService {
         logger.debug("update article");
         try {
             int result = articleDao.update(article);
-            logger.debug("result" + result);
+            logger.debug("result {}", result);
         } catch (SQLException e) {
-            logger.error("error while updating" + e);
+            logger.error("error while updating", e);
         }
     }
 
@@ -74,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
         logger.debug("find article by id", id);
         try {
             Optional<Article> article = articleDao.read(id);
-            logger.debug("result", id);
+            logger.debug("result {}", id + " " + article);
             return article;
         } catch (SQLException e) {
             logger.error("error while finding article by id", e);
@@ -83,30 +83,28 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void like(Long article_id, Long user_id) {
+    public void like(Long articleId, Long userId) {
 
-        logger.debug("like article " + article_id);
+        logger.debug("like article" + articleId);
 
         String result;
 
-        Article article = findArticleById(article_id)
-                .orElseThrow(() -> new RuntimeException("unknown article"));
         try {
-            if (articleDao.findLike(article_id, user_id)) {
+            if (articleDao.findLike(articleId, userId)) {
 
-                articleDao.deleteLike(article_id, user_id);
-                articleDao.updateLikeInArticle(article_id, false);
-                result = "remove like";
+                articleDao.deleteLike(articleId, userId);
+                articleDao.updateLikeInArticle(articleId, false);
+                result = "remove like by user with id " + userId;
 
             } else {
-                articleDao.addLike(article_id, user_id);
-                articleDao.updateLikeInArticle(article_id, true);
-                result = "add like";
+                articleDao.addLike(articleId, userId);
+                articleDao.updateLikeInArticle(articleId, true);
+                result = "add like by user with id " + userId;
 
             }
-            logger.debug("result " + result);
+            logger.debug("result {} ", result);
         } catch (SQLException e) {
-            logger.error("error while like " + e);
+            logger.error("error while like article ", e);
         }
     }
 

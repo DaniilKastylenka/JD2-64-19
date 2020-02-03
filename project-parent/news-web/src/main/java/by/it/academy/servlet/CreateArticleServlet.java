@@ -36,13 +36,13 @@ public class CreateArticleServlet extends HttpServlet {
         String title = req.getParameter("title");
         String text = req.getParameter("text");
 
-        User user = (User) req.getSession().getAttribute("user");
+        User author = (User) req.getSession().getAttribute("user");
 
         Section section = sectionService.getSections().stream()
-                .filter(section1 -> section1.getId().equals(Long.valueOf(sectionId)))
-                .findFirst().orElseThrow(()->new RuntimeException("no section with id " + sectionId));
+                .filter(section1 -> section1.getId().equals(Integer.valueOf(sectionId)))
+                .findFirst().orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
 
-        Article article = new Article(null, title, section, user, text);
+        Article article = new Article(null, section, title, text, author);
 
         articleService.addNewArticle(article);
 
