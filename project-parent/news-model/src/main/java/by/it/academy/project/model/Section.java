@@ -2,7 +2,7 @@ package by.it.academy.project.model;
 
 import lombok.*;
 
-import java.util.Objects;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -10,33 +10,36 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
+@Entity
+@Table(name = "section")
 
 public class Section {
 
+    @Id
+    @Column(name = "S_id")
+    @EqualsAndHashCode.Exclude
     private Integer id;
+
+    @Column(name = "S_name")
     private String name;
 
-    //one-to-many
+    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Article> articles;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Section section = (Section) o;
-        return Objects.equals(name, section.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
 
     public Section(String name) {
         this.name = name;
     }
 
+    public Section(Integer id) {
+        this.id = id;
+    }
 
+    public Section(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
 

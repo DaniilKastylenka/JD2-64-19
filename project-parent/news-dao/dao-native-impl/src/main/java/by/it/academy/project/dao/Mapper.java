@@ -62,13 +62,15 @@ public class Mapper {
     }
 
     public static Section mapSection(ResultSet resultSet) throws SQLException {
+        Integer id = resultSet.getInt("S_id");
         String name = resultSet.getString("S_name");
-        return new Section(name);
+        return new Section(id, name);
     }
 
     public static Role mapRole(ResultSet resultSet) throws SQLException {
+        Integer id = resultSet.getInt("R_id");
         String name = resultSet.getString("R_name");
-        return new Role(name);
+        return new Role(id, name);
     }
 
 }

@@ -27,7 +27,7 @@ CREATE TABLE article(
                       A_publication_date  DATETIME      NOT NULL,
                       A_updated_date      DATETIME      DEFAULT NULL,
                       A_text              TEXT          NOT NULL,
-                      A_number_of_likes   INT           NOT NULL DEFAULT 0,
+                      A_number_of_likes   BIGINT        NOT NULL DEFAULT 0,
                       FOREIGN KEY (A_section_id) REFERENCES section(S_id),
                       FOREIGN KEY (A_author_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
@@ -37,26 +37,26 @@ CREATE TABLE comment(
                       C_user_id         BIGINT        NOT NULL,
                       C_text            VARCHAR(500)  NOT NULL,
                       C_date            DATETIME      NOT NULL,
-                      C_number_of_likes INT           NOT NULL,
+                      C_number_of_likes BIGINT        NOT NULL,
                       C_article_id      BIGINT        NOT NULL,
-                      FOREIGN KEY (C_user_id) REFERENCES user(U_id) ON DELETE CASCADE ,
-                      FOREIGN KEY (C_article_id) REFERENCES article(A_id) ON DELETE CASCADE
+                      FOREIGN KEY (C_user_id) REFERENCES user(U_id) ON DELETE CASCADE ON UPDATE NO ACTION ,
+                      FOREIGN KEY (C_article_id) REFERENCES article(A_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
-CREATE TABLE like_on_article
+CREATE TABLE article_user
 (
-                      LA_article_id      BIGINT        NOT NULL,
-                      LA_user_id         BIGINT        NOT NULL,
-                      FOREIGN KEY (LA_article_id) REFERENCES article(A_id) ON DELETE CASCADE ,
-                      FOREIGN KEY (LA_user_id) REFERENCES user(U_id) ON DELETE CASCADE
+                      AU_article_id      BIGINT        NOT NULL,
+                      AU_user_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (AU_article_id) REFERENCES article(A_id) ON DELETE CASCADE ,
+                      FOREIGN KEY (AU_user_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
-CREATE TABLE like_on_comment
+CREATE TABLE comment_user
 (
-                      LC_comment_id      BIGINT        NOT NULL,
-                      LC_user_id         BIGINT        NOT NULL,
-                      FOREIGN KEY (LC_comment_id) REFERENCES comment(C_id) ON DELETE CASCADE,
-                      FOREIGN KEY (LC_user_id) REFERENCES user(U_id) ON DELETE CASCADE
+                      CU_comment_id      BIGINT        NOT NULL,
+                      CU_user_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (CU_comment_id) REFERENCES comment(C_id) ON DELETE CASCADE,
+                      FOREIGN KEY (CU_user_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
 INSERT INTO section (S_name) VALUES

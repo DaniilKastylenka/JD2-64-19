@@ -53,13 +53,13 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     private static final String INSERT_LIKE =
-            "INSERT INTO like_on_article VALUE (?,?);";
+            "INSERT INTO article_user VALUE (?,?);";
 
     private static final String DELETE_LIKE =
-            "DELETE FROM like_on_article WHERE LA_article_id = ? AND LA_user_id = ?;";
+            "DELETE FROM article_user WHERE AU_article_id = ? AND AU_user_id = ?;";
 
     private static final String SELECT_LIKE =
-            "SELECT * FROM like_on_article WHERE LA_article_id = ? AND LA_user_id = ?;";
+            "SELECT * FROM article_user WHERE AU_article_id = ? AND AU_user_id = ?;";
 
     private static final String UPDATE_LIKE =
             "UPDATE article SET A_number_of_likes = ? WHERE A_id = ?;";

@@ -42,16 +42,16 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
 
     private final static String INSERT_LIKE =
-            "INSERT INTO like_on_comment VALUE(?,?);";
+            "INSERT INTO comment_user VALUE(?,?);";
 
     private final static String DELETE_LIKE =
-            "DELETE FROM like_on_comment WHERE LC_comment_id = ? AND LC_user_id = ?;";
+            "DELETE FROM comment_user WHERE CU_comment_id = ? AND CU_user_id = ?;";
 
     private final static String UPDATE_LIKE =
             "UPDATE comment SET C_number_of_likes = ? WHERE C_id = ?";
 
     private final static String SELECT_LIKE =
-            "SELECT * FROM like_on_comment WHERE LC_comment_id = ? AND LC_user_id = ?;";
+            "SELECT * FROM comment_user WHERE CU_comment_id = ? AND CU_user_id = ?;";
 
     @Override
     public Long create(Comment comment) throws SQLException {
