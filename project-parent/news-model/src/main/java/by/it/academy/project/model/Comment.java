@@ -23,7 +23,7 @@ public class Comment {
     @EqualsAndHashCode.Exclude
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "C_user_id")
     private User user;
 
@@ -36,7 +36,7 @@ public class Comment {
     @Column(name = "C_number_of_likes")
     private Long numberOfLikes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "C_article_id")
     private Article article;
 
@@ -44,6 +44,10 @@ public class Comment {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<User> usersWhoLiked;
+
+    public Comment(Long id){
+        this.id = id;
+    }
 
     public Comment(User user, String text, Article article) {
         this.user = user;

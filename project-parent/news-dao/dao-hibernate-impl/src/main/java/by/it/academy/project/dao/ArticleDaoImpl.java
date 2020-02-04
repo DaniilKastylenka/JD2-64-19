@@ -124,7 +124,7 @@ public class ArticleDaoImpl implements ArticleDao {
         int result = -1;
         try (session) {
             session.getTransaction().begin();
-            NativeQuery query = session.createNativeQuery("DELETE FROM article_user WHERE AU_article_id = ? AND AU_user_id");
+            NativeQuery query = session.createNativeQuery("DELETE FROM user_article WHERE Article_A_id = ? AND User_U_id");
             query.setParameter(1, articleId);
             query.setParameter(2, userId);
             result = query.executeUpdate();
