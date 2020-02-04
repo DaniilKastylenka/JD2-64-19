@@ -50,7 +50,7 @@ public class Article {
     private Long numberOfLikes;
 
     @ManyToMany()
-    @JoinTable(name = "article_user",
+    @JoinTable(name = "user_article",
             joinColumns = {@JoinColumn(name = "AU_article_id")},
             inverseJoinColumns = {@JoinColumn(name = "AU_user_id")})
     @ToString.Exclude

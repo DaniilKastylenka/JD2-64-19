@@ -20,6 +20,8 @@ public class ArticleDaoImpl implements ArticleDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
+    private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
+
     @Override
     public Long create(Article article) throws SQLException {
         Session session = sessionFactory.openSession();
@@ -176,4 +178,9 @@ public class ArticleDaoImpl implements ArticleDao {
         }
         return result;
     }
+
+    public static ArticleDao getINSTANCE() {
+        return INSTANCE;
+    }
+
 }

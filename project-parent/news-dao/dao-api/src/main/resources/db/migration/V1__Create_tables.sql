@@ -43,12 +43,12 @@ CREATE TABLE comment(
                       FOREIGN KEY (C_article_id) REFERENCES article(A_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
-CREATE TABLE article_user
+CREATE TABLE user_article
 (
-                      AU_article_id      BIGINT        NOT NULL,
-                      AU_user_id         BIGINT        NOT NULL,
-                      FOREIGN KEY (AU_article_id) REFERENCES article(A_id) ON DELETE CASCADE ,
-                      FOREIGN KEY (AU_user_id) REFERENCES user(U_id) ON DELETE CASCADE
+                      Article_A_id      BIGINT        NOT NULL,
+                      User_U_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (Article_A_id) REFERENCES article(A_id) ON DELETE CASCADE ,
+                      FOREIGN KEY (User_U_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
 CREATE TABLE comment_user
