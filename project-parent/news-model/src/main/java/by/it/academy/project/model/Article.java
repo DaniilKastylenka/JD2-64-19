@@ -24,6 +24,7 @@ public class Article {
     @EqualsAndHashCode.Exclude
     private Long id;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "A_section_id")
     private Section section;
@@ -61,7 +62,6 @@ public class Article {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Comment> comments;
-
 
 
     public Article(Long id, Section section, String title, String text, User author) {

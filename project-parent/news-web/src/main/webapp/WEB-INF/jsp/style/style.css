@@ -71,31 +71,31 @@ p {
     color: #000;
 }
 
-.delete-btn{
+.delete-btn {
     color: black;
     transition: 0.15s;
 }
 
-.delete-btn:hover{
+.delete-btn:hover {
     color: red;
 }
 
-.update-btn{
+.update-btn {
     color: black;
     transition: 0.15s;
 }
 
-.update-btn:hover{
+.update-btn:hover {
     color: blue;
 }
 
-.title-link{
+.title-link {
     transition: 0.15s;
     height: 90px;
     overflow: hidden;
 }
 
-.title-link:hover{
+.title-link:hover {
     color: #a256ab;
 }
 
@@ -118,7 +118,7 @@ p {
     width: 100%;
 }
 
-.article-like-btn{
+.article-like-btn {
     font-family: 'Lato', sans-serif;
     font-size: 14px;
     color: black;
@@ -130,7 +130,6 @@ p {
     display: -ms-flexbox;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 0 10px;
     width: 60px;
     height: 30px;
@@ -145,18 +144,17 @@ p {
     transition: all 0.2s;
 }
 
-.article-like-btn:hover{
+.article-like-btn:hover {
     color: #fff;
     background-color: #9a80bb;
 }
 
-.article-like-btn:active{
-    font-size: 12px;
+.article-like-btn:active {
     background-color: #6c5a8a;
     border-color: #6c5a8a;
 }
 
-.comment-like-btn{
+.comment-like-btn {
     font-family: 'Lato', sans-serif;
     font-size: 12px;
     color: black;
@@ -168,10 +166,9 @@ p {
     display: -ms-flexbox;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 0 5px;
-    width: 50%;
-    height: 80%;
+    width: 40px;
+    height: 20px;
     border: 2px solid #9a80bb;
     background-color: #fff;
     border-radius: 30px;
@@ -182,12 +179,17 @@ p {
     transition: all 0.2s;
 }
 
-.comment-like-btn:hover{
+.comment-like-btn:hover {
     color: #fff;
     background-color: #9a80bb;
 }
 
-.submit-btn{
+.comment-like-btn:active {
+    background-color: #6c5a8a;
+    border-color: #6c5a8a;
+}
+
+.submit-btn {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
     color: black;
@@ -199,7 +201,6 @@ p {
     display: -ms-flexbox;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 0 10px;
     width: 100px;
     height: 35px;
@@ -213,9 +214,14 @@ p {
     transition: all 0.2s;
 }
 
-.submit-btn:hover{
+.submit-btn:hover {
     color: #fff;
-    background-color:  #9a80bb;
+    background-color: #9a80bb;
+}
+
+.submit-btn:active{
+    background-color: #6c5a8a;
+    border-color: #6c5a8a;
 }
 
 
