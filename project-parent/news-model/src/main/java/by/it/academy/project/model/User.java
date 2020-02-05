@@ -3,6 +3,7 @@ package by.it.academy.project.model;
 import by.it.academy.project.security.EncryptUtils;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -11,31 +12,52 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Entity
+@Table(name = "user")
+
 
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "U_id")
+    @EqualsAndHashCode.Exclude
     private Long id;
+
+    @Column(name = "U_username")
     private String username;
+
+    @Column(name = "U_password")
     private String password;
+
+    @Column(name = "U_salt")
     private String salt = EncryptUtils.generateSalt();
 
-    //many-to-one
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "U_role_id")
     private Role role;
 
-    //one-to-many
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Article> ownArticles;
 
-    //many-to-many
+    @ManyToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Article> likedArticles;
 
-    //one-to-many
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Comment> ownComments;
 
-    //many-to-many
+    @ManyToMany()
+    @JoinTable(name = "comment_user",
+            joinColumns = {@JoinColumn(name = "CU_user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "CU_comment_id")})
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Comment> likedComments;
 
     public User(String username, String password) {
@@ -62,6 +84,10 @@ public class User {
     public User(Long id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 }
 

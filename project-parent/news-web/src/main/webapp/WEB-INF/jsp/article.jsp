@@ -55,7 +55,7 @@
 
 <h2 align="center">Write your comment</h2>
 
-<table class="comment-tbl">
+<table class="comment-tbl" style="padding-bottom: 100px">
     <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
         <tr>
             <td align="left">
@@ -74,7 +74,7 @@
     </form>
 </table>
 
-<h2 align="center">Comments</h2>
+<h2 align="center" style="padding-bottom: 50px">Comments</h2>
 
 <table class="comment-tbl">
     <col width="70%">

@@ -1,41 +1,67 @@
 package by.it.academy.project.model;
 
 import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.*;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Entity
+@Table(name = "article")
 
 public class Article {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "A_id")
+    @EqualsAndHashCode.Exclude
     private Long id;
 
-    // many-to-one
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "A_section_id")
     private Section section;
 
+    @Column(name = "A_title")
     private String title;
 
+    @Column(name = "A_text", columnDefinition = "text")
     @ToString.Exclude
     private String text;
 
-    //many-to-one
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "A_author_id")
     private User author;
+
+    @Column(name = "A_publication_date", updatable = false)
     private Date publicationDate;
+
+    @Column(name = "A_updated_date", insertable = false)
+    @UpdateTimestamp
     private Date updatedDate;
+
+    @Column(name = "A_number_of_likes")
     private Long numberOfLikes;
 
-    //many-to-many
+    @ManyToMany()
+    @JoinTable(name = "user_article",
+            joinColumns = {@JoinColumn(name = "AU_article_id")},
+            inverseJoinColumns = {@JoinColumn(name = "AU_user_id")})
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<User> usersWhoLiked;
 
-    //one-to-many
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Comment> comments;
-
 
 
     public Article(Long id, Section section, String title, String text, User author) {
@@ -60,17 +86,4 @@ public class Article {
         this.id = id;
     }
 
-
-    //temp
-    public Article(Long id, Section section, String title, String text, User author, Date publicationDate, Date updatedDate, Long numberOfLikes, Set<User> usersWhoLiked) {
-        this.id = id;
-        this.section = section;
-        this.title = title;
-        this.text = text;
-        this.author = author;
-        this.publicationDate = publicationDate;
-        this.updatedDate = updatedDate;
-        this.numberOfLikes = numberOfLikes;
-        this.usersWhoLiked = usersWhoLiked;
-    }
 }
