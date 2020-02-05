@@ -174,6 +174,20 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public boolean findLike(Long commentId, Long userId) throws SQLException {
-        return false;
+        Session session = sessionFactory.openSession();
+        boolean result = false;
+        try{
+            session.getTransaction().begin();
+            NativeQuery<Comment> query = session.createNativeQuery("SELECT * FROM comment_user WHERE CU_comment_id = ? AND CU_user_id = ?;", Comment.class);
+            if (query.getSingleResult()!=null){
+                result = true;
+            }
+        } catch(HibernateException e){
+            log.error("error while finding like in comment", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
     }
 }

@@ -35,13 +35,13 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             "SELECT * FROM article a " +
                     "JOIN section s ON a.A_section_id = s.S_id " +
                     "JOIN user u ON a.A_author_id = u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id ORDER BY a.A_id DESC;";
+                    "JOIN role r ON u.U_role_id = r.R_id ORDER BY a.A_publication_date DESC;";
 
 
     private static final String SELECT_ALL_WHO_LIKED =
-            "SELECT * FROM like_on_article l " +
-                    "JOIN user u ON l.LA_user_id = u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id WHERE LA_article_id = ?;";
+            "SELECT * FROM user_article ua " +
+                    "JOIN user u ON ua.User_U_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE ua.Article_A_id = ?;";
 
 
     private static final String SELECT_ALL_COMMENTS =
@@ -53,13 +53,13 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     private static final String INSERT_LIKE =
-            "INSERT INTO article_user VALUE (?,?);";
+            "INSERT INTO user_article VALUE (?,?);";
 
     private static final String DELETE_LIKE =
-            "DELETE FROM article_user WHERE AU_article_id = ? AND AU_user_id = ?;";
+            "DELETE FROM user_article WHERE Article_A_id = ? AND User_U_id = ?;";
 
     private static final String SELECT_LIKE =
-            "SELECT * FROM article_user WHERE AU_article_id = ? AND AU_user_id = ?;";
+            "SELECT * FROM user_article WHERE Article_A_id = ? AND User_U_id = ?;";
 
     private static final String UPDATE_LIKE =
             "UPDATE article SET A_number_of_likes = ? WHERE A_id = ?;";

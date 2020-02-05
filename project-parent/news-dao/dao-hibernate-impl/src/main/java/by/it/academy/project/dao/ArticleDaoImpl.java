@@ -23,81 +23,89 @@ public class ArticleDaoImpl implements ArticleDao {
     private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
     @Override
-    public Long create(Article article) throws SQLException {
+    public Long create(Article article) {
         Session session = sessionFactory.openSession();
         Long result = null;
-        try (session) {
+        try {
             session.getTransaction().begin();
             result = (Long) session.save(article);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while creating article", e);
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
 
     @Override
-    public Optional<Article> read(Long id) throws SQLException {
+    public Optional<Article> read(Long id) {
         Session session = sessionFactory.openSession();
         Optional<Article> result = Optional.empty();
-        try (session) {
-            session.getTransaction().begin();
+        try {
             result = Optional.ofNullable(session.get(Article.class, id));
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while reading", e);
-            session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
 
     @Override
-    public int update(Article article) throws SQLException {
+    public int update(Article article) {
         Optional<Article> optionalArticle = read(article.getId());
         Session session = sessionFactory.openSession();
-        try (session) {
+        int result = 0;
+        try {
             session.getTransaction().begin();
             if (optionalArticle.isPresent()) {
                 session.update(article);
                 session.getTransaction().commit();
+                result = 1;
             }
         } catch (HibernateException e) {
             log.error("error while updating", e);
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return 1;
+        return result;
     }
 
     @Override
-    public int delete(Long id) throws SQLException {
+    public int delete(Long id) {
         Optional<Article> optionalArticle = read(id);
         Session session = sessionFactory.openSession();
-        try (session) {
+        int result = 0;
+        try {
             session.getTransaction().begin();
             if (optionalArticle.isPresent()) {
                 session.delete(new Article(id));
                 session.getTransaction().commit();
+                result = 1;
             }
         } catch (HibernateException e) {
             log.error("error while deleting", e);
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return 0;
+        return result;
     }
 
     @Override
-    public List<Article> getAll() throws SQLException {
+    public List<Article> getAll() {
         Session session = sessionFactory.openSession();
         List<Article> result = new ArrayList<>();
-        try (session) {
-            session.getTransaction().begin();
-            Query<Article> query = session.createQuery("FROM Article", Article.class);
+        try {
+            Query<Article> query = session.createQuery("FROM Article ORDER BY publicationDate DESC", Article.class);
             result = query.list();
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while getting all", e);
-            session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
