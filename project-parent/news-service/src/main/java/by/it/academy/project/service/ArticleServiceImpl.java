@@ -96,6 +96,14 @@ public class ArticleServiceImpl implements ArticleService {
                 articleDao.updateLikeInArticle(articleId, true);
                 result = "remove like by user with id " + userId;
 
+            } else if (articleDao.findDislike(articleId, userId)) {
+
+                articleDao.deleteDislike(articleId, userId);
+                articleDao.addLike(articleId, userId);
+                articleDao.updateLikeInArticle(articleId, false);
+                articleDao.updateDislikeInArticle(articleId, true);
+                result = "remove dislike and add like by user with id " + userId;
+
             } else {
                 articleDao.addLike(articleId, userId);
                 articleDao.updateLikeInArticle(articleId, false);
@@ -106,6 +114,41 @@ public class ArticleServiceImpl implements ArticleService {
         } catch (SQLException e) {
             logger.error("error while like article ", e);
         }
+    }
+
+    @Override
+    public void dislike(Long articleId, Long userId) {
+
+        logger.debug("dislike article" + articleId);
+
+        String result;
+
+        try {
+            if (articleDao.findDislike(articleId, userId)) {
+
+                articleDao.deleteDislike(articleId, userId);
+                articleDao.updateDislikeInArticle(articleId, true);
+                result = "remove dislike by user with id " + userId;
+
+            } else if (articleDao.findLike(articleId, userId)) {
+
+                articleDao.deleteLike(articleId, userId);
+                articleDao.addDislike(articleId, userId);
+                articleDao.updateDislikeInArticle(articleId, false);
+                articleDao.updateLikeInArticle(articleId, true);
+                result = "remove like and add dislike by user with id " + userId;
+
+            } else {
+                articleDao.addDislike(articleId, userId);
+                articleDao.updateDislikeInArticle(articleId, false);
+                result = "add dislike by user with id " + userId;
+
+            }
+            logger.debug("result {} ", result);
+        } catch (SQLException e) {
+            logger.error("error while dislike article ", e);
+        }
+
     }
 
     public static ArticleService getINSTANCE() {

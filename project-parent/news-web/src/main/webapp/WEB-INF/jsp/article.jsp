@@ -11,6 +11,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         <%@include file="js/ajax/ajax_like_article.js" %>
+        <%@include file="js/ajax/ajax_dislike_article.js"%>
     </script>
 </head>
 <body>
@@ -47,11 +48,23 @@
     </tr>
 </table>
 
-<div style="margin-left: 140px; width: 60px; height: 30px" align="center">
-    <button id="article-like-btn" class="article-like-btn">Like</button>
-</div>
-<div id="article-likes" style="font-size: 14px; margin-left: 140px  ">${article.numberOfLikes} like(s)</div>
-
+<table style="margin-left: 140px; width: 200px; height: 150px">
+    <tr>
+        <td align="center">
+            <div style="width: 60px; height: 30px" align="center">
+                <button id="article-like-btn" class="article-like-btn">Like</button>
+            </div>
+            <div id="article-likes" style="font-size: 14px;">${article.likes} like(s)</div>
+        </td>
+        <td align="center">
+            <div style="width: 60px; height: 30px" align="center">
+                <button id="article-dislike-btn" class="article-dislike-btn">Dislike</button>
+            </div>
+            <div id="article-dislikes" style="font-size: 14px">${article.dislikes} dislike(s)
+            </div>
+        </td>
+    </tr>
+</table>
 
 <h2 align="center">Write your comment</h2>
 
@@ -69,7 +82,8 @@
                                                                                  maxlength="500"></textarea></td>
         </tr>
         <tr>
-            <td align="left" style="width: 100px; height: 35px"><input type="submit" class="submit-btn" placeholder="submit"></td>
+            <td align="left" style="width: 100px; height: 35px"><input type="submit" class="submit-btn"
+                                                                       placeholder="submit"></td>
         </tr>
     </form>
 </table>

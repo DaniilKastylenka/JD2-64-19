@@ -19,9 +19,9 @@ public class CommentDaoImpl implements CommentDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    private static CommentDaoImpl INSTANCE = new CommentDaoImpl();
+    private static final CommentDaoImpl INSTANCE = new CommentDaoImpl();
 
-    public static CommentDaoImpl getINSTANCE() {
+    public static CommentDao getINSTANCE() {
         return INSTANCE;
     }
 

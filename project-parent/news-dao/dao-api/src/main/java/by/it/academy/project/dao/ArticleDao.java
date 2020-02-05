@@ -14,4 +14,12 @@ public interface ArticleDao extends DAO<Article> {
 
     boolean findLike(Long articleId, Long userId) throws SQLException;
 
+    void addDislike(Long articleId, Long userId) throws SQLException;
+
+    int deleteDislike(Long articleId, Long userId) throws SQLException;
+
+    int updateDislikeInArticle(Long articleId, boolean isLiked) throws SQLException;
+
+    boolean findDislike(Long articleId, Long userId) throws SQLException;
+
 }

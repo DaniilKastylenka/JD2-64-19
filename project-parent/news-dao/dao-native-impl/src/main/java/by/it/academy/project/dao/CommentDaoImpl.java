@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
-    private static CommentDaoImpl INSTANCE = new CommentDaoImpl();
+    private static final CommentDaoImpl INSTANCE = new CommentDaoImpl();
 
 
     protected CommentDaoImpl() {
@@ -155,7 +155,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
         return result;
     }
 
-    public static CommentDaoImpl getINSTANCE() {
+    public static CommentDao getINSTANCE() {
         return INSTANCE;
     }
 

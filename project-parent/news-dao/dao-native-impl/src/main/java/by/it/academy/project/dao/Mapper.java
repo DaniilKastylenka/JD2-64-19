@@ -30,9 +30,11 @@ public class Mapper {
             updatedDate = new Date(timestamp1.getTime());
         }
 
-        Long numberOfLikes = resultSet.getLong("A_number_of_likes");
+        Long likes = resultSet.getLong("A_likes");
 
-        return new Article(articleId, section, title, text, author, publicationDate, updatedDate, numberOfLikes);
+        Long dislikes = resultSet.getLong("A_dislikes");
+
+        return new Article(articleId, section, title, text, author, publicationDate, updatedDate, likes, dislikes);
     }
 
     public static User mapUser(ResultSet resultSet) throws SQLException {

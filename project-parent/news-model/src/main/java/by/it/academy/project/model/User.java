@@ -48,6 +48,12 @@ public class User {
     @Transient
     private Set<Article> likedArticles;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Transient
+    private Set<Article> dislikedArticles;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -1,7 +1,6 @@
 package by.it.academy.project.service;
 
 import by.it.academy.project.model.Article;
-import by.it.academy.project.model.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +17,8 @@ public interface ArticleService {
 
     void update(Article article);
 
-    void like(Long article_id, Long user_id);
+    void like(Long articleId, Long userId);
+
+    void dislike(Long articleId, Long userId);
 
 }

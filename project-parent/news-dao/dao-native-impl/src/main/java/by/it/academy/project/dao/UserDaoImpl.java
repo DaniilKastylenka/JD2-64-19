@@ -14,10 +14,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         super(LoggerFactory.getLogger(UserDaoImpl.class));
     }
 
-    private static UserDaoImpl INSTANCE = new UserDaoImpl();
+    private static final UserDaoImpl INSTANCE = new UserDaoImpl();
 
 
-    public static UserDaoImpl getINSTANCE() {
+    public static UserDao getINSTANCE() {
         return INSTANCE;
     }
 

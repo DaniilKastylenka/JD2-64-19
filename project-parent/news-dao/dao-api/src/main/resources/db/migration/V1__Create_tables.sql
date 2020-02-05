@@ -27,7 +27,8 @@ CREATE TABLE article(
                       A_publication_date  DATETIME      NOT NULL,
                       A_updated_date      DATETIME      DEFAULT NULL,
                       A_text              TEXT          NOT NULL,
-                      A_number_of_likes   BIGINT        NOT NULL DEFAULT 0,
+                      A_likes             BIGINT        NOT NULL DEFAULT 0,
+                      A_dislikes          BIGINT        NOT NULL DEFAULT 0,
                       FOREIGN KEY (A_section_id) REFERENCES section(S_id),
                       FOREIGN KEY (A_author_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
@@ -43,7 +44,15 @@ CREATE TABLE comment(
                       FOREIGN KEY (C_article_id) REFERENCES article(A_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
-CREATE TABLE user_article
+CREATE TABLE user_article_like
+(
+                      Article_A_id      BIGINT        NOT NULL,
+                      User_U_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (Article_A_id) REFERENCES article(A_id) ON DELETE CASCADE ,
+                      FOREIGN KEY (User_U_id) REFERENCES user(U_id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_article_dislike
 (
                       Article_A_id      BIGINT        NOT NULL,
                       User_U_id         BIGINT        NOT NULL,

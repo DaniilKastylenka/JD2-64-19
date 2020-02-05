@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = "/likeArticle")
+@WebServlet(urlPatterns = "/dislikeArticle")
 
-public class LikeArticleServlet extends HttpServlet {
+public class DislikeArticleServlet extends HttpServlet {
 
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
 
@@ -26,25 +26,22 @@ public class LikeArticleServlet extends HttpServlet {
 
         User user = (User) req.getSession().getAttribute("user");
 
-        articleService.like(articleId, user.getId());
+        articleService.dislike(articleId, user.getId());
 
         Optional<Article> article = articleService.findArticleById(articleId);
 
-        Long likes = null;
         Long dislikes = null;
+        Long likes = null;
 
         if (article.isPresent()) {
-            likes = article.get().getLikes();
             dislikes = article.get().getDislikes();
+            likes = article.get().getLikes();
         }
 
-        String response = likes + " like(s)" + ":" + dislikes + " dislike(s)";
+        String response = dislikes + " dislike(s)" + ":" + likes + " like(s)";
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(response);
-
-
-
 
     }
 

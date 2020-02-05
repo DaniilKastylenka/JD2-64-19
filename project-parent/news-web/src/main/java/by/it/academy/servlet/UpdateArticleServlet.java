@@ -51,7 +51,7 @@ public class UpdateArticleServlet extends HttpServlet {
         Optional<Article> optionalArticle = articleService.findArticleById(articleId);
 
         Article oldArticle = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
-        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getPublicationDate(), new Date(), oldArticle.getNumberOfLikes());
+        Article newArticle = new Article(articleId, section, title, text, oldArticle.getAuthor(), oldArticle.getPublicationDate(), new Date(), oldArticle.getLikes(), oldArticle.getDislikes());
 
         articleService.update(newArticle);
 

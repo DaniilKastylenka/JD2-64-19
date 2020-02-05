@@ -15,9 +15,9 @@ import java.util.Optional;
 @Slf4j
 public class SectionDaoImpl implements SectionDao {
 
-    private static SectionDaoImpl INSTANCE = new SectionDaoImpl();
+    private static final SectionDaoImpl INSTANCE = new SectionDaoImpl();
 
-    public static SectionDaoImpl getINSTANCE() {
+    public static SectionDao getINSTANCE() {
         return INSTANCE;
     }
 

@@ -18,9 +18,9 @@ public class UserDaoImpl implements UserDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    private static UserDaoImpl INSTANCE = new UserDaoImpl();
+    private static final UserDaoImpl INSTANCE = new UserDaoImpl();
 
-    public static UserDaoImpl getINSTANCE() {
+    public static UserDao getINSTANCE() {
         return INSTANCE;
     }
 

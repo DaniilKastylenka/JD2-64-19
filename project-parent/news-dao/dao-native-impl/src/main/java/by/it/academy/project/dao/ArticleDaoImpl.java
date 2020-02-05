@@ -14,7 +14,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
         super(LoggerFactory.getLogger(ArticleDaoImpl.class));
     }
 
-    private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
+    private static final ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
     private static final String INSERT_ARTICLE =
             "INSERT INTO article (A_title, A_section_id, A_author_id, A_publication_date, A_text) VALUES (?,?,?,?,?);";
@@ -39,7 +39,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     private static final String SELECT_ALL_WHO_LIKED =
-            "SELECT * FROM user_article ua " +
+            "SELECT * FROM user_article_like ua " +
                     "JOIN user u ON ua.User_U_id = u.U_id " +
                     "JOIN role r ON u.U_role_id = r.R_id WHERE ua.Article_A_id = ?;";
 
@@ -53,16 +53,28 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
 
     private static final String INSERT_LIKE =
-            "INSERT INTO user_article VALUE (?,?);";
+            "INSERT INTO user_article_like VALUE (?,?);";
 
     private static final String DELETE_LIKE =
-            "DELETE FROM user_article WHERE Article_A_id = ? AND User_U_id = ?;";
+            "DELETE FROM user_article_like WHERE Article_A_id = ? AND User_U_id = ?;";
 
     private static final String SELECT_LIKE =
-            "SELECT * FROM user_article WHERE Article_A_id = ? AND User_U_id = ?;";
+            "SELECT * FROM user_article_like WHERE Article_A_id = ? AND User_U_id = ?;";
 
     private static final String UPDATE_LIKE =
-            "UPDATE article SET A_number_of_likes = ? WHERE A_id = ?;";
+            "UPDATE article SET A_likes = ? WHERE A_id = ?;";
+
+    private static final String INSERT_DISLIKE =
+            "INSERT INTO user_article_dislike VALUE (?,?);";
+
+    private static final String DELETE_DISLIKE =
+            "DELETE FROM user_article_dislike WHERE Article_A_id = ? AND User_U_id = ?;";
+
+    private static final String SELECT_DISLIKE =
+            "SELECT * FROM user_article_dislike WHERE Article_A_id = ? AND User_U_id = ?;";
+
+    private static final String UPDATE_DISLIKE =
+            "UPDATE article SET A_dislikes = ? WHERE A_id = ?;";
 
 
     public static ArticleDao getINSTANCE() {
@@ -259,9 +271,73 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     .orElseThrow(() -> new RuntimeException("unknown article"));
 
             if (isLiked) {
-                statement.setLong(1, article.getNumberOfLikes() - 1);
+                statement.setLong(1, article.getLikes() - 1);
             } else {
-                statement.setLong(1, article.getNumberOfLikes() + 1);
+                statement.setLong(1, article.getLikes() + 1);
+            }
+            statement.setLong(2, articleId);
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void addDislike(Long articleId, Long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_DISLIKE)) {
+
+            statement.setLong(1, articleId);
+            statement.setLong(2, userId);
+
+            statement.executeUpdate();
+
+        }
+    }
+
+    @Override
+    public int deleteDislike(Long articleId, Long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_DISLIKE)) {
+
+            statement.setLong(1, articleId);
+            statement.setLong(2, userId);
+
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean findDislike(Long articleId, Long userId) throws SQLException {
+        ResultSet resultSet = null;
+        boolean result = false;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_DISLIKE)) {
+
+            statement.setLong(1, articleId);
+            statement.setLong(2, userId);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                result = true;
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public int updateDislikeInArticle(Long articleId, boolean isLiked) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_DISLIKE)) {
+
+            Article article = read(articleId)
+                    .orElseThrow(() -> new RuntimeException("unknown article"));
+
+            if (isLiked) {
+                statement.setLong(1, article.getDislikes() - 1);
+            } else {
+                statement.setLong(1, article.getDislikes() + 1);
             }
             statement.setLong(2, articleId);
             return statement.executeUpdate();

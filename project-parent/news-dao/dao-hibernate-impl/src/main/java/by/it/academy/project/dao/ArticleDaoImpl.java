@@ -19,7 +19,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    private static ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
+    private static final ArticleDaoImpl INSTANCE = new ArticleDaoImpl();
 
     @Override
     public Long create(Article article) {
@@ -110,7 +110,7 @@ public class ArticleDaoImpl implements ArticleDao {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            NativeQuery query = session.createNativeQuery("INSERT INTO user_article VALUES (?,?)");
+            NativeQuery query = session.createNativeQuery("INSERT INTO user_article_like VALUES (?,?)");
             query.setParameter(1, articleId);
             query.setParameter(2, userId);
             query.executeUpdate();
@@ -129,13 +129,13 @@ public class ArticleDaoImpl implements ArticleDao {
         int result = 0;
         try {
             session.getTransaction().begin();
-            NativeQuery query = session.createNativeQuery("DELETE FROM user_article WHERE Article_A_id = ? AND User_U_id = ?");
+            NativeQuery query = session.createNativeQuery("DELETE FROM user_article_like WHERE Article_A_id = ? AND User_U_id = ?");
             query.setParameter(1, articleId);
             query.setParameter(2, userId);
             result = query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            log.error("error while deleting like from article_user table", e);
+            log.error("error while deleting like from article_user_like table", e);
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -149,8 +149,8 @@ public class ArticleDaoImpl implements ArticleDao {
         int result = 0;
         try {
             session.getTransaction().begin();
-            Long numberOfLikes = read(articleId).orElseThrow(() -> new RuntimeException("unknown article")).getNumberOfLikes();
-            Query query = session.createQuery("UPDATE Article SET numberOfLikes =:likes WHERE id =: id");
+            Long numberOfLikes = read(articleId).orElseThrow(() -> new RuntimeException("unknown article")).getLikes();
+            Query query = session.createQuery("UPDATE Article SET likes =:likes WHERE id =: id");
             if (isLiked) {
                 query.setParameter("likes", numberOfLikes - 1);
             } else {
@@ -173,7 +173,7 @@ public class ArticleDaoImpl implements ArticleDao {
         Session session = sessionFactory.openSession();
         boolean result = false;
         try (session) {
-            NativeQuery query = session.createNativeQuery("SELECT * FROM user_article WHERE Article_A_id = ? AND  User_U_id = ?;");
+            NativeQuery query = session.createNativeQuery("SELECT * FROM user_article_like WHERE Article_A_id = ? AND  User_U_id = ?;");
             query.setParameter(1, articleId);
             query.setParameter(2, userId);
             if (query.uniqueResult() != null) {
@@ -181,6 +181,86 @@ public class ArticleDaoImpl implements ArticleDao {
             }
         } catch (HibernateException e) {
             log.error("error while finding like in article", e);
+        }
+        return result;
+    }
+
+    @Override
+    public void addDislike(Long articleId, Long userId) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.getTransaction().begin();
+            NativeQuery query = session.createNativeQuery("INSERT INTO user_article_dislike VALUES (?,?)");
+            query.setParameter(1, articleId);
+            query.setParameter(2, userId);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            log.error("error while adding dislike to article_user_dislike table", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public int deleteDislike(Long articleId, Long userId) {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try {
+            session.getTransaction().begin();
+            NativeQuery query = session.createNativeQuery("DELETE FROM user_article_dislike WHERE Article_A_id = ? AND User_U_id = ?");
+            query.setParameter(1, articleId);
+            query.setParameter(2, userId);
+            result = query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            log.error("error while deleting dislike from article_user_dislike table", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    @Override
+    public int updateDislikeInArticle(Long articleId, boolean isDisliked) {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try {
+            session.getTransaction().begin();
+            Long dislikes = read(articleId).orElseThrow(() -> new RuntimeException("unknown article")).getDislikes();
+            Query query = session.createQuery("UPDATE Article SET dislikes =:dislikes WHERE id =: id");
+            if (isDisliked) {
+                query.setParameter("dislikes", dislikes - 1);
+            } else {
+                query.setParameter("dislikes", dislikes + 1);
+            }
+            query.setParameter("id", articleId);
+            result = query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            log.error("error while update dislike in article", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean findDislike(Long articleId, Long userId) {
+        Session session = sessionFactory.openSession();
+        boolean result = false;
+        try (session) {
+            NativeQuery query = session.createNativeQuery("SELECT * FROM user_article_dislike WHERE Article_A_id = ? AND  User_U_id = ?;");
+            query.setParameter(1, articleId);
+            query.setParameter(2, userId);
+            if (query.uniqueResult() != null) {
+                result = true;
+            }
+        } catch (HibernateException e) {
+            log.error("error while finding dislike in article", e);
         }
         return result;
     }

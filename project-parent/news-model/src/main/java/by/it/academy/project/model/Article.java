@@ -47,16 +47,27 @@ public class Article {
     @UpdateTimestamp
     private Date updatedDate;
 
-    @Column(name = "A_number_of_likes")
-    private Long numberOfLikes;
+    @Column(name = "A_likes")
+    private Long likes;
+
+    @Column(name = "A_dislikes")
+    private Long dislikes;
 
     @ManyToMany()
-    @JoinTable(name = "user_article",
+    @JoinTable(name = "user_article_like",
             joinColumns = {@JoinColumn(name = "User_U_id")},
             inverseJoinColumns = {@JoinColumn(name = "Article_A_id")})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<User> usersWhoLiked;
+
+    @ManyToMany()
+    @JoinTable(name = "user_article_dislike",
+            joinColumns = {@JoinColumn(name = "User_U_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Article_A_id")})
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<User> usersWhoDisliked;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
     @ToString.Exclude
@@ -72,14 +83,16 @@ public class Article {
         this.author = author;
         this.publicationDate = new Date();
         this.updatedDate = null;
-        this.numberOfLikes = 0L;
+        this.likes = 0L;
+        this.dislikes = 0L;
     }
 
-    public Article(Long id, Section section, String title, String text, User author, Date publicationDate, Date updatedDate, Long likes) {
+    public Article(Long id, Section section, String title, String text, User author, Date publicationDate, Date updatedDate, Long likes, Long dislikes) {
         this(id, section, title, text, author);
         this.publicationDate = publicationDate;
         this.updatedDate = updatedDate;
-        this.numberOfLikes = likes;
+        this.likes = likes;
+        this.dislikes = dislikes;
     }
 
     public Article(Long id) {

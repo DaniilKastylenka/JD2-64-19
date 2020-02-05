@@ -224,6 +224,41 @@ p {
     border-color: #6c5a8a;
 }
 
+.article-dislike-btn {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: black;
+    line-height: 1.2;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+    width: 60px;
+    height: 30px;
+    border: 2px solid #bb545f;
+    background-color: #fff;
+    border-radius: 30px;
+    user-select: none;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.2s;
+}
+
+.article-dislike-btn:hover {
+    color: #fff;
+    background-color: #bb545f;
+}
+
+.article-dislike-btn:active {
+    background-color: #791d25;
+    border-color: #791d25;
+}
 
 
 
