@@ -26,7 +26,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public Long create(Comment comment) throws SQLException {
+    public Long create(Comment comment) {
         Session session = sessionFactory.openSession();
         Long result = null;
         try {
@@ -43,15 +43,31 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public Optional<Comment> read(Long id) throws SQLException {
+    public Optional<Comment> read(Long id) {
         Session session = sessionFactory.openSession();
         Optional<Comment> result = Optional.empty();
-        try {
-            session.getTransaction().begin();
+        try (session) {
             result = Optional.ofNullable(session.get(Comment.class, id));
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while reading comment", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int update(Comment comment) {
+        Optional<Comment> optionalComment = read(comment.getId());
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try {
+            session.getTransaction().begin();
+            if (optionalComment.isPresent()) {
+                session.update(comment);
+                session.getTransaction().commit();
+                result = 1;
+            }
+        } catch (HibernateException e) {
+            log.error("error while updating comment", e);
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -60,57 +76,41 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public int update(Comment comment) throws SQLException {
-        Optional<Comment> optionalComment = read(comment.getId());
-        Session session = sessionFactory.openSession();
-        try (session) {
-            session.getTransaction().begin();
-            if (optionalComment.isPresent()) {
-                session.update(comment);
-                session.getTransaction().commit();
-            }
-        } catch (HibernateException e) {
-            log.error("error while updating comment", e);
-            session.getTransaction().rollback();
-        }
-        return 1;
-    }
-
-    @Override
     public int delete(Long id) throws SQLException {
         Optional<Comment> optionalComment = read(id);
         Session session = sessionFactory.openSession();
-        try (session) {
+        int result = 0;
+        try {
             session.getTransaction().begin();
             if (optionalComment.isPresent()) {
                 session.delete(new Comment(id));
                 session.getTransaction().commit();
+                result = 1;
             }
         } catch (HibernateException e) {
             log.error("error while deleting comment", e);
             session.getTransaction().rollback();
-        }
-        return 1;
-    }
-
-    @Override
-    public List<Comment> getAll() throws SQLException {
-        List<Comment> result = new ArrayList<>();
-        Session session = sessionFactory.openSession();
-        try (session) {
-            session.getTransaction().begin();
-            Query<Comment> query = session.createQuery("FROM Comment", Comment.class);
-            result = query.list();
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            log.error("error while getting all comments", e);
-            session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
 
     @Override
-    public void addLike(Long commentId, Long userId) throws SQLException {
+    public List<Comment> getAll() {
+        List<Comment> result = new ArrayList<>();
+        Session session = sessionFactory.openSession();
+        try (session) {
+            Query<Comment> query = session.createQuery("FROM Comment ORDER BY date DESC", Comment.class);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting all comments", e);
+        }
+        return result;
+    }
+
+    @Override
+    public void addLike(Long commentId, Long userId) {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
@@ -128,12 +128,12 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public int deleteLike(Long commentId, Long userId) throws SQLException {
+    public int deleteLike(Long commentId, Long userId) {
         Session session = sessionFactory.openSession();
-        int result = -1;
+        int result = 0;
         try {
             session.getTransaction().begin();
-            NativeQuery<Comment> query = session.createNativeQuery("DELETE FROM comment_user WHERE CU_comment_id = ? AND CU_user_id = ?", Comment.class);
+            NativeQuery query = session.createNativeQuery("DELETE FROM comment_user WHERE Comment_C_id = ? AND User_U_id = ?");
             query.setParameter(1, commentId);
             query.setParameter(2, userId);
             result = query.executeUpdate();
@@ -148,13 +148,13 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public int updateLikeInComment(Long commentId, boolean isLiked) throws SQLException {
+    public int updateLikeInComment(Long commentId, boolean isLiked) {
         Session session = sessionFactory.openSession();
-        int result = -1;
+        int result = 0;
         try {
             session.getTransaction().begin();
             Long numberOfLikes = read(commentId).orElseThrow(() -> new RuntimeException("unknown comment")).getNumberOfLikes();
-            Query<Comment> query = session.createQuery("UPDATE Comment SET numberOfLikes=:numberOfLikes WHERE id=:id", Comment.class);
+            Query query = session.createQuery("UPDATE Comment SET numberOfLikes=:numberOfLikes WHERE id=:id");
             if (isLiked) {
                 query.setParameter("numberOfLikes", numberOfLikes - 1);
             } else {
@@ -176,17 +176,15 @@ public class CommentDaoImpl implements CommentDao {
     public boolean findLike(Long commentId, Long userId) throws SQLException {
         Session session = sessionFactory.openSession();
         boolean result = false;
-        try{
-            session.getTransaction().begin();
-            NativeQuery<Comment> query = session.createNativeQuery("SELECT * FROM comment_user WHERE CU_comment_id = ? AND CU_user_id = ?;", Comment.class);
-            if (query.getSingleResult()!=null){
+        try (session) {
+            NativeQuery query = session.createNativeQuery("SELECT * FROM comment_user WHERE Comment_C_id = ? AND User_U_id = ?");
+            query.setParameter(1, commentId);
+            query.setParameter(2, userId);
+            if (query.uniqueResult() != null) {
                 result = true;
             }
-        } catch(HibernateException e){
+        } catch (HibernateException e) {
             log.error("error while finding like in comment", e);
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
         }
         return result;
     }

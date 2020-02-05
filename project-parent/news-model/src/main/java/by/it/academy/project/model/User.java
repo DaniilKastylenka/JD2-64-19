@@ -45,6 +45,7 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Transient
     private Set<Article> likedArticles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -54,8 +55,8 @@ public class User {
 
     @ManyToMany()
     @JoinTable(name = "comment_user",
-            joinColumns = {@JoinColumn(name = "CU_user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "CU_comment_id")})
+            joinColumns = {@JoinColumn(name = "User_U_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Comment_C_id")})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Comment> likedComments;
@@ -63,7 +64,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = new Role("user");
+        this.role = new Role(3,"user");
     }
 
     public User(String username, String password, Role role) {

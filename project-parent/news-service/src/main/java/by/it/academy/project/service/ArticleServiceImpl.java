@@ -93,12 +93,12 @@ public class ArticleServiceImpl implements ArticleService {
             if (articleDao.findLike(articleId, userId)) {
 
                 articleDao.deleteLike(articleId, userId);
-                articleDao.updateLikeInArticle(articleId, false);
+                articleDao.updateLikeInArticle(articleId, true);
                 result = "remove like by user with id " + userId;
 
             } else {
                 articleDao.addLike(articleId, userId);
-                articleDao.updateLikeInArticle(articleId, true);
+                articleDao.updateLikeInArticle(articleId, false);
                 result = "add like by user with id " + userId;
 
             }

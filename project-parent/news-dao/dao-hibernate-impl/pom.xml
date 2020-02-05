@@ -14,11 +14,7 @@
     <artifactId>dao-hibernate-impl</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>by.it.academy.project</groupId>
-            <artifactId>news-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>by.it.academy.project</groupId>
             <artifactId>dao-api</artifactId>
@@ -49,12 +45,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.16</version>
         </dependency>
     </dependencies>
 

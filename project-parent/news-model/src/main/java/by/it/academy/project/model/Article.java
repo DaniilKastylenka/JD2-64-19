@@ -52,8 +52,8 @@ public class Article {
 
     @ManyToMany()
     @JoinTable(name = "user_article",
-            joinColumns = {@JoinColumn(name = "AU_article_id")},
-            inverseJoinColumns = {@JoinColumn(name = "AU_user_id")})
+            joinColumns = {@JoinColumn(name = "User_U_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Article_A_id")})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<User> usersWhoLiked;

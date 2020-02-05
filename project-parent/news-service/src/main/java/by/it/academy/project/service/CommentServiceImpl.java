@@ -79,7 +79,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void like(Long commentId, Long userId) {
-
         logger.debug("like comment");
         String result;
         try {
@@ -92,7 +91,7 @@ public class CommentServiceImpl implements CommentService {
                 commentDao.updateLikeInComment(commentId, false);
                 result = "add like by user with id " + userId;
             }
-            logger.debug("resulr{}", result);
+            logger.debug("result{}", result);
         } catch (SQLException e) {
             logger.debug("error while like comment", e);
         }

@@ -259,9 +259,9 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     .orElseThrow(() -> new RuntimeException("unknown article"));
 
             if (isLiked) {
-                statement.setLong(1, article.getNumberOfLikes() + 1);
-            } else {
                 statement.setLong(1, article.getNumberOfLikes() - 1);
+            } else {
+                statement.setLong(1, article.getNumberOfLikes() + 1);
             }
             statement.setLong(2, articleId);
             return statement.executeUpdate();

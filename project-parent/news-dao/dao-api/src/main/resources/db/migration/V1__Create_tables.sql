@@ -53,10 +53,10 @@ CREATE TABLE user_article
 
 CREATE TABLE comment_user
 (
-                      CU_comment_id      BIGINT        NOT NULL,
-                      CU_user_id         BIGINT        NOT NULL,
-                      FOREIGN KEY (CU_comment_id) REFERENCES comment(C_id) ON DELETE CASCADE,
-                      FOREIGN KEY (CU_user_id) REFERENCES user(U_id) ON DELETE CASCADE
+                      Comment_C_id       BIGINT        NOT NULL,
+                      User_U_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (Comment_C_id) REFERENCES comment(C_id) ON DELETE CASCADE,
+                      FOREIGN KEY (User_U_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
 INSERT INTO section (S_name) VALUES

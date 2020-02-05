@@ -50,7 +50,7 @@ public class CreateAuthorAccountServlet extends HttpServlet {
             req.setAttribute("errorString", error);
             req.getRequestDispatcher("WEB-INF/jsp/createAuthorAccount.jsp").forward(req, resp);
         } else {
-            userService.addUser(new User(username, password, new Role("author")));
+            userService.addUser(new User(username, password, new Role(2, "author")));
             resp.sendRedirect(req.getContextPath() + "/userList");
         }
     }

@@ -60,34 +60,42 @@ public class UserDaoImpl implements UserDao {
     public int update(User user) {
         Optional<User> optionalUser = read(user.getId());
         Session session = sessionFactory.openSession();
-        try (session) {
+        int result = 0;
+        try {
             session.getTransaction().begin();
             if (optionalUser.isPresent()) {
                 session.update(user);
                 session.getTransaction().commit();
+                result = 1;
             }
         } catch (HibernateException e) {
             log.error("error while updating user", e);
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return 1;
+        return result;
     }
 
     @Override
     public int delete(Long id) {
         Optional<User> optionalUser = read(id);
         Session session = sessionFactory.openSession();
-        try (session) {
+        int result = 0;
+        try {
             session.getTransaction().begin();
             if (optionalUser.isPresent()) {
                 session.delete(new User(id));
                 session.getTransaction().commit();
+                result = 1;
             }
         } catch (HibernateException e) {
             log.error("error while deleting user", e);
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return 0;
+        return result;
     }
 
     @Override
@@ -95,13 +103,10 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.openSession();
         List<User> result = new ArrayList<>();
         try (session) {
-            session.getTransaction().begin();
             Query<User> query = session.createQuery("FROM User", User.class);
             result = query.list();
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while getting all users", e);
-            session.getTransaction().rollback();
         }
         return result;
     }
@@ -110,21 +115,15 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findUserByUsernameAndPassword(String username, String password) {
         Session session = sessionFactory.openSession();
         Optional<User> result = Optional.empty();
-        try {
-            session.getTransaction().begin();
+        try (session) {
             Query<User> query = session.createQuery("SELECT distinct u FROM User u WHERE username=:username and password=:password", User.class);
             query.setParameter("username", username);
             query.setParameter("password", password);
             result = Optional.ofNullable(query.getSingleResult());
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while finding user by username and password", e);
-            session.getTransaction().rollback();
         } catch (NoResultException e) {
             log.error("find user by username and password - no result", e);
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
         }
         return result;
     }
@@ -133,20 +132,14 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findUserByUsername(String username) {
         Session session = sessionFactory.openSession();
         Optional<User> result = Optional.empty();
-        try {
-            session.getTransaction().begin();
+        try (session) {
             Query<User> query = session.createQuery("SELECT distinct u FROM User u WHERE username=: username", User.class);
             query.setParameter("username", username);
             result = Optional.ofNullable(query.getSingleResult());
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while finding user by username", e);
-            session.getTransaction().rollback();
         } catch (NoResultException e) {
             log.error("find user by username - no result", e);
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
         }
         return result;
     }

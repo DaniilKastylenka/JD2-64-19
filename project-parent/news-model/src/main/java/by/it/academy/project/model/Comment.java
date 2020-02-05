@@ -30,7 +30,7 @@ public class Comment {
     @Column(name = "C_text")
     private String text;
 
-    @Column(name = "C_date")
+    @Column(name = "C_date", updatable = false)
     private Date date;
 
     @Column(name = "C_number_of_likes")

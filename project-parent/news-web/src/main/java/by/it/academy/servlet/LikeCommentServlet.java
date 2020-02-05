@@ -30,8 +30,6 @@ public class LikeCommentServlet extends HttpServlet {
 
         Optional<Comment> comment = commentService.findCommentById(commentId);
 
-        //Article article = comment.orElseThrow(()->new RuntimeException("unknown article")).getArticle();
-
         Long likes = null;
 
         if(comment.isPresent()){
@@ -42,8 +40,6 @@ public class LikeCommentServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("plain/text");
         resp.getWriter().write(result);
-
-        //resp.sendRedirect(req.getContextPath() + "/article?articleId=" + article.getId());
 
     }
 }
