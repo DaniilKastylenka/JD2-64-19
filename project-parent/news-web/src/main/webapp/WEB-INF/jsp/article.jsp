@@ -101,7 +101,6 @@
     <col width="15%">
     <c:forEach items="${commentList}" var="comment">
         <c:if test="${article.id == comment.article.id}">
-            <% int i = 0; %>
             <tr>
                 <td align="left" style="color: #5e5e5e;">${comment.user.username} • <fmt:formatDate
                         pattern="dd.MM.yyy 'at' HH:mm" value="${comment.date}"/>
@@ -118,7 +117,7 @@
                     </script>
                     <div style="height: 20px; width: 45px;" align="center">
                         <button id="comment-like-btn${comment.id}"
-                                class="comment-like<c:if test="${}">d</c:if>-btn">Like
+                                class="comment-like<c:if test="">d</c:if>-btn">Like
                         </button>
                     </div>
                     <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.likes} like(s)</div>
@@ -130,7 +129,7 @@
                     </script>
                     <div style="height: 20px; width: 45px;" align="center">
                         <button id="comment-dislike-btn${comment.id}"
-                                class="comment-dislike<c:if test="${}">d</c:if>-btn">
+                                class="comment-dislike<c:if test="">d</c:if>-btn">
                             Dislike
                         </button>
                     </div>
