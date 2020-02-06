@@ -60,12 +60,20 @@ public class User {
     private Set<Comment> ownComments;
 
     @ManyToMany()
-    @JoinTable(name = "comment_user",
+    @JoinTable(name = "comment_user_like",
             joinColumns = {@JoinColumn(name = "User_U_id")},
             inverseJoinColumns = {@JoinColumn(name = "Comment_C_id")})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Comment> likedComments;
+
+    @ManyToMany()
+    @JoinTable(name = "comment_user_dislike",
+            joinColumns = {@JoinColumn(name = "User_U_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Comment_C_id")})
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Comment> dislikedComments;
 
     public User(String username, String password) {
         this.username = username;

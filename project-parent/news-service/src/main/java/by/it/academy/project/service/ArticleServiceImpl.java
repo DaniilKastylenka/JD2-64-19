@@ -90,13 +90,13 @@ public class ArticleServiceImpl implements ArticleService {
         String result;
 
         try {
-            if (articleDao.findLike(articleId, userId)) {
+            if (isLiked(articleId, userId)) {
 
                 articleDao.deleteLike(articleId, userId);
                 articleDao.updateLikeInArticle(articleId, true);
                 result = "remove like by user with id " + userId;
 
-            } else if (articleDao.findDislike(articleId, userId)) {
+            } else if (isDisliked(articleId, userId)) {
 
                 articleDao.deleteDislike(articleId, userId);
                 articleDao.addLike(articleId, userId);

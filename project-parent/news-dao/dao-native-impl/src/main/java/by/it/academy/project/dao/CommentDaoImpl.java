@@ -12,13 +12,12 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
     private static final CommentDaoImpl INSTANCE = new CommentDaoImpl();
 
-
     protected CommentDaoImpl() {
         super(LoggerFactory.getLogger(CommentDaoImpl.class));
     }
 
     private final static String INSERT_COMMENT =
-            "INSERT INTO comment(C_user_id, C_text, C_date, C_number_of_likes, C_article_id) VALUE(?,?,?,?,?)";
+            "INSERT INTO comment(C_user_id, C_text, C_date, C_likes, C_dislikes, C_article_id) VALUE(?,?,?,?,?,?)";
 
     private final static String SELECT_COMMENT_BY_ID =
             "SELECT * FROM comment c " +
@@ -42,16 +41,28 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
 
 
     private final static String INSERT_LIKE =
-            "INSERT INTO comment_user VALUE(?,?);";
+            "INSERT INTO comment_user_like VALUE(?,?);";
 
     private final static String DELETE_LIKE =
-            "DELETE FROM comment_user WHERE Comment_C_id = ? AND User_U_id = ?;";
+            "DELETE FROM comment_user_like WHERE Comment_C_id = ? AND User_U_id = ?;";
 
     private final static String UPDATE_LIKE =
-            "UPDATE comment SET C_number_of_likes = ? WHERE C_id = ?";
+            "UPDATE comment SET C_likes = ? WHERE C_id = ?";
 
     private final static String SELECT_LIKE =
-            "SELECT * FROM comment_user WHERE Comment_C_id = ? AND User_U_id = ?;";
+            "SELECT * FROM comment_user_like WHERE Comment_C_id = ? AND User_U_id = ?;";
+
+    private final static String INSERT_DISLIKE =
+            "INSERT INTO comment_user_dislike VALUE(?,?);";
+
+    private final static String DELETE_DISLIKE =
+            "DELETE FROM comment_user_dislike WHERE Comment_C_id = ? AND User_U_id = ?;";
+
+    private final static String UPDATE_DISLIKE =
+            "UPDATE comment SET C_dislikes = ? WHERE C_id = ?";
+
+    private final static String SELECT_DISLIKE =
+            "SELECT * FROM comment_user_dislike WHERE Comment_C_id = ? AND User_U_id = ?;";
 
     @Override
     public Long create(Comment comment) throws SQLException {
@@ -66,8 +77,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             Timestamp timestamp = new Timestamp(comment.getDate().getTime());
             statement.setObject(3, timestamp);
 
-            statement.setLong(4, comment.getNumberOfLikes());
-            statement.setLong(5, comment.getArticle().getId());
+            statement.setLong(4, comment.getLikes());
+            statement.setLong(5, comment.getDislikes());
+            statement.setLong(6, comment.getArticle().getId());
 
             statement.executeUpdate();
 
@@ -115,7 +127,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             Timestamp timestamp = new Timestamp(comment.getDate().getTime());
             statement.setObject(3, timestamp);
 
-            statement.setLong(4, comment.getNumberOfLikes());
+            statement.setLong(4, comment.getLikes());
 
             statement.setLong(5, comment.getArticle().getId());
 
@@ -189,9 +201,9 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
             Comment comment = read(commentId)
                     .orElseThrow(() -> new RuntimeException("no comment with id " + commentId));
             if (isLiked) {
-                statement.setLong(1, comment.getNumberOfLikes() - 1);
+                statement.setLong(1, comment.getLikes() - 1);
             } else {
-                statement.setLong(1, comment.getNumberOfLikes() + 1);
+                statement.setLong(1, comment.getLikes() + 1);
             }
             statement.setLong(2, commentId);
             return statement.executeUpdate();
@@ -204,6 +216,67 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
         boolean result = false;
         try(Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(SELECT_LIKE)){
+
+            statement.setLong(1, commentId);
+            statement.setLong(2, userId);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                result = true;
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+
+    @Override
+    public void addDislike(Long commentId, Long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_DISLIKE)) {
+
+            statement.setLong(1, commentId);
+            statement.setLong(2, userId);
+
+            statement.executeUpdate();
+
+        }
+    }
+
+    @Override
+    public int deleteDislike(Long commentId, Long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_DISLIKE)) {
+            statement.setLong(1, commentId);
+            statement.setLong(2, userId);
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public int updateDislikeInComment(Long commentId, boolean isDisliked) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_DISLIKE)) {
+            Comment comment = read(commentId)
+                    .orElseThrow(() -> new RuntimeException("no comment with id " + commentId));
+            if (isDisliked) {
+                statement.setLong(1, comment.getDislikes() - 1);
+            } else {
+                statement.setLong(1, comment.getDislikes() + 1);
+            }
+            statement.setLong(2, commentId);
+            return statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean findDislike(Long commentId, Long userId) throws SQLException {
+        ResultSet resultSet = null;
+        boolean result = false;
+        try(Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(SELECT_DISLIKE)){
 
             statement.setLong(1, commentId);
             statement.setLong(2, userId);

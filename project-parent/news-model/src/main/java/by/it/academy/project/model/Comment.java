@@ -33,8 +33,11 @@ public class Comment {
     @Column(name = "C_date", updatable = false)
     private Date date;
 
-    @Column(name = "C_number_of_likes")
-    private Long numberOfLikes;
+    @Column(name = "C_likes")
+    private Long likes;
+
+    @Column(name = "C_dislikes")
+    private Long dislikes;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "C_article_id")
@@ -45,6 +48,11 @@ public class Comment {
     @EqualsAndHashCode.Exclude
     private Set<User> usersWhoLiked;
 
+    @ManyToMany(mappedBy = "dislikedComments")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<User> usersWhoDisliked;
+
     public Comment(Long id){
         this.id = id;
     }
@@ -54,13 +62,15 @@ public class Comment {
         this.text = text;
         this.article = article;
         this.date = new Date();
-        this.numberOfLikes = 0L;
+        this.likes = 0L;
+        this.dislikes = 0L;
     }
 
-    public Comment(Long id, User user, String text, Date date, Long numberOfLikes, Article article) {
+    public Comment(Long id, User user, String text, Date date, Long likes, Long dislikes, Article article) {
         this(user, text, article);
         this.id = id;
         this.date = date;
-        this.numberOfLikes = numberOfLikes;
+        this.likes = likes;
+        this.dislikes = dislikes;
     }
 }

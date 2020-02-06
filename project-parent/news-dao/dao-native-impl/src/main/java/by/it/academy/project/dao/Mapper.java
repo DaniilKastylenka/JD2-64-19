@@ -56,11 +56,13 @@ public class Mapper {
         Timestamp timestamp = resultSet.getTimestamp("C_date");
         Date date = new Date(timestamp.getTime());
 
-        Long numberOfLikes = resultSet.getLong("C_number_of_likes");
+        Long likes = resultSet.getLong("C_likes");
+
+        Long dislikes = resultSet.getLong("C_dislikes");
 
         Article article = mapArticle(resultSet);
 
-        return new Comment(id, user, text, date, numberOfLikes, article);
+        return new Comment(id, user, text, date, likes, dislikes, article);
     }
 
     public static Section mapSection(ResultSet resultSet) throws SQLException {

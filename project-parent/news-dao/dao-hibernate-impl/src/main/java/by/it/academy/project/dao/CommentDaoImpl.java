@@ -114,7 +114,7 @@ public class CommentDaoImpl implements CommentDao {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            NativeQuery<Comment> query = session.createNativeQuery("INSERT INTO comment_user VALUE (?,?)", Comment.class);
+            NativeQuery query = session.createNativeQuery("INSERT INTO comment_user_like VALUE (?,?)");
             query.setParameter(1, commentId);
             query.setParameter(2, userId);
             query.executeUpdate();
@@ -133,7 +133,7 @@ public class CommentDaoImpl implements CommentDao {
         int result = 0;
         try {
             session.getTransaction().begin();
-            NativeQuery query = session.createNativeQuery("DELETE FROM comment_user WHERE Comment_C_id = ? AND User_U_id = ?");
+            NativeQuery query = session.createNativeQuery("DELETE FROM comment_user_like WHERE Comment_C_id = ? AND User_U_id = ?");
             query.setParameter(1, commentId);
             query.setParameter(2, userId);
             result = query.executeUpdate();
@@ -153,18 +153,18 @@ public class CommentDaoImpl implements CommentDao {
         int result = 0;
         try {
             session.getTransaction().begin();
-            Long numberOfLikes = read(commentId).orElseThrow(() -> new RuntimeException("unknown comment")).getNumberOfLikes();
-            Query query = session.createQuery("UPDATE Comment SET numberOfLikes=:numberOfLikes WHERE id=:id");
+            Long likes = read(commentId).orElseThrow(() -> new RuntimeException("unknown comment")).getLikes();
+            Query query = session.createQuery("UPDATE Comment SET likes=:likes WHERE id=:id");
             if (isLiked) {
-                query.setParameter("numberOfLikes", numberOfLikes - 1);
+                query.setParameter("likes", likes - 1);
             } else {
-                query.setParameter("numberOfLikes", numberOfLikes + 1);
+                query.setParameter("likes", likes + 1);
             }
             query.setParameter("id", commentId);
             result = query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            log.error("error while update like in comment", e);
+            log.error("error while updating like in comment", e);
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -173,11 +173,11 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public boolean findLike(Long commentId, Long userId) throws SQLException {
+    public boolean findLike(Long commentId, Long userId) {
         Session session = sessionFactory.openSession();
         boolean result = false;
         try (session) {
-            NativeQuery query = session.createNativeQuery("SELECT * FROM comment_user WHERE Comment_C_id = ? AND User_U_id = ?");
+            NativeQuery query = session.createNativeQuery("SELECT * FROM comment_user_like WHERE Comment_C_id = ? AND User_U_id = ?");
             query.setParameter(1, commentId);
             query.setParameter(2, userId);
             if (query.uniqueResult() != null) {
@@ -185,6 +185,86 @@ public class CommentDaoImpl implements CommentDao {
             }
         } catch (HibernateException e) {
             log.error("error while finding like in comment", e);
+        }
+        return result;
+    }
+
+    @Override
+    public void addDislike(Long commentId, Long userId) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.getTransaction().begin();
+            NativeQuery query = session.createNativeQuery("INSERT INTO comment_user_dislike VALUE (?,?)");
+            query.setParameter(1, commentId);
+            query.setParameter(2, userId);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            log.error("error while adding dislike to comment", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public int deleteDislike(Long commentId, Long userId) {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try {
+            session.getTransaction().begin();
+            NativeQuery query = session.createNativeQuery("DELETE FROM comment_user_dislike WHERE Comment_C_id = ? AND User_U_id = ?");
+            query.setParameter(1, commentId);
+            query.setParameter(2, userId);
+            result = query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            log.error("error while deleting dislike from comment", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    @Override
+    public int updateDislikeInComment(Long commentId, boolean isDisliked) {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try {
+            session.getTransaction().begin();
+            Long dislikes = read(commentId).orElseThrow(() -> new RuntimeException("unknown comment")).getDislikes();
+            Query query = session.createQuery("UPDATE Comment SET dislikes=:dislikes WHERE id=:id");
+            if (isDisliked) {
+                query.setParameter("dislikes", dislikes - 1);
+            } else {
+                query.setParameter("dislikes", dislikes + 1);
+            }
+            query.setParameter("id", commentId);
+            result = query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            log.error("error while updating dislike in comment", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean findDislike(Long commentId, Long userId) {
+        Session session = sessionFactory.openSession();
+        boolean result = false;
+        try (session) {
+            NativeQuery query = session.createNativeQuery("SELECT * FROM comment_user_dislike WHERE Comment_C_id = ? AND User_U_id = ?");
+            query.setParameter(1, commentId);
+            query.setParameter(2, userId);
+            if (query.uniqueResult() != null) {
+                result = true;
+            }
+        } catch (HibernateException e) {
+            log.error("error while finding dislike in comment", e);
         }
         return result;
     }

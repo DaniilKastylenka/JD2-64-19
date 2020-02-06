@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = "/likeComment")
-public class LikeCommentServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/dislikeComment")
+public class DislikeCommentServlet extends HttpServlet {
 
     private CommentService commentService = CommentServiceImpl.getINSTANCE();
 
@@ -26,30 +26,31 @@ public class LikeCommentServlet extends HttpServlet {
 
         User user = (User) req.getSession().getAttribute("user");
 
-        commentService.like(commentId, user.getId());
+        commentService.dislike(commentId, user.getId());
 
         Optional<Comment> comment = commentService.findCommentById(commentId);
 
-        Long likes = null;
         Long dislikes = null;
-        boolean isLiked = false;
+        Long likes = null;
         boolean isDisliked = false;
+        boolean isLiked = false;
 
-        if(comment.isPresent()){
-            likes = comment.get().getLikes();
+        if (comment.isPresent()) {
             dislikes = comment.get().getDislikes();
-            isLiked = commentService.isLiked(comment.get().getId(), user.getId());
+            likes = comment.get().getLikes();
             isDisliked = commentService.isDisliked(comment.get().getId(), user.getId());
+            isLiked = commentService.isLiked(comment.get().getId(), user.getId());
         }
 
         String result =
-                likes + " like(s)" + ":" +
                 dislikes + " dislike(s)" + ":" +
-                isLiked + ":" +
-                isDisliked;
+                        likes + " like(s)" + ":" +
+                        isDisliked + ":" +
+                        isLiked;
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("plain/text");
         resp.getWriter().write(result);
 
     }
+
 }

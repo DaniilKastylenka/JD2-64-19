@@ -13,6 +13,8 @@ public interface CommentService {
     List<Comment> getAllComments();
     Optional<Comment> findCommentById(Long id);
     void like(Long commentId, Long userId);
-
+    boolean isLiked(Long commentId, Long userId);
+    void dislike(Long commentId, Long userId);
+    boolean isDisliked(Long commentId, Long userId);
 
 }

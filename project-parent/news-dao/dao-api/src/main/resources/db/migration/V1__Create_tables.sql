@@ -38,7 +38,8 @@ CREATE TABLE comment(
                       C_user_id         BIGINT        NOT NULL,
                       C_text            VARCHAR(500)  NOT NULL,
                       C_date            DATETIME      NOT NULL,
-                      C_number_of_likes BIGINT        NOT NULL,
+                      C_likes           BIGINT        NOT NULL,
+                      C_dislikes        BIGINT        NOT NULL,
                       C_article_id      BIGINT        NOT NULL,
                       FOREIGN KEY (C_user_id) REFERENCES user(U_id) ON DELETE CASCADE ON UPDATE NO ACTION ,
                       FOREIGN KEY (C_article_id) REFERENCES article(A_id) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -60,7 +61,15 @@ CREATE TABLE user_article_dislike
                       FOREIGN KEY (User_U_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
-CREATE TABLE comment_user
+CREATE TABLE comment_user_like
+(
+                      Comment_C_id       BIGINT        NOT NULL,
+                      User_U_id         BIGINT        NOT NULL,
+                      FOREIGN KEY (Comment_C_id) REFERENCES comment(C_id) ON DELETE CASCADE,
+                      FOREIGN KEY (User_U_id) REFERENCES user(U_id) ON DELETE CASCADE
+);
+
+CREATE TABLE comment_user_dislike
 (
                       Comment_C_id       BIGINT        NOT NULL,
                       User_U_id         BIGINT        NOT NULL,

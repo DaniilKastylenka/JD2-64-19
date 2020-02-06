@@ -58,7 +58,9 @@
         </td>
         <td align="center">
             <div style="width: 60px; height: 30px" align="center">
-                <button id="article-dislike-btn" class="article-dislike<c:if test="${isDisliked}">d</c:if>-btn">Dislike</button>
+                <button id="article-dislike-btn" class="article-dislike<c:if test="${isDisliked}">d</c:if>-btn">
+                    Dislike
+                </button>
             </div>
             <div id="article-dislikes" style="font-size: 14px">${article.dislikes} dislike(s)
             </div>
@@ -77,10 +79,10 @@
         </tr>
         <tr>
             <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place"
-                          name="text"
-                          placeholder="write your comment"
-                          required
-                          maxlength="500"></textarea>
+                                                                                 name="text"
+                                                                                 placeholder="write your comment"
+                                                                                 required
+                                                                                 maxlength="500"></textarea>
             </td>
         </tr>
         <tr>
@@ -93,11 +95,13 @@
 <h2 align="center" style="padding-bottom: 50px">Comments</h2>
 
 <table class="comment-tbl">
-    <col width="70%">
+    <col width="55%">
+    <col width="15%">
     <col width="15%">
     <col width="15%">
     <c:forEach items="${commentList}" var="comment">
         <c:if test="${article.id == comment.article.id}">
+            <% int i = 0; %>
             <tr>
                 <td align="left" style="color: #5e5e5e;">${comment.user.username} • <fmt:formatDate
                         pattern="dd.MM.yyy 'at' HH:mm" value="${comment.date}"/>
@@ -108,18 +112,33 @@
                            href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">DELETE</a>
                     </c:if>
                 </td>
-                <td valign="middle" align="right" style="color: #5e5e5e;">
+                <td valign="middle" align="center" style="color: #5e5e5e;">
                     <script>
                         <%@include file="js/ajax/ajax_like_comment.js" %>
                     </script>
-                    <div style="height: 20px; width: 40px;" align="center">
-                        <button id="comment-btn${comment.id}" class="comment-like-btn">Like</button>
+                    <div style="height: 20px; width: 45px;" align="center">
+                        <button id="comment-like-btn${comment.id}"
+                                class="comment-like<c:if test="${}">d</c:if>-btn">Like
+                        </button>
                     </div>
-                    <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.numberOfLikes} like(s)</div>
+                    <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.likes} like(s)</div>
+                </td>
+
+                <td valign="middle" align="center" style="color: #5e5e5e;">
+                    <script>
+                        <%@include file="js/ajax/ajax_dislike_comment.js" %>
+                    </script>
+                    <div style="height: 20px; width: 45px;" align="center">
+                        <button id="comment-dislike-btn${comment.id}"
+                                class="comment-dislike<c:if test="${}">d</c:if>-btn">
+                            Dislike
+                        </button>
+                    </div>
+                    <div id="comment-dislikes${comment.id}" style="font-size: 12px">${comment.dislikes} dislike(s)</div>
                 </td>
             </tr>
             <tr>
-                <td style="word-wrap: break-word; padding-bottom: 30px; color: #565656;" valign="center" colspan="3">
+                <td style="word-wrap: break-word; padding-bottom: 30px; color: #565656;" valign="center" colspan="4">
                     <c:out
                             value="${comment.text}"/></td>
             </tr>

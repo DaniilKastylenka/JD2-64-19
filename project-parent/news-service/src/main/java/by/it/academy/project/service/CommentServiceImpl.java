@@ -82,10 +82,16 @@ public class CommentServiceImpl implements CommentService {
         logger.debug("like comment");
         String result;
         try {
-            if (commentDao.findLike(commentId, userId)) {
+            if (isLiked(commentId, userId)) {
                 commentDao.deleteLike(commentId, userId);
                 commentDao.updateLikeInComment(commentId, true);
                 result = "remove like by user with id " + userId;
+            } else if (isDisliked(commentId, userId)) {
+                commentDao.deleteDislike(commentId, userId);
+                commentDao.addLike(commentId, userId);
+                commentDao.updateLikeInComment(commentId, false);
+                commentDao.updateDislikeInComment(commentId, true);
+                result = "remove dislike and add like in comment by user with id " + userId;
             } else {
                 commentDao.addLike(commentId, userId);
                 commentDao.updateLikeInComment(commentId, false);
@@ -95,7 +101,54 @@ public class CommentServiceImpl implements CommentService {
         } catch (SQLException e) {
             logger.debug("error while like comment", e);
         }
+    }
 
+    @Override
+    public boolean isLiked(Long commentId, Long userId) {
+        boolean result = false;
+        try {
+            result = commentDao.findLike(commentId, userId);
+        } catch (SQLException e) {
+            logger.error("error while checking isLiked", e);
+        }
+        return result;
+    }
+
+    @Override
+    public void dislike(Long commentId, Long userId) {
+        logger.debug("dislike comment");
+        String result;
+        try {
+            if (isDisliked(commentId, userId)) {
+                commentDao.deleteDislike(commentId, userId);
+                commentDao.updateDislikeInComment(commentId, true);
+                result = "remove dislike by user with id " + userId;
+            } else if (isLiked(commentId, userId)) {
+                commentDao.deleteLike(commentId, userId);
+                commentDao.addDislike(commentId, userId);
+                commentDao.updateDislikeInComment(commentId, false);
+                commentDao.updateLikeInComment(commentId, true);
+                result = "remove like and add dislike in comment by user with id " + userId;
+            } else {
+                commentDao.addDislike(commentId, userId);
+                commentDao.updateDislikeInComment(commentId, false);
+                result = "add like by user with id " + userId;
+            }
+            logger.debug("result{}", result);
+        } catch (SQLException e) {
+            logger.debug("error while dislike comment", e);
+        }
+    }
+
+    @Override
+    public boolean isDisliked(Long commentId, Long userId) {
+        boolean result = false;
+        try {
+            result = commentDao.findDislike(commentId, userId);
+        } catch (SQLException e) {
+            logger.error("error while checking isDisliked", e);
+        }
+        return result;
     }
 
     public static CommentServiceImpl getINSTANCE() {
