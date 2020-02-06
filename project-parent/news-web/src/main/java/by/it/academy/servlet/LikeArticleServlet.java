@@ -32,13 +32,21 @@ public class LikeArticleServlet extends HttpServlet {
 
         Long likes = null;
         Long dislikes = null;
+        boolean isLiked = false;
+        boolean isDisliked = false;
 
         if (article.isPresent()) {
             likes = article.get().getLikes();
             dislikes = article.get().getDislikes();
+            isLiked = articleService.isLiked(article.get().getId(), user.getId());
+            isDisliked = articleService.isDisliked(article.get().getId(), user.getId());
         }
 
-        String response = likes + " like(s)" + ":" + dislikes + " dislike(s)";
+        String response =
+                likes + " like(s)" + ":" +
+                        dislikes + " dislike(s)" + ":" +
+                        isLiked + ":" +
+                        isDisliked;
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(response);

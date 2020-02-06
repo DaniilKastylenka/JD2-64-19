@@ -260,6 +260,48 @@ p {
     border-color: #791d25;
 }
 
+.article-liked-btn {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.2;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+    width: 60px;
+    height: 30px;
+    border: 2px solid #9a80bb;
+    background-color: #9a80bb;
+    border-radius: 30px;
+    user-select: none;
+}
+
+.article-disliked-btn {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.2;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+    width: 60px;
+    height: 30px;
+    border: 2px solid #bb545f;
+    background-color: #bb545f;
+    border-radius: 30px;
+    user-select: none;
+}
+
 
 
 

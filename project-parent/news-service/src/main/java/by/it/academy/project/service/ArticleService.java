@@ -19,6 +19,10 @@ public interface ArticleService {
 
     void like(Long articleId, Long userId);
 
+    boolean isLiked(Long articleId, Long userId);
+
     void dislike(Long articleId, Long userId);
+
+    boolean isDisliked(Long articleId, Long userId);
 
 }

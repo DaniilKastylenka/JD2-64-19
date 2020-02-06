@@ -117,6 +117,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public boolean isLiked(Long articleId, Long userId) {
+        boolean result = false;
+        try {
+            result = articleDao.findLike(articleId, userId);
+        } catch (SQLException e) {
+            logger.error("error while checking isLiked");
+        }
+        return result;
+    }
+
+    @Override
     public void dislike(Long articleId, Long userId) {
 
         logger.debug("dislike article" + articleId);
@@ -124,13 +135,13 @@ public class ArticleServiceImpl implements ArticleService {
         String result;
 
         try {
-            if (articleDao.findDislike(articleId, userId)) {
+            if (isDisliked(articleId, userId)) {
 
                 articleDao.deleteDislike(articleId, userId);
                 articleDao.updateDislikeInArticle(articleId, true);
                 result = "remove dislike by user with id " + userId;
 
-            } else if (articleDao.findLike(articleId, userId)) {
+            } else if (isLiked(articleId, userId)) {
 
                 articleDao.deleteLike(articleId, userId);
                 articleDao.addDislike(articleId, userId);
@@ -148,7 +159,17 @@ public class ArticleServiceImpl implements ArticleService {
         } catch (SQLException e) {
             logger.error("error while dislike article ", e);
         }
+    }
 
+    @Override
+    public boolean isDisliked(Long articleId, Long userId) {
+        boolean result = false;
+        try {
+            result = articleDao.findDislike(articleId, userId);
+        } catch (SQLException e) {
+            logger.error("error while checking isDisliked");
+        }
+        return result;
     }
 
     public static ArticleService getINSTANCE() {
