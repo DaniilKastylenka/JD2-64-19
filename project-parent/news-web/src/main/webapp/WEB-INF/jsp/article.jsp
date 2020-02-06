@@ -76,14 +76,11 @@
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #d4d4d4; border-radius: 15px">
-                <textarea class="comment-text-place"
+            <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place"
                           name="text"
                           placeholder="write your comment"
                           required
-                          maxlength="500">
-
-                </textarea>
+                          maxlength="500"></textarea>
             </td>
         </tr>
         <tr>
