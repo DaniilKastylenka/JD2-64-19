@@ -159,7 +159,7 @@ public class CommentServiceImpl implements CommentService {
         try {
             List<Comment> all = commentDao.getAll();
             for (Comment c : all) {
-                comments.add(mapFromCommentIntoCommentDto(c));
+                comments.add(convertFromCommentIntoCommentDto(c));
             }
         } catch (SQLException e) {
             logger.error("error while getting dto comments", e);
@@ -167,7 +167,7 @@ public class CommentServiceImpl implements CommentService {
         return comments;
     }
 
-    private CommentDto mapFromCommentIntoCommentDto(Comment comment) {
+    private CommentDto convertFromCommentIntoCommentDto(Comment comment) {
         return new CommentDto(
                 comment.getId(),
                 comment.getUser(),
