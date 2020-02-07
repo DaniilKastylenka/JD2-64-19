@@ -19,6 +19,6 @@ public class MyArticlesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("articles", articleService.getAllArticles());
-        req.getRequestDispatcher("/WEB-INF/jsp/myArticles.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/myArticle.jsp").forward(req, resp);
     }
 }
