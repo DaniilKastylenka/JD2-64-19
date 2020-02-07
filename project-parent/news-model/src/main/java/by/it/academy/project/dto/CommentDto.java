@@ -2,10 +2,7 @@ package by.it.academy.project.dto;
 
 import by.it.academy.project.model.Article;
 import by.it.academy.project.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -13,10 +10,14 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 
 public class CommentDto {
 
+    @EqualsAndHashCode.Exclude
     private Long id;
+
     private User user;
     private String text;
     private Date date;
