@@ -2,6 +2,7 @@ package by.it.academy.project.service;
 
 import by.it.academy.project.dao.CommentDao;
 import by.it.academy.project.dao.CommentDaoImpl;
+import by.it.academy.project.dto.CommentDto;
 import by.it.academy.project.model.Comment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,6 +150,33 @@ public class CommentServiceImpl implements CommentService {
             logger.error("error while checking isDisliked", e);
         }
         return result;
+    }
+
+    @Override
+    public List<CommentDto> getDtoComments() {
+        logger.debug("get all dto comments");
+        List<CommentDto> comments = new ArrayList<>();
+        try {
+            List<Comment> all = commentDao.getAll();
+            for (Comment c : all) {
+                comments.add(mapFromCommentIntoCommentDto(c));
+            }
+        } catch (SQLException e) {
+            logger.error("error while getting dto comments", e);
+        }
+        return comments;
+    }
+
+    private CommentDto mapFromCommentIntoCommentDto(Comment comment) {
+        return new CommentDto(
+                comment.getId(),
+                comment.getUser(),
+                comment.getText(),
+                comment.getDate(),
+                comment.getLikes(),
+                comment.getDislikes(),
+                comment.getArticle()
+        );
     }
 
     public static CommentServiceImpl getINSTANCE() {

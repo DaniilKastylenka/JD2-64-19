@@ -204,6 +204,11 @@ p {
     transition: all 0.2s;
 }
 
+.comment-liked-btn:active {
+    background-color: #6c5a8a;
+    border-color: #6c5a8a;
+}
+
 .comment-like-btn:hover {
     color: #fff;
     background-color: #9a80bb;
@@ -262,6 +267,11 @@ p {
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.2s;
+}
+
+.comment-disliked-btn:active {
+    background-color: #791d25;
+    border-color: #791d25;
 }
 
 .comment-dislike-btn:hover {
@@ -366,6 +376,11 @@ p {
     user-select: none;
 }
 
+.article-liked-btn:active {
+    background-color: #6c5a8a;
+    border-color: #6c5a8a;
+}
+
 .article-disliked-btn {
     font-family: 'Lato', sans-serif;
     font-size: 14px;
@@ -386,6 +401,13 @@ p {
     border-radius: 30px;
     user-select: none;
 }
+
+.article-disliked-btn:active {
+    background-color: #791d25;
+    border-color: #791d25;
+}
+
+
 
 
 
