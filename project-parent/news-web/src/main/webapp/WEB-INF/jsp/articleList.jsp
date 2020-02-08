@@ -8,7 +8,18 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <h1 align="center">Articles</h1>
-
+<div align="center">
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=1">People | </a>
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=2">Technology
+        | </a>
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=3">Politics
+        | </a>
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=4">Entertainment
+        | </a>
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=5">Game | </a>
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=6">World | </a>
+    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=7">Education</a>
+</div>
 <table class="articles-list">
     <col width="70%"/>
     <col width="30%"/>
@@ -23,7 +34,9 @@
             <td class="art-text-brd" rowspan="2"><p class="article-list-text">${article.text}</p></td>
             <td class="art-info" align="left" valign="center">
                 <div style="border-bottom: 1px solid #a1a1a1; font-size: 30px"
-                     align="center">${article.section.name}</div>
+                     align="center"><a style="font-size: 20px"
+                                       href="${pageContext.request.contextPath}/articleListBySection?sectionId=${article.section.id}">${article.section.name}</a>
+                </div>
                 <div style="border-bottom: 1px solid #e3e3e3">Author: ${article.author.username}</div>
                 <div style="border-bottom: 1px solid #e3e3e3">Published: <fmt:formatDate
                         value="${article.publicationDate}" pattern="dd.MM.yyy 'at' hh:mm"/></div>
@@ -36,15 +49,15 @@
             </td>
         </tr>
         <tr>
-            <c:if test="${(sessionScope.user.role.name=='admin' or sessionScope.user==article.author)}">
-                <td align="center" class="art-btns">
+            <td align="center" class="art-btns">
+                <c:if test="${(sessionScope.user.role.name=='admin' or sessionScope.user==article.author)}">
+
                     <a class="delete-btn"
                        href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
                     <a class="update-btn"
                        href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
-                </td>
-            </c:if>
-
+                </c:if>
+            </td>
         </tr>
     </c:forEach>
 </table>

@@ -51,6 +51,11 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     "JOIN article a ON c.C_article_id = a.A_id " +
                     "JOIN section s on a.A_section_id = s.S_id WHERE c.C_article_id = ?;";
 
+    private static final String SELECT_ALL_BY_SECTION =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_section_id = ? ORDER BY a.A_publication_date DESC;";
 
     private static final String INSERT_LIKE =
             "INSERT INTO user_article_like VALUE (?,?);";
@@ -209,6 +214,23 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 result.add(Mapper.mapComment(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getAllBySectionId(Long sectionId) throws SQLException {
+        ResultSet resultSet = null;
+        List<Article> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_SECTION)) {
+            statement.setLong(1, sectionId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(Mapper.mapArticle(resultSet));
             }
         } finally {
             closeQuietly(resultSet);

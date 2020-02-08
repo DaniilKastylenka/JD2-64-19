@@ -3,8 +3,11 @@ package by.it.academy.project.dao;
 import by.it.academy.project.model.Article;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface ArticleDao extends DAO<Article> {
+
+    List<Article> getAllBySectionId(Long id) throws SQLException;
 
     void addLike(Long articleId, Long userId) throws SQLException;
 

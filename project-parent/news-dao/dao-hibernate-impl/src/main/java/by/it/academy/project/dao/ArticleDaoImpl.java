@@ -106,6 +106,20 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
+    public List<Article> getAllBySectionId(Long sectionId) {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            NativeQuery<Article> query = session.createNativeQuery("SELECT * FROM article WHERE A_section_id = ? ORDER BY A_publication_date DESC;", Article.class);
+            query.setParameter(1, sectionId);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting all articles by section", e);
+        }
+        return result;
+    }
+
+    @Override
     public void addLike(Long articleId, Long userId) {
         Session session = sessionFactory.openSession();
         try {

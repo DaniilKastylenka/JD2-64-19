@@ -24,6 +24,6 @@ public class ArticleListServlet extends HttpServlet {
         req.setAttribute("articleList", allArticles);
 
         req.getRequestDispatcher("/WEB-INF/jsp/articleList.jsp")
-                .forward(req,resp);
+                .forward(req, resp);
     }
 }

@@ -25,14 +25,27 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getAllArticles() {
         logger.debug("get all articles");
-        ArrayList<Article> articles = null;
+        List<Article> result = new ArrayList<>();
         try {
-            articles = (ArrayList<Article>) articleDao.getAll();
-            logger.debug("result {}", articles);
+            result =  articleDao.getAll();
+            logger.debug("result {}", result);
         } catch (SQLException e) {
             logger.error("error while reading articles", e);
         }
-        return articles;
+        return result;
+    }
+
+    @Override
+    public List<Article> getAllBySectionId(Long sectionId) {
+        logger.debug("get all articles by section");
+        List<Article> result = new ArrayList<>();
+        try{
+            result = articleDao.getAllBySectionId(sectionId);
+            logger.debug("result{}", result);
+        } catch (SQLException e){
+            logger.error("error while getting all articles by section id", e);
+        }
+        return result;
     }
 
     @Override
