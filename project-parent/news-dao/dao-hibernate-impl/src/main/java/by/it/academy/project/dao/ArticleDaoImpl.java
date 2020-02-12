@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +107,127 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public List<Article> getAllBySectionId(Long sectionId) {
+    public List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article ORDER BY publicationDate DESC", Article.class);
+            query.setFirstResult(start - 1);
+            query.setMaxResults(total);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting limit articles", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticles() throws SQLException {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try (session) {
+            Query query = session.createQuery("SELECT count(a.id) FROM Article a");
+            result = Integer.valueOf(query.getSingleResult().toString());
+        } catch (HibernateException e) {
+            log.error("error while getting count of articles", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesBySectionId(int start, int total, int sectionId) throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE section.id =: sectionId ORDER BY publicationDate DESC", Article.class);
+            query.setParameter("sectionId", sectionId);
+            query.setFirstResult(start - 1);
+            query.setMaxResults(total);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by section id", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticlesBySectionId(int sectionId) throws SQLException {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try (session) {
+            Query query = session.createQuery("SELECT count(a.id) FROM Article a WHERE section.id =: sectionId");
+            query.setParameter("sectionId", sectionId);
+            result = Integer.valueOf(query.getSingleResult().toString());
+        } catch (HibernateException e) {
+            log.error("error while getting count of articles by section id", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesByUserId(int start, int total, Long userId) throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE author.id =: userId ORDER BY publicationDate DESC", Article.class);
+            query.setParameter("userId", userId);
+            query.setFirstResult(start - 1);
+            query.setMaxResults(total);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by user id", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticlesByUserId(Long userId) throws SQLException {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try (session) {
+            Query query = session.createQuery("SELECT count(a.id) FROM Article a WHERE author.id =: userId");
+            query.setParameter("userId", userId);
+            result = Integer.valueOf(query.getSingleResult().toString());
+        } catch (HibernateException e) {
+            log.error("error while getting count of articles by user id", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesByUserIdAndSectionId(int start, int total, Long userId, int sectionId) throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE author.id =: userId AND section.id =: sectionId ORDER BY publicationDate DESC", Article.class);
+            query.setParameter("userId", userId);
+            query.setParameter("sectionId", sectionId);
+            query.setFirstResult(start - 1);
+            query.setMaxResults(total);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by user id and section id", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticlesByUserIdAndSectionId(Long userId, int sectionId) throws SQLException {
+        Session session = sessionFactory.openSession();
+        int result = 0;
+        try (session) {
+            Query query = session.createQuery("SELECT count(a.id) FROM Article a WHERE author.id =: userId AND section.id =: sectionId");
+            query.setParameter("userId", userId);
+            query.setParameter("sectionId", sectionId);
+            result = Integer.valueOf(query.getSingleResult().toString());
+        } catch (HibernateException e) {
+            log.error("error while getting count of articles by user id and section id", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getAllBySectionId(int sectionId) {
         Session session = sessionFactory.openSession();
         List<Article> result = new ArrayList<>();
         try (session) {

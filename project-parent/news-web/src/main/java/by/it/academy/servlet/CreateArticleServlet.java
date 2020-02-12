@@ -46,6 +46,6 @@ public class CreateArticleServlet extends HttpServlet {
 
         articleService.addNewArticle(article);
 
-        resp.sendRedirect(req.getContextPath() + "/myArticles");
+        resp.sendRedirect(req.getContextPath() + "/articleList?page=1");
     }
 }

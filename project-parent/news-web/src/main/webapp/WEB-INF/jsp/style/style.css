@@ -25,7 +25,7 @@
 }
 
 .news-header:hover {
-    color: #8272b7;
+    color: #a7c8ff;
 
 }
 
@@ -334,7 +334,7 @@ p {
     padding: 0 10px;
     width: 60px;
     height: 30px;
-    border: 2px solid #bb545f;
+    border: 2px solid #d52229;
     background-color: #fff;
     border-radius: 30px;
     user-select: none;
@@ -347,7 +347,7 @@ p {
 
 .article-dislike-btn:hover {
     color: #fff;
-    background-color: #bb545f;
+    background-color: #d52229;
 }
 
 .article-dislike-btn:active {
@@ -396,8 +396,8 @@ p {
     padding: 0 10px;
     width: 60px;
     height: 30px;
-    border: 2px solid #bb545f;
-    background-color: #bb545f;
+    border: 2px solid #d52229;
+    background-color: #d52229;
     border-radius: 30px;
     user-select: none;
 }
@@ -414,15 +414,15 @@ p {
     margin-bottom: 50px;
 }
 
-.art-title-brd{
+.art-title-brd {
     border-radius: 15px;
     padding-top: 50px;
 }
 
 .article-list-text {
-    height:140px;
+    height: 140px;
     font-size: 20px;
-    overflow:hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
@@ -445,7 +445,23 @@ p {
     height: 20px;
     border-bottom: 1px solid #909090;
     border-radius: 15px;
+}
 
+.page-btn {
+    font-size: 25px;
+}
+
+.page-btn:hover {
+    color: #4d9cff;
+}
+
+.article-title-link {
+    font-size: 30px;
+    transition: 0.3s;
+}
+
+.article-title-link:hover {
+    color: #a7c8ff;
 }
 
 

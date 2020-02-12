@@ -7,25 +7,23 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<h1 align="center">Articles</h1>
+<h1 align="center"><a style="font-size: 40px" class="article-title-link" href="${pageContext.request.contextPath}/articleList?page=1">Articles</a></h1>
+
 <div align="center">
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=1">People | </a>
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=2">Technology
-        | </a>
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=3">Politics
-        | </a>
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=4">Entertainment
-        | </a>
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=5">Game | </a>
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=6">World | </a>
-    <a style="font-size: 30px" href="${pageContext.request.contextPath}/articleListBySection?sectionId=7">Education</a>
+    <a style="font-size: 30px"> | </a>
+    <c:forEach items="${sections}" var="section">
+        <a class="article-title-link" <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff; font-size: 33px" </c:if>
+           href="${pageContext.request.contextPath}/articleListBySection?sectionId=${section.id}&page=1">${section.name}</a>
+        <a style="font-size: 30px"> | </a>
+    </c:forEach>
 </div>
+
 <table class="articles-list">
     <col width="70%"/>
     <col width="30%"/>
     <c:forEach items="${articleList}" var="article">
         <tr>
-            <td align="center" class="art-title-brd" colspan="2"><h1><a style="font-size: 30px"
+            <td align="center" class="art-title-brd" colspan="2"><h1><a class="article-title-link"
                                                                         href="${pageContext.request.contextPath}/article?articleId=${article.id}">${article.title}</a>
             </h1>
             </td>
@@ -34,8 +32,8 @@
             <td class="art-text-brd" rowspan="2"><p class="article-list-text">${article.text}</p></td>
             <td class="art-info" align="left" valign="center">
                 <div style="border-bottom: 1px solid #a1a1a1; font-size: 30px"
-                     align="center"><a style="font-size: 20px"
-                                       href="${pageContext.request.contextPath}/articleListBySection?sectionId=${article.section.id}">${article.section.name}</a>
+                     align="center"><a class="article-title-link"
+                                       href="${pageContext.request.contextPath}/articleListBySection?page=1&sectionId=${article.section.id}">${article.section.name}</a>
                 </div>
                 <div style="border-bottom: 1px solid #e3e3e3">Author: ${article.author.username}</div>
                 <div style="border-bottom: 1px solid #e3e3e3">Published: <fmt:formatDate
@@ -61,8 +59,16 @@
         </tr>
     </c:forEach>
 </table>
-
-
+<div align="center" style="padding-bottom: 50px">
+    <c:choose>
+        <c:when test="${pageContext.request.parameterMap.containsKey('sectionId')}">
+            <%@include file="/WEB-INF/include/pageButtonsWithSectionId.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="/WEB-INF/include/pageButtons.jsp" %>
+        </c:otherwise>
+    </c:choose>
+</div>
 <%@include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

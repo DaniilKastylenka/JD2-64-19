@@ -28,10 +28,10 @@ public class DeleteArticleServlet extends HttpServlet {
         articleService.deleteArticle(id);
 
         User user = (User) req.getSession().getAttribute("user");
-        if (user.getRole().equals("author")) {
+        if (user.getRole().getName().equals("author")) {
             resp.sendRedirect(req.getContextPath() + "/myArticles");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/articleList");
+            resp.sendRedirect(req.getContextPath() + "/articleList?page=1");
         }
     }
 }

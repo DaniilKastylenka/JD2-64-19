@@ -1,12 +1,12 @@
 package by.it.academy.project.dao;
 
 import by.it.academy.project.model.Article;
-import by.it.academy.project.model.Comment;
-import by.it.academy.project.model.User;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 
@@ -37,19 +37,41 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                     "JOIN user u ON a.A_author_id = u.U_id " +
                     "JOIN role r ON u.U_role_id = r.R_id ORDER BY a.A_publication_date DESC;";
 
+    private static final String SELECT_LIMITED_NUMBER_OF_ARTICLES =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id ORDER BY a.A_publication_date DESC LIMIT ?, ?;";
 
-    private static final String SELECT_ALL_WHO_LIKED =
-            "SELECT * FROM user_article_like ua " +
-                    "JOIN user u ON ua.User_U_id = u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id WHERE ua.Article_A_id = ?;";
+    private static final String GET_COUNT_OF_ARTICLES =
+            "SELECT count(a.A_id) FROM article a";
 
+    private static final String SELECT_LIMITED_NUMBER_OF_ARTICLES_BY_SECTION_ID =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_section_id = ? ORDER BY a.A_publication_date DESC LIMIT ?, ?;";
 
-    private static final String SELECT_ALL_COMMENTS =
-            "SELECT * FROM comment c " +
-                    "JOIN user u ON c.C_user_id = u.U_id " +
-                    "JOIN role r ON u.U_role_id = r.R_id " +
-                    "JOIN article a ON c.C_article_id = a.A_id " +
-                    "JOIN section s on a.A_section_id = s.S_id WHERE c.C_article_id = ?;";
+    private static final String GET_COUNT_OF_ARTICLES_BY_SECTION_ID =
+            "SELECT count(a.A_id) FROM article a WHERE a.A_section_id = ?";
+
+    private static final String GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_author_id = ? ORDER BY a.A_publication_date DESC LIMIT ?, ?;";
+
+    private static final String GET_COUNT_OF_ARTICLES_BY_USER_ID =
+            "SELECT count(a.A_id) FROM article a WHERE a.A_author_id = ?";
+
+    private static final String GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID_AND_SECTION_ID =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_author_id = ? AND a.A_section_id = ? ORDER BY a.A_publication_date DESC LIMIT ?, ?;";
+
+    private static final String GET_COUNT_OF_ARTICLES_BY_USER_ID_AND_SECTION_ID =
+            "SELECT count(a.A_id) FROM article a WHERE a.A_author_id = ? AND a.A_section_id = ?";
 
     private static final String SELECT_ALL_BY_SECTION =
             "SELECT * FROM article a " +
@@ -181,39 +203,23 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
             while (resultSet.next()) {
                 articles.add(Mapper.mapArticle(resultSet));
             }
-
         } finally {
             closeQuietly(resultSet);
         }
-
         return articles;
     }
 
-    private Set<User> getUsersWhoLiked(Long articleId) throws SQLException {
+    @Override
+    public List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException {
         ResultSet resultSet = null;
-        Set<User> result = new HashSet<>();
+        List<Article> result = new ArrayList<>();
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_WHO_LIKED)) {
-            statement.setLong(1, articleId);
+             PreparedStatement statement = connection.prepareStatement(SELECT_LIMITED_NUMBER_OF_ARTICLES)) {
+            statement.setInt(1, start - 1);
+            statement.setInt(2, total);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(Mapper.mapUser(resultSet));
-            }
-        } finally {
-            closeQuietly(resultSet);
-        }
-        return result;
-    }
-
-    private Set<Comment> getAllComments(Long articleId) throws SQLException {
-        ResultSet resultSet = null;
-        Set<Comment> result = new HashSet<>();
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_COMMENTS)) {
-            statement.setLong(1, articleId);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                result.add(Mapper.mapComment(resultSet));
+                result.add(Mapper.mapArticle(resultSet));
             }
         } finally {
             closeQuietly(resultSet);
@@ -222,12 +228,138 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public List<Article> getAllBySectionId(Long sectionId) throws SQLException {
+    public int getCountOfArticles() throws SQLException {
+        ResultSet resultSet = null;
+        int result = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_COUNT_OF_ARTICLES)) {
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesBySectionId(int start, int total, int sectionId) throws SQLException {
+        ResultSet resultSet = null;
+        List<Article> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_LIMITED_NUMBER_OF_ARTICLES_BY_SECTION_ID)) {
+            statement.setInt(1, sectionId);
+            statement.setInt(2, start - 1);
+            statement.setInt(3, total);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(Mapper.mapArticle(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticlesBySectionId(int sectionId) throws SQLException {
+        ResultSet resultSet = null;
+        int result = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_COUNT_OF_ARTICLES_BY_SECTION_ID)) {
+            statement.setInt(1, sectionId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesByUserId(int start, int total, Long userId) throws SQLException {
+        ResultSet resultSet = null;
+        List<Article> result = new ArrayList<>();
+        try(Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID)){
+            statement.setLong(1, userId);
+            statement.setInt(2, start - 1);
+            statement.setInt(3, total);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(Mapper.mapArticle(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticlesByUserId(Long userId) throws SQLException {
+        ResultSet resultSet = null;
+        int result = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_COUNT_OF_ARTICLES_BY_USER_ID)) {
+            statement.setLong(1, userId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesByUserIdAndSectionId(int start, int total, Long userId, int sectionId) throws SQLException {
+        ResultSet resultSet = null;
+        List<Article> result = new ArrayList<>();
+        try(Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID_AND_SECTION_ID)){
+            statement.setLong(1, userId);
+            statement.setInt(2, sectionId);
+            statement.setInt(3, start - 1);
+            statement.setInt(4, total);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(Mapper.mapArticle(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfArticlesByUserIdAndSectionId(Long userId, int sectionId) throws SQLException {
+        ResultSet resultSet = null;
+        int result = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_COUNT_OF_ARTICLES_BY_USER_ID_AND_SECTION_ID)) {
+            statement.setLong(1, userId);
+            statement.setInt(2, sectionId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getAllBySectionId(int sectionId) throws SQLException {
         ResultSet resultSet = null;
         List<Article> result = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_SECTION)) {
-            statement.setLong(1, sectionId);
+            statement.setInt(1, sectionId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 result.add(Mapper.mapArticle(resultSet));

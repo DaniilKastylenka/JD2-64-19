@@ -7,7 +7,23 @@ import java.util.List;
 
 public interface ArticleDao extends DAO<Article> {
 
-    List<Article> getAllBySectionId(Long id) throws SQLException;
+    List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException;
+
+    int getCountOfArticles() throws SQLException;
+
+    List<Article> getLimitedNumberOfArticlesBySectionId(int start, int total, int sectionId) throws SQLException;
+
+    int getCountOfArticlesBySectionId(int sectionId) throws SQLException;
+
+    List<Article> getLimitedNumberOfArticlesByUserId(int start, int total, Long userId) throws SQLException;
+
+    int getCountOfArticlesByUserId(Long userId) throws SQLException;
+
+    List<Article> getLimitedNumberOfArticlesByUserIdAndSectionId(int start, int total, Long userId, int sectionId) throws SQLException;
+
+    int getCountOfArticlesByUserIdAndSectionId(Long userId, int sectionId) throws SQLException;
+
+    List<Article> getAllBySectionId(int sectionId) throws SQLException;
 
     void addLike(Long articleId, Long userId) throws SQLException;
 
