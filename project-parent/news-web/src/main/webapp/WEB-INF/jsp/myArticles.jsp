@@ -22,6 +22,17 @@
     </c:forEach>
 </div>
 
+<div align="center" style="padding-top: 40px">
+    <c:choose>
+        <c:when test="${pageContext.request.parameterMap.containsKey('sectionId')}">
+            <%@include file="/WEB-INF/include/pageButtonsWithSectionId.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="/WEB-INF/include/pageButtons.jsp" %>
+        </c:otherwise>
+    </c:choose>
+</div>
+
 <table class="articles-list">
     <col width="70%"/>
     <col width="30%"/>

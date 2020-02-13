@@ -7,15 +7,28 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<h1 align="center"><a style="font-size: 40px" class="article-title-link" href="${pageContext.request.contextPath}/articleList?page=1">Articles</a></h1>
+<h1 align="center"><a style="font-size: 40px" class="article-title-link"
+                      href="${pageContext.request.contextPath}/articleList?page=1">Articles</a></h1>
 
 <div align="center">
     <a style="font-size: 30px"> | </a>
     <c:forEach items="${sections}" var="section">
-        <a class="article-title-link" <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff; font-size: 33px" </c:if>
+        <a class="article-title-link"
+           <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff; font-size: 33px" </c:if>
            href="${pageContext.request.contextPath}/articleListBySection?sectionId=${section.id}&page=1">${section.name}</a>
         <a style="font-size: 30px"> | </a>
     </c:forEach>
+</div>
+
+<div align="center" style="padding-top: 40px">
+    <c:choose>
+        <c:when test="${pageContext.request.parameterMap.containsKey('sectionId')}">
+            <%@include file="/WEB-INF/include/pageButtonsWithSectionId.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="/WEB-INF/include/pageButtons.jsp" %>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 <table class="articles-list">
