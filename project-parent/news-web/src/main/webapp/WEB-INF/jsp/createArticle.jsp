@@ -3,7 +3,6 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head lang="${param.lang}">
-    <fmt:setLocale scope="session" value="${param.lang}"/>
     <fmt:setBundle basename="messages"/>
     <title><fmt:message key="create.article.page.title"/></title>
     <meta charset=" UTF-8

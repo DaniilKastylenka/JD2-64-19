@@ -2,13 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale scope="session" value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
 
 <!DOCTYPE html>
 <html lang="${param.lang}">
 <head>
-    <title><fmt:message key="login.title"/></title>
+    <title><fmt:message key="login.login"/></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,7 +31,7 @@
         <div class="wrap-login100 p-t-50 p-b-90">
             <form class="login100-form validate-form flex-sb flex-w" method="post">
 					<span class="login100-form-title p-b-51">
-						<fmt:message key="login.title"/>
+						<fmt:message key="login.login"/>
 					</span>
 
 
@@ -53,7 +52,7 @@
 
                 <div class="flex-sb-m w-full p-t-3 p-b-24">
                     <div>
-                        <a><fmt:message key="login.account"/></a>
+                        <a><fmt:message key="login.no.account"/></a>
                         <a href="${pageContext.request.contextPath}/register" class="txt1">
                             <fmt:message key="login.sign.up"/>
                         </a>
@@ -62,7 +61,7 @@
 
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn">
-                        <fmt:message key="login.button"/>
+                        <fmt:message key="login.login"/>
                     </button>
                 </div>
 

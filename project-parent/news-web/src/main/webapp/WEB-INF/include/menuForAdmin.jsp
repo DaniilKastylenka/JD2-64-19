@@ -1,10 +1,10 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <li>
-    <a href="#">Users</a>
+    <a href="#"><fmt:message key="menu.users"/></a>
     <ul>
-        <li><a href="${pageContext.request.contextPath}/userList">All users</a></li>
-        <li><a href="${pageContext.request.contextPath}/createAuthorAccount">Add new author</a></li>
+        <li><a href="${pageContext.request.contextPath}/userList"><fmt:message key="menu.all.users"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/createAuthorAccount"><fmt:message key="menu.add.new.author"/></a></li>
     </ul>
 </li>
 <li>

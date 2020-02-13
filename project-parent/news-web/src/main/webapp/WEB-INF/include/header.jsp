@@ -3,8 +3,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<fmt:setLocale scope="session" value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<a href="${pageContext.request.contextPath}/articleList?page=1"><h1 class="news-header"><fmt:message key="header.title"/></h1></a>
+<a href="${pageContext.request.contextPath}/articleList?page=1"><h1 class="news-header">News</h1></a>
 

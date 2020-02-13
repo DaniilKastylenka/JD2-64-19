@@ -4,15 +4,14 @@
 <!DOCTYPE html>
 <html lang="${param.lang}">
 <head>
-    <fmt:setLocale scope="session" value="${param.lang}"/>
     <fmt:setBundle basename="messages"/>
-    <title><fmt:message key="home.page.title"/></title>
+    <title>News</title>
     <meta charset="UTF-8">
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1><fmt:message key="home.page.title"/></h1>
+<h1><fmt:message key="home.page"/></h1>
 
 <div style="word-wrap: break-word">Это проект студента it-academy - Костыленко Даниила. Проектом является новостной
     портал.

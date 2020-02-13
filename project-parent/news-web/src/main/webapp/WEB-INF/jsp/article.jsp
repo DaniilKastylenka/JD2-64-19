@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html lang="${param.lang}">
 <head>
-    <fmt:setLocale scope="session" value="${param.lang}"/>
     <fmt:setBundle basename="messages"/>
     <title>${article.title}</title>
     <meta charset="UTF-8">
@@ -35,13 +35,15 @@
     <tr>
         <td align="right" style="padding-right: 145px; color: #878b8f">
             <div>
-                <fmt:message key="article.author"/>: ${article.author.username}
-                <fmt:formatDate pattern="dd.MM.yyy 'at' HH:mm" value="${article.publicationDate}"/>
+                <fmt:message key="articles.author"/>: ${article.author.username}
+            </div>
+            <div>
+                <fmt:message key="articles.published"/> <fmt:formatDate pattern="dd.MM.yyy • HH:mm" value="${article.publicationDate}"/>
             </div>
 
             <c:if test="${article.updatedDate != null}">
                 <div>
-                    Updated <fmt:formatDate pattern="dd.MM.yyy 'at' HH:mm" value="${article.updatedDate}"/>
+                    <fmt:message key="articles.updated"/> <fmt:formatDate pattern="dd.MM.yyy • HH:mm" value="${article.updatedDate}"/>
                 </div>
             </c:if>
         </td>
@@ -54,7 +56,7 @@
             <div style="width: 60px; height: 30px" align="center">
                 <button id="article-like-btn" class="article-like<c:if test="${isLiked}">d</c:if>-btn">like</button>
             </div>
-            <div id="article-likes" style="font-size: 13px;">${article.likes} like(s)</div>
+            <div id="article-likes" style="font-size: 13px;">${article.likes} like(s) </div>
         </td>
         <td align="center">
             <div style="width: 60px; height: 30px" align="center">
@@ -68,7 +70,7 @@
     </tr>
 </table>
 
-<h2 align="center">Write your comment</h2>
+<h2 align="center"><fmt:message key="article.write.comment"/></h2>
 
 <table class="comment-tbl" style="padding-bottom: 100px">
     <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
@@ -91,8 +93,9 @@
         </tr>
     </form>
 </table>
-
-<h2 align="center" style="padding-bottom: 50px">Comments</h2>
+<c:if test="${fn:length(commentList)>0}">
+    <h2 align="center" style="padding-bottom: 50px"><fmt:message key="article.comments"/></h2>
+</c:if>
 
 <table class="comment-tbl">
     <col width="55%">
