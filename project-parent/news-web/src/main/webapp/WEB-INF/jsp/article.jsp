@@ -38,12 +38,14 @@
                 <fmt:message key="articles.author"/>: ${article.author.username}
             </div>
             <div>
-                <fmt:message key="articles.published"/> <fmt:formatDate pattern="dd.MM.yyy • HH:mm" value="${article.publicationDate}"/>
+                <fmt:message key="articles.published"/> <fmt:formatDate pattern="dd.MM.yyy • HH:mm"
+                                                                        value="${article.publicationDate}"/>
             </div>
 
             <c:if test="${article.updatedDate != null}">
                 <div>
-                    <fmt:message key="articles.updated"/> <fmt:formatDate pattern="dd.MM.yyy • HH:mm" value="${article.updatedDate}"/>
+                    <fmt:message key="articles.updated"/> <fmt:formatDate pattern="dd.MM.yyy • HH:mm"
+                                                                          value="${article.updatedDate}"/>
                 </div>
             </c:if>
         </td>
@@ -56,7 +58,7 @@
             <div style="width: 60px; height: 30px" align="center">
                 <button id="article-like-btn" class="article-like<c:if test="${isLiked}">d</c:if>-btn">like</button>
             </div>
-            <div id="article-likes" style="font-size: 13px;">${article.likes} like(s) </div>
+            <div id="article-likes" style="font-size: 13px;">${article.likes} like(s)</div>
         </td>
         <td align="center">
             <div style="width: 60px; height: 30px" align="center">
@@ -93,9 +95,9 @@
         </tr>
     </form>
 </table>
-<c:if test="${fn:length(commentList)>0}">
-    <h2 align="center" style="padding-bottom: 50px"><fmt:message key="article.comments"/></h2>
-</c:if>
+
+<h2 align="center" style="padding-bottom: 50px"><fmt:message key="article.comments"/></h2>
+
 
 <table class="comment-tbl">
     <col width="55%">
