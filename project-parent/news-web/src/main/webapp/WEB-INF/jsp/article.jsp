@@ -52,17 +52,17 @@
     <tr>
         <td align="center">
             <div style="width: 60px; height: 30px" align="center">
-                <button id="article-like-btn" class="article-like<c:if test="${isLiked}">d</c:if>-btn">Like</button>
+                <button id="article-like-btn" class="article-like<c:if test="${isLiked}">d</c:if>-btn">like</button>
             </div>
-            <div id="article-likes" style="font-size: 14px;">${article.likes} like(s)</div>
+            <div id="article-likes" style="font-size: 13px;">${article.likes} like(s)</div>
         </td>
         <td align="center">
             <div style="width: 60px; height: 30px" align="center">
                 <button id="article-dislike-btn" class="article-dislike<c:if test="${isDisliked}">d</c:if>-btn">
-                    Dislike
+                    dislike
                 </button>
             </div>
-            <div id="article-dislikes" style="font-size: 14px">${article.dislikes} dislike(s)
+            <div id="article-dislikes" style="font-size: 13px">${article.dislikes} dislike(s)
             </div>
         </td>
     </tr>
@@ -117,10 +117,10 @@
                     </script>
                     <div style="height: 20px; width: 45px;" align="center">
                         <button id="comment-like-btn${comment.id}"
-                                class="comment-like<c:if test="${comment.liked}">d</c:if>-btn">Like
+                                class="comment-like<c:if test="${comment.liked}">d</c:if>-btn">like
                         </button>
                     </div>
-                    <div id="comment-likes${comment.id}" style="font-size: 12px">${comment.likes} like(s)</div>
+                    <div id="comment-likes${comment.id}" style="font-size: 11px">${comment.likes} like(s)</div>
                 </td>
 
                 <td valign="middle" align="center" style="color: #5e5e5e;">
@@ -130,10 +130,10 @@
                     <div style="height: 20px; width: 45px;" align="center">
                         <button id="comment-dislike-btn${comment.id}"
                                 class="comment-dislike<c:if test="${comment.disliked}">d</c:if>-btn">
-                            Dislike
+                            dislike
                         </button>
                     </div>
-                    <div id="comment-dislikes${comment.id}" style="font-size: 12px">${comment.dislikes} dislike(s)</div>
+                    <div id="comment-dislikes${comment.id}" style="font-size: 11px">${comment.dislikes} dislike(s)</div>
                 </td>
             </tr>
             <tr>

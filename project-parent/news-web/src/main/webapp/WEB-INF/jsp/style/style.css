@@ -11,7 +11,7 @@
     left: 0;
     bottom: 0;
     padding: 0;
-    background: #8664b5;
+    background: #4a93d9;
     color: #fff;
     width: 100%;
 }
@@ -120,7 +120,7 @@ p {
 
 .article-like-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     color: black;
     line-height: 1.2;
 
@@ -131,9 +131,9 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 10px;
-    width: 60px;
-    height: 30px;
-    border: 2px solid #9a80bb;
+    width: 50px;
+    height: 25px;
+    border: 1.5px solid #4a93d9;
     background-color: #fff;
     border-radius: 30px;
     user-select: none;
@@ -146,17 +146,17 @@ p {
 
 .article-like-btn:hover {
     color: #fff;
-    background-color: #9a80bb;
+    background-color: #4a93d9;
 }
 
 .article-like-btn:active {
-    background-color: #6c5a8a;
-    border-color: #6c5a8a;
+    background-color: #3267a7;
+    border-color: #3267a7;
 }
 
 .comment-like-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: black;
     line-height: 1.2;
 
@@ -167,9 +167,9 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 5px;
-    width: 45px;
+    width: 40px;
     height: 20px;
-    border: 2px solid #9a80bb;
+    border: 1.5px solid #4a93d9;
     background-color: #fff;
     border-radius: 30px;
 
@@ -181,7 +181,7 @@ p {
 
 .comment-liked-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: #fff;
     line-height: 1.2;
 
@@ -192,10 +192,10 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 5px;
-    width: 45px;
+    width: 40px;
     height: 20px;
-    border: 2px solid #9a80bb;
-    background-color: #9a80bb;
+    border: 1px solid #4a93d9;
+    background-color: #4a93d9;
     border-radius: 30px;
 
     -webkit-transition: all 0.4s;
@@ -205,23 +205,23 @@ p {
 }
 
 .comment-liked-btn:active {
-    background-color: #6c5a8a;
-    border-color: #6c5a8a;
+    background-color: #3267a7;
+    border-color: #3267a7;
 }
 
 .comment-like-btn:hover {
     color: #fff;
-    background-color: #9a80bb;
+    background-color: #4a93d9;
 }
 
 .comment-like-btn:active {
-    background-color: #6c5a8a;
-    border-color: #6c5a8a;
+    background-color: #3267a7;
+    border-color: #3267a7;
 }
 
 .comment-dislike-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: black;
     line-height: 1.2;
 
@@ -232,9 +232,9 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 5px;
-    width: 45px;
+    width: 40px;
     height: 20px;
-    border: 2px solid #bb545f;
+    border: 1.5px solid #c72323;
     background-color: #fff;
     border-radius: 30px;
 
@@ -246,7 +246,7 @@ p {
 
 .comment-disliked-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: #fff;
     line-height: 1.2;
 
@@ -257,10 +257,10 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 5px;
-    width: 45px;
+    width: 40px;
     height: 20px;
-    border: 2px solid #bb545f;
-    background-color: #bb545f;
+    border: 1px solid #c72323;
+    background-color: #c72323;
     border-radius: 30px;
 
     -webkit-transition: all 0.4s;
@@ -270,18 +270,18 @@ p {
 }
 
 .comment-disliked-btn:active {
-    background-color: #791d25;
-    border-color: #791d25;
+    background-color: #8b1f28;
+    border-color: #8b1f28;
 }
 
 .comment-dislike-btn:hover {
     color: #fff;
-    background-color: #bb545f;
+    background-color: #c72323;
 }
 
 .comment-dislike-btn:active {
-    background-color: #791d25;
-    border-color: #791d25;
+    background-color: #8b1f28;
+    border-color: #8b1f28;
 }
 
 .submit-btn {
@@ -299,7 +299,7 @@ p {
     padding: 0 10px;
     width: 100px;
     height: 35px;
-    border: 2px solid #9a80bb;
+    border: 2px solid #4a93d9;
     background-color: #fff;
     border-radius: 10px;
 
@@ -311,17 +311,17 @@ p {
 
 .submit-btn:hover {
     color: #fff;
-    background-color: #9a80bb;
+    background-color: #4a93d9;
 }
 
 .submit-btn:active {
-    background-color: #6c5a8a;
-    border-color: #6c5a8a;
+    background-color: #3267a7;
+    border-color: #3267a7;
 }
 
 .article-dislike-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     color: black;
     line-height: 1.2;
 
@@ -332,9 +332,9 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 10px;
-    width: 60px;
-    height: 30px;
-    border: 2px solid #d52229;
+    width: 50px;
+    height: 25px;
+    border: 1.5px solid #c72323;
     background-color: #fff;
     border-radius: 30px;
     user-select: none;
@@ -347,17 +347,17 @@ p {
 
 .article-dislike-btn:hover {
     color: #fff;
-    background-color: #d52229;
+    background-color: #c72323;
 }
 
 .article-dislike-btn:active {
-    background-color: #791d25;
-    border-color: #791d25;
+    background-color: #8b1f28;
+    border-color: #8b1f28;
 }
 
 .article-liked-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     color: #fff;
     line-height: 1.2;
 
@@ -368,22 +368,22 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 10px;
-    width: 60px;
-    height: 30px;
-    border: 2px solid #9a80bb;
-    background-color: #9a80bb;
+    width: 50px;
+    height: 25px;
+    border: 2px solid #4a93d9;
+    background-color: #4a93d9;
     border-radius: 30px;
     user-select: none;
 }
 
 .article-liked-btn:active {
-    background-color: #6c5a8a;
-    border-color: #6c5a8a;
+    background-color: #3267a7;
+    border-color: #3267a7;
 }
 
 .article-disliked-btn {
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     color: #fff;
     line-height: 1.2;
 
@@ -394,17 +394,17 @@ p {
     display: flex;
     justify-content: center;
     padding: 0 10px;
-    width: 60px;
-    height: 30px;
-    border: 2px solid #d52229;
-    background-color: #d52229;
+    width: 50px;
+    height: 25px;
+    border: 2px solid #c72323;
+    background-color: #c72323;
     border-radius: 30px;
     user-select: none;
 }
 
 .article-disliked-btn:active {
-    background-color: #791d25;
-    border-color: #791d25;
+    background-color: #8b1f28;
+    border-color: #8b1f28;
 }
 
 .articles-list {
