@@ -48,6 +48,14 @@
                                                                           value="${article.updatedDate}"/>
                 </div>
             </c:if>
+            <c:if test="${sessionScope.user.role.name=='admin' or article.user==sessionScope.user}">
+                <div>
+                    <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
+                            key="delete.btn"/></a> |
+                    <a class="update-btn" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
+                            key="update.btn"/></a>
+                </div>
+            </c:if>
         </td>
     </tr>
 </table>
@@ -113,7 +121,8 @@
                 <td style="color: #5e5e5e; text-align: center">
                     <c:if test="${comment.user == sessionScope.user or sessionScope.user.role.name == 'admin'}">
                         <a class="delete-btn"
-                           href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}">DELETE</a>
+                           href="${pageContext.request.contextPath}/deleteComment?commentId=${comment.id}"><fmt:message
+                                key="delete.btn"/></a>
                     </c:if>
                 </td>
                 <td valign="middle" align="center" style="color: #5e5e5e;">

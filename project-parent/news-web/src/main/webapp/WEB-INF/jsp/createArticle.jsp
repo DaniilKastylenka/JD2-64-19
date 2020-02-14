@@ -5,7 +5,7 @@
 <head>
     <fmt:setBundle basename="messages"/>
     <title><fmt:message key="create.article"/></title>
-    <meta charset=" UTF-8">
+    <meta charset="UTF-8">
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
@@ -54,7 +54,7 @@
             <td colspan="2"
                 style="border: 1px solid #d4d4d4; border-bottom-left-radius: 10px; border-top-left-radius: 10px">
                 <textarea class="article-text-place" name="text" placeholder="<fmt:message key="create.article.text"/>"
-                          required
+                          required="<fmt:message key="create.article.error"/>"
                           maxlength="65535">${text}</textarea>
             </td>
         </tr>

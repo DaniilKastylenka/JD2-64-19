@@ -5,7 +5,7 @@
 <head>
     <fmt:setBundle basename="messages"/>
     <title><fmt:message key="update.article"/></title>
-    <meta charset=" UTF-8">
+    <meta charset="UTF-8">
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
