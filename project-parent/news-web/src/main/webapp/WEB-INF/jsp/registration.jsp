@@ -2,13 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale scope="session" value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
 
 <!DOCTYPE html>
 <html lang="${param.lang}">
 <head>
-    <title><fmt:message key="registration.sign.up"/></title>
+    <title><fmt:message key="reg.reg"/></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -33,26 +32,26 @@
         <div class="wrap-login100 p-t-50 p-b-90">
             <form class="login100-form validate-form flex-sb flex-w" method="post">
 					<span class="login100-form-title p-b-51">
-						<fmt:message key="registration.page.title"/>
+						<fmt:message key="reg.reg"/>
 					</span>
 
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
                     <input class="input100" type="text" name="username"
-                           placeholder="<fmt:message key="registration.username"/>">
+                           placeholder="<fmt:message key="reg.username"/>">
                     <span class="focus-input100"></span>
                 </div>
 
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
                     <input class="input100" type="password" name="password"
-                           placeholder="<fmt:message key="registration.password"/>">
+                           placeholder="<fmt:message key="reg.password"/>">
                     <span class="focus-input100"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
                     <input class="input100" type="password" name="repeatPass"
-                           placeholder="<fmt:message key="registration.repeat.password"/>">
+                           placeholder="<fmt:message key="reg.repeat.password"/>">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -61,16 +60,16 @@
                 <div class="flex-sb-m w-full p-t-3 p-b-24">
 
                     <div>
-                        <a><fmt:message key="registration.account"/></a>
+                        <a><fmt:message key="reg.account"/></a>
                         <a href="${pageContext.request.contextPath}/login" class="txt1">
-                            <fmt:message key="registration.login"/>
+                            <fmt:message key="reg.sign.in"/>
                         </a>
                     </div>
                 </div>
 
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn">
-                        <fmt:message key="registration.sign.up"/>
+                        <fmt:message key="reg.reg"/>
                     </button>
                 </div>
 

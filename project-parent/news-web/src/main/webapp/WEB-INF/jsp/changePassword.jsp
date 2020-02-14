@@ -4,7 +4,6 @@
 <html>
 <head>
     <title>Change password</title>
-    <fmt:setLocale scope="session" value="${param.lang}"/>
     <fmt:setBundle basename="messages"/>
 </head>
 <body>

@@ -9,6 +9,24 @@ public interface ArticleService {
 
     List<Article> getAllArticles();
 
+    List<Article> getLimitedNumberOfArticles(int start, int total);
+
+    int getCountOfPages(int countOfArticlesOnPage);
+
+    List<Article> getLimitedNumberOfArticlesBySectionId(int start, int total, int sectionId);
+
+    int getCountOfPagesWithArticlesBySectionId(int countOfArticlesOnPage, int sectionId);
+
+    List<Article> getLimitedNumberOfArticlesByUserId(int start, int total, Long userId);
+
+    int getCountOfPagesWithArticlesByUserId(int countOfArticlesOnPage, Long userId);
+
+    List<Article> getLimitedNumberOfArticlesByUserIdAndSectionId(int start, int total, Long userId, int sectionId);
+
+    int getCountOfPagesWithArticlesByUserIdAndSectionId(int countOfArticlesOnPage, Long userId, int sectionId);
+
+    List<Article> getAllBySectionId(int sectionId);
+
     void addNewArticle(Article article);
 
     void deleteArticle(Long id);

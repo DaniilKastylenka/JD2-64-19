@@ -33,19 +33,37 @@ public class CreateArticleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Integer sectionId = Integer.valueOf(req.getParameter("sectionId"));
+
+        String error = "";
+        boolean hasError = false;
+        if (sectionId < 1 || sectionId > 7) {
+            error = "choose section";
+            hasError = true;
+        }
+
         String title = req.getParameter("title");
         String text = req.getParameter("text");
 
-        User author = (User) req.getSession().getAttribute("user");
+        if (!hasError) {
 
-        Section section = sectionService.getSections().stream()
-                .filter(section1 -> section1.getId().equals(sectionId))
-                .findFirst().orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
+            User author = (User) req.getSession().getAttribute("user");
 
-        Article article = new Article(null, section, title, text, author);
+            Section section = sectionService.getSections().stream()
+                    .filter(section1 -> section1.getId().equals(sectionId))
+                    .findFirst().orElseThrow(() -> new RuntimeException("no section with id " + sectionId));
 
-        articleService.addNewArticle(article);
+            Article article = new Article(null, section, title, text, author);
 
-        resp.sendRedirect(req.getContextPath() + "/myArticles");
+            articleService.addNewArticle(article);
+
+            resp.sendRedirect(req.getContextPath() + "/articleList?page=1");
+        } else {
+            req.setAttribute("sections", sectionService.getSections());
+            req.setAttribute("error", error);
+            req.setAttribute("title", title);
+            req.setAttribute("text", text);
+            req.getRequestDispatcher("/WEB-INF/jsp/createArticle.jsp")
+                    .forward(req, resp);
+        }
     }
 }

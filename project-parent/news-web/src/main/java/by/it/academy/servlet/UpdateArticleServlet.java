@@ -57,7 +57,7 @@ public class UpdateArticleServlet extends HttpServlet {
 
         User user = (User) req.getSession().getAttribute("user");
         if (user.getRole().getName().equals("admin")) {
-            resp.sendRedirect(req.getContextPath() + "/articleList");
+            resp.sendRedirect(req.getContextPath() + "/articleList?page=1");
         } else {
             resp.sendRedirect(req.getContextPath() + "/myArticles");
         }

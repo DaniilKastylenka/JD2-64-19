@@ -2,6 +2,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:if test="${param.lang != null}">
+    <% session.setAttribute("locale", request.getParameter("lang")); %>
+</c:if>
+<c:if test="${sessionScope.locale != null}">
+    <fmt:setLocale value="${sessionScope.locale}"/>
+</c:if>
+
 <style>
     <%@include file="menu_style/style.css" %>
     <%@include file="/WEB-INF/jsp/login_style/css/main.css" %>
@@ -23,17 +30,35 @@
         </c:if>
         <li><a href="#"><fmt:message key="menu.localisation"/></a>
             <ul>
-                <li><a href="?lang=en">English</a></li>
-                <li><a href="?lang=ru">Русский</a></li>
+                <li>
+                    <a href="<c:url value="${requestScope['javax.servlet.forward.request_uri.param']}">
+                    <c:forEach items="${param}" var="entry">
+                    <c:if test="${entry.key!='lang'}">
+                    <c:param name="${entry.key}" value="${entry.value}"/></c:if>
+</c:forEach>
+<c:param name="lang" value="en"/>
+</c:url>">
+                        English
+                    </a>
+                </li>
+                <li>
+                    <a href="<c:url value="${requestScope['javax.servlet.forward.request_uri.param']}">
+                    <c:forEach items="${param}" var="entry">
+                    <c:if test="${entry.key != 'lang'}">
+                    <c:param name="${entry.key}" value="${entry.value}"/></c:if>
+</c:forEach>
+<c:param name="lang" value="ru"/>
+</c:url>">
+                        Русский
+                    </a>
+                </li>
             </ul>
         </li>
         <li><a href="${pageContext.request.contextPath}/home"
-               style="color: green">Hello ${sessionScope.user.username}</a>
+               style="color: green"><fmt:message key="menu.hello"/> ${sessionScope.user.username}</a>
             <ul>
 
-                <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="menu.home"/> </a></li>
-
-                <li><a href="${pageContext.request.contextPath}/userPage">Account</a></li>
+                <li><a href="${pageContext.request.contextPath}/userPage"><fmt:message key="menu.account"/></a></li>
 
                 <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff1d00"><fmt:message
                         key="menu.logout"/></a></li>

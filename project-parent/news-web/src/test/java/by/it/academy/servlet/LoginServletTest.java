@@ -84,7 +84,7 @@ public class LoginServletTest {
         //then
         Mockito.verify(session).setAttribute(LoginServlet.USER_ATTRIBUTE, Optional.of(expectedUser).get());
         Mockito.verify(dispatcher, Mockito.never()).forward(request, response);
-        Mockito.verify(response).sendRedirect(CONTEXT_PATH + LoginServlet.HOME);
+        Mockito.verify(response).sendRedirect(CONTEXT_PATH + LoginServlet.ARTICLES);
 
     }
 

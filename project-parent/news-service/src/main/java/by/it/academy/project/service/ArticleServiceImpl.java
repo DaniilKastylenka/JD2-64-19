@@ -25,14 +25,147 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getAllArticles() {
         logger.debug("get all articles");
-        ArrayList<Article> articles = null;
+        List<Article> result = new ArrayList<>();
         try {
-            articles = (ArrayList<Article>) articleDao.getAll();
-            logger.debug("result {}", articles);
+            result = articleDao.getAll();
+            logger.debug("result {}", result);
         } catch (SQLException e) {
             logger.error("error while reading articles", e);
         }
-        return articles;
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticles(int start, int total) {
+        logger.debug("get limited number articles");
+        List<Article> result = new ArrayList<>();
+        try {
+            result = articleDao.getLimitedNumberOfArticles(start, total);
+            logger.debug("result {}", result);
+        } catch (SQLException e) {
+            logger.error("error while reading articles", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfPages(int countOfArticlesOnPage) {
+        logger.debug("get count of pages");
+        int result = 0;
+        try {
+            int countOfArticles = articleDao.getCountOfArticles();
+            if (countOfArticles % countOfArticlesOnPage == 0) {
+                result = countOfArticles / countOfArticlesOnPage;
+            } else {
+                result = (countOfArticles / countOfArticlesOnPage) + 1;
+            }
+        } catch (SQLException e) {
+            logger.error("error while getting count of articles");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesBySectionId(int start, int total, int sectionId) {
+        logger.debug("get limited number articles by section id");
+        List<Article> result = new ArrayList<>();
+        try {
+            result = articleDao.getLimitedNumberOfArticlesBySectionId(start, total, sectionId);
+            logger.debug("result {}", result);
+        } catch (SQLException e) {
+            logger.error("error while reading articles", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfPagesWithArticlesBySectionId(int countOfArticlesOnPage, int sectionId) {
+        logger.debug("get count of pages");
+        int result = 0;
+        try {
+            int countOfArticles = articleDao.getCountOfArticlesBySectionId(sectionId);
+            if (countOfArticles % countOfArticlesOnPage == 0) {
+                result = countOfArticles / countOfArticlesOnPage;
+            } else {
+                result = (countOfArticles / countOfArticlesOnPage) + 1;
+            }
+        } catch (SQLException e) {
+            logger.error("error while getting count of articles");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesByUserId(int start, int total, Long userId) {
+        logger.debug("get limited number articles by user id");
+        List<Article> result = new ArrayList<>();
+        try {
+            result = articleDao.getLimitedNumberOfArticlesByUserId(start, total, userId);
+            logger.debug("result {}", result);
+        } catch (SQLException e) {
+            logger.error("error while reading articles", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfPagesWithArticlesByUserId(int countOfArticlesOnPage, Long userId) {
+        logger.debug("get count of pages");
+        int result = 0;
+        try {
+            int countOfArticles = articleDao.getCountOfArticlesByUserId(userId);
+            if (countOfArticles % countOfArticlesOnPage == 0) {
+                result = countOfArticles / countOfArticlesOnPage;
+            } else {
+                result = (countOfArticles / countOfArticlesOnPage) + 1;
+            }
+        } catch (SQLException e) {
+            logger.error("error while getting count of articles");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getLimitedNumberOfArticlesByUserIdAndSectionId(int start, int total, Long userId, int sectionId) {
+        logger.debug("get limited number articles by user id and section id");
+        List<Article> result = new ArrayList<>();
+        try {
+            result = articleDao.getLimitedNumberOfArticlesByUserIdAndSectionId(start, total, userId, sectionId);
+            logger.debug("result {}", result);
+        } catch (SQLException e) {
+            logger.error("error while reading articles", e);
+        }
+        return result;
+    }
+
+    @Override
+    public int getCountOfPagesWithArticlesByUserIdAndSectionId(int countOfArticlesOnPage, Long userId, int sectionId) {
+        logger.debug("get count of pages");
+        int result = 0;
+        try {
+            int countOfArticles = articleDao.getCountOfArticlesByUserIdAndSectionId(userId, sectionId);
+            if (countOfArticles % countOfArticlesOnPage == 0) {
+                result = countOfArticles / countOfArticlesOnPage;
+            } else {
+                result = (countOfArticles / countOfArticlesOnPage) + 1;
+            }
+        } catch (SQLException e) {
+            logger.error("error while getting count of articles");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getAllBySectionId(int sectionId) {
+        logger.debug("get all articles by section");
+        List<Article> result = new ArrayList<>();
+        try {
+            result = articleDao.getAllBySectionId(sectionId);
+            logger.debug("result{}", result);
+        } catch (SQLException e) {
+            logger.error("error while getting all articles by section id", e);
+        }
+        return result;
     }
 
     @Override
