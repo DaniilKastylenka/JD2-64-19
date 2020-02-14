@@ -4,5 +4,5 @@
 
 <fmt:setBundle basename="messages"/>
 
-<a href="${pageContext.request.contextPath}/articleList?page=1"><h1 class="news-header">News</h1></a>
+<a href="${pageContext.request.contextPath}/articleList?page=1"><h1 class="news-header">Danila News</h1></a>
 

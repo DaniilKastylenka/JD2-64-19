@@ -64,30 +64,7 @@
                         <fmt:message key="login.login"/>
                     </button>
                 </div>
-
             </form>
-            <table border="1px">
-                <tr>
-                    <th>Role</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                </tr>
-                <tr>
-                    <td>SimpleUser</td>
-                    <td>User</td>
-                    <td>User</td>
-                </tr>
-                <tr>
-                    <td>Author</td>
-                    <td>Author</td>
-                    <td>Author</td>
-                </tr>
-                <tr>
-                    <td>Admin</td>
-                    <td>Admin</td>
-                    <td>Admin</td>
-                </tr>
-            </table>
         </div>
     </div>
 </div>

@@ -48,11 +48,13 @@
                                                                           value="${article.updatedDate}"/>
                 </div>
             </c:if>
-            <c:if test="${sessionScope.user.role.name=='admin' or article.user==sessionScope.user}">
+            <c:if test="${sessionScope.user.role.name=='admin' or article.author==sessionScope.user}">
                 <div>
-                    <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
+                    <a class="delete-btn"
+                       href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
                             key="delete.btn"/></a> |
-                    <a class="update-btn" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
+                    <a class="update-btn"
+                       href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
                             key="update.btn"/></a>
                 </div>
             </c:if>
@@ -84,11 +86,6 @@
 
 <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
     <table class="comment-tbl" style="padding-bottom: 100px">
-        <tr>
-            <td align="left">
-                <div style="font-size: 20px">${sessionScope.user.username}:</div>
-            </td>
-        </tr>
         <tr>
             <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place"
                                                                                  name="text"
@@ -151,9 +148,8 @@
                 </td>
             </tr>
             <tr>
-                <td style="word-wrap: break-word; padding-bottom: 30px; color: #565656;" valign="center" colspan="4">
-                    <c:out
-                            value="${comment.text}"/></td>
+                <td style="word-wrap: break-word; color: #565656;" valign="top" colspan="4">
+                    <p style="white-space: pre-wrap">${comment.text}</p>
             </tr>
         </c:if>
     </c:forEach>
