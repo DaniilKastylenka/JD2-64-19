@@ -58,8 +58,6 @@
                style="color: green"><fmt:message key="menu.hello"/> ${sessionScope.user.username}</a>
             <ul>
 
-                <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="menu.home"/> </a></li>
-
                 <li><a href="${pageContext.request.contextPath}/userPage"><fmt:message key="menu.account"/></a></li>
 
                 <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff1d00"><fmt:message

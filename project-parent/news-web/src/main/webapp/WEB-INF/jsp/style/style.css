@@ -30,8 +30,7 @@
 }
 
 .create-article-tbl {
-    border: black;
-    margin-bottom: 20px;
+    padding-bottom: 50px;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -108,14 +107,16 @@ p {
 
 .article-title-place {
     resize: none;
-    height: 50px;
+    height: 130px;
     width: 100%;
+    font-size: 20px;
 }
 
 .article-text-place {
     resize: none;
     height: 500px;
     width: 100%;
+    font-size: 16px;
 }
 
 .article-like-btn {
@@ -464,6 +465,64 @@ p {
     color: #a7c8ff;
 }
 
+
+.custom-select {
+    position: relative;
+}
+
+.custom-select select {
+    display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+    background-color: #4a93d9;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+    position: absolute;
+    background-color: #4a93d9;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 0;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 
 

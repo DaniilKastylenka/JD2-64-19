@@ -4,12 +4,13 @@
 
 <html>
 <head>
+    <fmt:setBundle basename="messages"/>
     <title><fmt:message key="articles.my"/> </title>
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1 align="center"><a class="article-title-link" href="${pageContext.request.contextPath}/myArticles?page=1"><fmt:message key="articles.my"/></a></h1>
+<h1 align="center"><a style="font-size: 40px" class="article-title-link" href="${pageContext.request.contextPath}/myArticles?page=1"><fmt:message key="articles.my"/></a></h1>
 
 <div align="center">
     <a style="font-size: 30px"> | </a>
@@ -52,10 +53,10 @@
                     </div>
                     <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.author"/>: ${article.author.username}</div>
                     <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.published"/>: <fmt:formatDate
-                            value="${article.publicationDate}" pattern="dd.MM.yyy • hh:mm"/></div>
+                            value="${article.publicationDate}" pattern="dd.MM.yyy • HH:mm"/></div>
                     <c:if test="${article.updatedDate!=null}">
                         <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.updated"/>: <fmt:formatDate
-                                value="${article.updatedDate}" pattern="dd.MM • hh:mm"/></div>
+                                value="${article.updatedDate}" pattern="dd.MM • HH:mm"/></div>
                     </c:if>
                     <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.likes"/>: ${article.likes}</div>
                     <div><fmt:message key="articles.dislikes"/>: ${article.dislikes}</div>

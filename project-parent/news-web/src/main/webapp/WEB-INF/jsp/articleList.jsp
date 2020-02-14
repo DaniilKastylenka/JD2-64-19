@@ -3,6 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <fmt:setBundle basename="messages"/>
     <title><fmt:message key="articles.articles"/></title>
 </head>
 <body>
@@ -53,10 +54,10 @@
                 <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.author"/>
                     : ${article.author.username}</div>
                 <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.published"/>: <fmt:formatDate
-                        value="${article.publicationDate}" pattern="dd.MM.yyy • hh:mm"/></div>
+                        value="${article.publicationDate}" pattern="dd.MM.yyy • HH:mm"/></div>
                 <c:if test="${article.updatedDate!=null}">
                     <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.updated"/>: <fmt:formatDate
-                            value="${article.updatedDate}" pattern="dd.MM • hh:mm"/></div>
+                            value="${article.updatedDate}" pattern="dd.MM • HH:mm"/></div>
                 </c:if>
                 <div style="border-bottom: 1px solid #e3e3e3"><fmt:message
                         key="articles.likes"/>: ${article.likes}</div>

@@ -74,8 +74,8 @@
 
 <h2 align="center"><fmt:message key="article.write.comment"/></h2>
 
-<table class="comment-tbl" style="padding-bottom: 100px">
-    <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
+<form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
+    <table class="comment-tbl" style="padding-bottom: 100px">
         <tr>
             <td align="left">
                 <div style="font-size: 20px">${sessionScope.user.username}:</div>
@@ -93,8 +93,8 @@
             <td align="left" style="width: 100px; height: 35px"><input type="submit" class="submit-btn"
                                                                        placeholder="submit"></td>
         </tr>
-    </form>
-</table>
+    </table>
+</form>
 
 <h2 align="center" style="padding-bottom: 50px"><fmt:message key="article.comments"/></h2>
 
@@ -108,7 +108,7 @@
         <c:if test="${article.id == comment.article.id}">
             <tr>
                 <td align="left" style="color: #5e5e5e;">${comment.user.username} • <fmt:formatDate
-                        pattern="dd.MM.yyy 'at' HH:mm" value="${comment.date}"/>
+                        pattern="dd.MM.yyy '|' HH:mm" value="${comment.date}"/>
                 </td>
                 <td style="color: #5e5e5e; text-align: center">
                     <c:if test="${comment.user == sessionScope.user or sessionScope.user.role.name == 'admin'}">

@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
     public static final String BAD_CREDENTIALS = "Bad credentials";
     public static final String ERROR_STRING_ATTRIBUTE = "errorString";
     public static final String USER_ATTRIBUTE = "user";
-    public static final String HOME = "/home";
+    public static final String ARTICLES = "/articleList?page=1";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
             req.setAttribute(ERROR_STRING_ATTRIBUTE, errMsg);
             req.getRequestDispatcher(LOGIN_JSP).forward(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + HOME);
+            resp.sendRedirect(req.getContextPath() + ARTICLES);
         }
     }
 }
