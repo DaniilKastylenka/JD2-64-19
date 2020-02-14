@@ -21,7 +21,7 @@
 
 <table class="article-tbl">
     <tr>
-        <td>
+        <td style="word-wrap: break-word">
             <h2 style="text-align: center; font-size: 40px;">
                 ${article.title}
             </h2>
@@ -29,7 +29,7 @@
     </tr>
     <tr>
         <td>
-            <p style="width: 75%; margin: auto; padding-top: 30px; text-align: justify; font-size: 18px">${article.text}</p>
+            <p style="width: 75%; margin: auto; padding-top: 30px; text-align: justify; font-size: 18px; white-space: pre-wrap;">${article.text}</p>
         </td>
     </tr>
     <tr>
