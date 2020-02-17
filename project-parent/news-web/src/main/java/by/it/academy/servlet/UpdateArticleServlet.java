@@ -59,7 +59,7 @@ public class UpdateArticleServlet extends HttpServlet {
         if (user.getRole().getName().equals("admin")) {
             resp.sendRedirect(req.getContextPath() + "/articleList?page=1");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/myArticles");
+            resp.sendRedirect(req.getContextPath() + "/myArticles?page=1");
         }
     }
 
