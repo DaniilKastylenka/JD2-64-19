@@ -559,7 +559,7 @@ p {
     height: 60px;
     width: 370px;
     transition: 0.25s;
-    padding-left: 5px;
+    padding-left: 20px;
 }
 
 .login-data-space:focus{
