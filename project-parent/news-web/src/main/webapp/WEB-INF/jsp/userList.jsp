@@ -9,20 +9,24 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1>All users</h1>
-<table border="1px" style="width: 100%; border: black">
+<h1 align="center" style="padding-bottom: 40px"><fmt:message key="all.users"/> </h1>
+<table class="users-tbl">
+    <col width="15%">
+    <col width="50%">
+    <col width="25%">
+    <col width="10%">
     <tr>
-        <td>User ID</td>
-        <td>Username</td>
-        <td>Role</td>
-        <td>Actions</td>
+        <th class="users-tbl-col">ID</th>
+        <th class="users-tbl-col"><fmt:message key="username"/> </th>
+        <th class="users-tbl-col"><fmt:message key="role"/> </th>
+        <th class="users-tbl-col"><fmt:message key="users.actions"/></th>
     </tr>
     <c:forEach items="${userList}" var="user">
         <tr>
-            <td><c:out value="${user.id}"/></td>
-            <td><c:out value="${user.username}"/></td>
-            <td><c:out value="${user.role.name}"/></td>
-            <td>
+            <td class="users-tbl-col"><c:out value="${user.id}"/></td>
+            <td class="users-tbl-col"><c:out value="${user.username}"/></td>
+            <td class="users-tbl-col"><fmt:message key="role.${user.role.name}"/></td>
+            <td class="users-tbl-col">
                 <c:if test="${user.role.name != 'admin'}">
                     <a class="delete-btn"
                        href="${pageContext.request.contextPath}/deleteUser?userId=${user.id}">DELETE</a>

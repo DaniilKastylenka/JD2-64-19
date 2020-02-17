@@ -524,6 +524,20 @@ p {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.users-tbl{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.users-tbl-col{
+    height: 30px;
+    border: 1px solid #aeaeae;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 
 
