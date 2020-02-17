@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*", dispatcherTypes = DispatcherType.REQUEST)
+@WebFilter(urlPatterns = {"/likeArticle", "/dislikeArticle", "/likeComment", "/dislikeComment", "/writeComment"}, dispatcherTypes = DispatcherType.REQUEST)
 
 public class AuthFilter extends HttpFilter {
 
@@ -22,8 +22,7 @@ public class AuthFilter extends HttpFilter {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null && (!req.getRequestURI().endsWith("/login")
-                && !req.getRequestURI().endsWith("/register"))) {
+        if (user == null) {
             res.sendRedirect(req.getContextPath() + "/login");
         } else {
             super.doFilter(req, res, chain);

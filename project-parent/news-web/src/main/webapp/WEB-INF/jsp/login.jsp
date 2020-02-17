@@ -1,76 +1,49 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setBundle basename="messages"/>
 
-<!DOCTYPE html>
-<html lang="${param.lang}">
+<html>
 <head>
     <title><fmt:message key="login.login"/></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        <%@include file="login_style/css/main.css" %>
-        <%@include file="login_style/css/util.css" %>
-        <%@include file="login_style/vendor/daterangepicker/daterangepicker.css" %>
-        <%@include file="login_style/vendor/select2/select2.min.css" %>
-        <%@include file="login_style/vendor/animsition/css/animsition.min.css" %>
-        <%@include file="login_style/vendor/css-hamburgers/hamburgers.min.css" %>
-        <%@include file="login_style/vendor/animate/animate.css" %>
-        <%@include file="login_style/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %>
-        <%@include file="login_style/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %>
-        <%@include file="login_style/vendor/bootstrap/css/bootstrap.min.css" %>
-    </style>
 </head>
 <body>
+<%@include file="/WEB-INF/include/menu.jsp" %>
+<form method="POST" action="${pageContext.request.contextPath}/login">
+    <table class="login-table">
+        <tr>
+            <td align="center" class="login-head"><fmt:message key="login.login"/></td>
+        </tr>
+        <tr>
+            <td align="center" style="padding-bottom: 20px">
+                <input class="login-data-space" value="${username}" placeholder="<fmt:message key="login.username"/>" type="text"
+                       name="username">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input class="login-data-space" placeholder="<fmt:message key="login.password"/>" type="password"
+                       name="password">
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 16px; color: red">
+                ${errorString}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-bottom: 40px">
+                <div style="font-size: 16px"><fmt:message key="login.no.account"/>
+                    <a class="reg-link" style="font-size: 16px" href="${pageContext.request.contextPath}/register">
+                    <fmt:message key="login.sign.up"/>
+                </a></div>
+            </td>
+        </tr>
+        <tr>
+            <td><input class="login-btn" type="submit" value="<fmt:message key="login.login"/> "/></td>
+        </tr>
+    </table>
+</form>
 
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100 p-t-50 p-b-90">
-            <form class="login100-form validate-form flex-sb flex-w" method="post">
-					<span class="login100-form-title p-b-51">
-						<fmt:message key="login.login"/>
-					</span>
-
-
-                <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
-                    <input class="input100" type="text" name="username"
-                           placeholder="<fmt:message key="login.username"/>">
-                    <span class="focus-input100"></span>
-                </div>
-
-
-                <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-                    <input class="input100" type="password" name="password"
-                           placeholder="<fmt:message key="login.password"/>">
-                    <span class="focus-input100"></span>
-                </div>
-
-                <p style="color: #ff0010">${errorString}</p>
-
-                <div class="flex-sb-m w-full p-t-3 p-b-24">
-                    <div>
-                        <a><fmt:message key="login.no.account"/></a>
-                        <a href="${pageContext.request.contextPath}/register" class="txt1">
-                            <fmt:message key="login.sign.up"/>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="container-login100-form-btn m-t-17">
-                    <button class="login100-form-btn">
-                        <fmt:message key="login.login"/>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div id="dropDownSelect1"></div>
-
+<%@include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

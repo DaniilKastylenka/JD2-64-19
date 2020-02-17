@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (hasError) {
+            req.setAttribute("username", username);
             req.setAttribute(ERROR_STRING_ATTRIBUTE, errMsg);
             req.getRequestDispatcher(LOGIN_JSP).forward(req, resp);
         } else {

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<fmt:setBundle basename="messages"/>
 <c:if test="${param.lang != null}">
     <% session.setAttribute("locale", request.getParameter("lang")); %>
 </c:if>
@@ -15,58 +15,14 @@
     <%@include file="/WEB-INF/jsp/login_style/css/util.css" %>
     <%@include file="/WEB-INF/jsp/style/style.css"%>
 </style>
-
-<nav role='navigation'>
-    <%@include file="/WEB-INF/include/header.jsp" %>
-    <ul>
-        <c:if test="${sessionScope.user.role.name == 'author'}">
-            <%@include file="menuForAuthor.jsp" %>
-        </c:if>
-        <c:if test="${sessionScope.user.role.name == 'admin'}">
-            <%@include file="menuForAdmin.jsp" %>
-        </c:if>
-        <c:if test="${sessionScope.user.role.name == 'user'}">
-            <%@include file="menuForUser.jsp" %>
-        </c:if>
-        <li><a href="#"><fmt:message key="menu.localisation"/></a>
-            <ul>
-                <li>
-                    <a href="<c:url value="${requestScope['javax.servlet.forward.request_uri.param']}">
-                    <c:forEach items="${param}" var="entry">
-                    <c:if test="${entry.key!='lang'}">
-                    <c:param name="${entry.key}" value="${entry.value}"/></c:if>
-</c:forEach>
-<c:param name="lang" value="en"/>
-</c:url>">
-                        English
-                    </a>
-                </li>
-                <li>
-                    <a href="<c:url value="${requestScope['javax.servlet.forward.request_uri.param']}">
-                    <c:forEach items="${param}" var="entry">
-                    <c:if test="${entry.key != 'lang'}">
-                    <c:param name="${entry.key}" value="${entry.value}"/></c:if>
-</c:forEach>
-<c:param name="lang" value="ru"/>
-</c:url>">
-                        Русский
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/home"
-               style="color: green"><fmt:message key="menu.hello"/> ${sessionScope.user.username}</a>
-            <ul>
-
-                <li><a href="${pageContext.request.contextPath}/userPage"><fmt:message key="menu.account"/></a></li>
-
-                <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff1d00"><fmt:message
-                        key="menu.logout"/></a></li>
-
-            </ul>
-        </li>
-
-    </ul>
+<nav role="navigation">
+    <%@include file="header.jsp"%>
+    <c:choose>
+        <c:when test="${sessionScope.user != null}">
+            <%@include file="menuForAuthUser.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="menuForNonAuthUser.jsp" %>
+        </c:otherwise>
+    </c:choose>
 </nav>
-
-

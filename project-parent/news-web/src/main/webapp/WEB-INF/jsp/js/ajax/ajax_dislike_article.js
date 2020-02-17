@@ -1,5 +1,9 @@
 $(document).on("click", "#article-dislike-btn", function () {
     $.get("${pageContext.request.contextPath}/dislikeArticle?articleId=${article.id}", function (response) {
+        if ('${sessionScope.user==null}' === 'true') {
+            window.location.href =  '${pageContext.request.contextPath}/login';
+            return window.jQuery;
+        }
         $("#article-dislikes").text(response.split(":")[0]);
         $("#article-likes").text(response.split(":")[1]);
         if (response.split(":")[2]==="true") {
