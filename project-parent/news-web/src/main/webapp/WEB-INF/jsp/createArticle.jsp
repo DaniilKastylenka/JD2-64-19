@@ -53,7 +53,7 @@
         <tr>
             <td colspan="2"
                 style="border: 1px solid #d4d4d4; border-bottom-left-radius: 10px; border-top-left-radius: 10px">
-                <textarea class="article-text-place" name="text" placeholder="<fmt:message key="create.article.text"/>"
+                <textarea id="full-featured-non-premium" class="article-text-place" name="text" placeholder="<fmt:message key="create.article.text"/>"
                           required="<fmt:message key="create.article.error"/>"
                           maxlength="65535">${text}</textarea>
             </td>
