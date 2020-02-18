@@ -21,7 +21,6 @@ p {
 input {
     outline: none;
     border: none;
-    cursor: pointer;
 }
 
 textarea{
