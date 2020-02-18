@@ -21,7 +21,7 @@
 .news-header {
     font-family: 'Lato', sans-serif;
     margin-left: 225px;
-    position: fixed;
+    position: absolute;
     font-size: 50px;
     color: #000;
     transition: 0.15s;
@@ -531,15 +531,15 @@ p {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 .users-tbl-col{
     height: 30px;
-    border: 1px solid #aeaeae;
+    border-bottom: 3px solid #8b8b8b;
     border-radius: 15px;
     padding-left: 10px;
     padding-right: 10px;
+    background-color: #f0f0f0;
 }
 
 .login-table{
@@ -555,7 +555,7 @@ p {
 .login-data-space{
     font-size: 18px;
     border-radius: 5px;
-    background-color: #dbdbdb;
+    background-color: #eeeeee;
     height: 60px;
     width: 370px;
     transition: 0.25s;
@@ -587,5 +587,21 @@ p {
 .reg-link:hover{
     color: #a7c8ff;
 }
+
+.search-bar{
+    font-size: 16px;
+    width: 250px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    text-align: center;
+}
+
+
+
+
+
 
 

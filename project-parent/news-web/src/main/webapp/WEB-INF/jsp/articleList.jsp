@@ -9,18 +9,33 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 <h1 align="center"><a style="font-size: 40px" class="article-title-link"
-                      href="${pageContext.request.contextPath}/articleList?page=1"><fmt:message key="articles.articles"/></a></h1>
+                      href="${pageContext.request.contextPath}/articleList?page=1"><fmt:message
+        key="articles.articles"/></a></h1>
 
-<div align="center">
-    <a style="font-size: 30px"> | </a>
-    <c:forEach items="${sections}" var="section">
-        <a class="article-title-link"
-           <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff; font-size: 33px" </c:if>
-           href="${pageContext.request.contextPath}/articleListBySection?sectionId=${section.id}&page=1"><fmt:message
-                key="section.${section.name}"/></a>
+<form action="${pageContext.request.contextPath}/searchArticle" autocomplete="off">
+    <table style="margin-left: auto; margin-right: auto">
+        <tr>
+            <td>
+                <input class="search-bar" type="search" name="searchRequest" placeholder="<fmt:message key="search"/> "
+                       onfocus="this.placeholder=''" onblur="this.placeholder='<fmt:message key="search"/> '" required>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<c:if test="${sections != null}">
+    <div align="center">
         <a style="font-size: 30px"> | </a>
-    </c:forEach>
-</div>
+        <c:forEach items="${sections}" var="section">
+            <a class="article-title-link"
+               <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff; font-size: 33px" </c:if>
+               href="${pageContext.request.contextPath}/articleListBySection?sectionId=${section.id}&page=1"><fmt:message
+                    key="section.${section.name}"/></a>
+            <a style="font-size: 30px"> | </a>
+        </c:forEach>
+    </div>
+</c:if>
+
 
 <div align="center" style="padding-top: 40px">
     <c:choose>

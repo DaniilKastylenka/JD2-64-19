@@ -5,22 +5,38 @@
 <html>
 <head>
     <fmt:setBundle basename="messages"/>
-    <title><fmt:message key="articles.my"/> </title>
+    <title><fmt:message key="articles.my"/></title>
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1 align="center"><a style="font-size: 40px" class="article-title-link" href="${pageContext.request.contextPath}/myArticles?page=1"><fmt:message key="articles.my"/></a></h1>
+<h1 align="center"><a style="font-size: 40px" class="article-title-link"
+                      href="${pageContext.request.contextPath}/myArticles?page=1"><fmt:message key="articles.my"/></a>
+</h1>
 
-<div align="center">
-    <a style="font-size: 30px"> | </a>
-    <c:forEach items="${sections}" var="section">
-        <a class="article-title-link"
-           <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="font-size: 33px;color: #007bff" </c:if>
-           href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${section.id}&page=1"><fmt:message key="section.${section.name}"/></a>
+<form action="${pageContext.request.contextPath}/searchMyArticles" autocomplete="off">
+    <table style="margin-left: auto; margin-right: auto">
+        <tr>
+            <td>
+                <input class="search-bar" type="search" name="searchRequest" placeholder="<fmt:message key="search"/> "
+                       onfocus="this.placeholder=''" onblur="this.placeholder='<fmt:message key="search"/>'" required>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<c:if test="${sections != null}">
+    <div align="center">
         <a style="font-size: 30px"> | </a>
-    </c:forEach>
-</div>
+        <c:forEach items="${sections}" var="section">
+            <a class="article-title-link"
+               <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="font-size: 33px;color: #007bff" </c:if>
+               href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${section.id}&page=1"><fmt:message
+                    key="section.${section.name}"/></a>
+            <a style="font-size: 30px"> | </a>
+        </c:forEach>
+    </div>
+</c:if>
 
 <div align="center" style="padding-top: 40px">
     <c:choose>
@@ -49,25 +65,32 @@
                 <td class="art-info" align="left" valign="center">
                     <div style="border-bottom: 1px solid #a1a1a1; font-size: 30px"
                          align="center"><a class="article-title-link"
-                                           href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${article.section.id}&page=1"><fmt:message key="section.${article.section.name}"/> </a>
+                                           href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${article.section.id}&page=1"><fmt:message
+                            key="section.${article.section.name}"/> </a>
                     </div>
-                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.author"/>: ${article.author.username}</div>
-                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.published"/>: <fmt:formatDate
-                            value="${article.publicationDate}" pattern="dd.MM.yyy • HH:mm"/></div>
+                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message
+                            key="articles.author"/>: ${article.author.username}</div>
+                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.published"/>:
+                        <fmt:formatDate
+                                value="${article.publicationDate}" pattern="dd.MM.yyy • HH:mm"/></div>
                     <c:if test="${article.updatedDate!=null}">
-                        <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.updated"/>: <fmt:formatDate
-                                value="${article.updatedDate}" pattern="dd.MM • HH:mm"/></div>
+                        <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.updated"/>:
+                            <fmt:formatDate
+                                    value="${article.updatedDate}" pattern="dd.MM • HH:mm"/></div>
                     </c:if>
-                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.likes"/>: ${article.likes}</div>
+                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message
+                            key="articles.likes"/>: ${article.likes}</div>
                     <div><fmt:message key="articles.dislikes"/>: ${article.dislikes}</div>
                 </td>
             </tr>
             <tr>
                 <td align="center" class="art-btns">
                     <a class="delete-btn"
-                       href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message key="delete.btn"/></a> |
+                       href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
+                            key="delete.btn"/></a> |
                     <a class="update-btn"
-                       href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message key="update.btn"/></a>
+                       href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
+                            key="update.btn"/></a>
                 </td>
             </tr>
         </c:if>

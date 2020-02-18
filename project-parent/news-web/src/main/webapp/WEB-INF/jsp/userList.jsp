@@ -26,7 +26,7 @@
             <td class="users-tbl-col"><c:out value="${user.id}"/></td>
             <td class="users-tbl-col"><c:out value="${user.username}"/></td>
             <td class="users-tbl-col"><fmt:message key="role.${user.role.name}"/></td>
-            <td class="users-tbl-col">
+            <td class="users-tbl-col" align="center">
                 <c:if test="${user.role.name != 'admin'}">
                     <a class="delete-btn"
                        href="${pageContext.request.contextPath}/deleteUser?userId=${user.id}">DELETE</a>

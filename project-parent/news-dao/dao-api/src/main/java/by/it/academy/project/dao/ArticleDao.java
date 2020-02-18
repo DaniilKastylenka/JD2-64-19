@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface ArticleDao extends DAO<Article> {
 
+    List<Article> getArticlesBySearchRequest(String request) throws SQLException;
+
+    List<Article> getArticlesBySearchRequestAndUserId(String request, Long id) throws SQLException;
+
     List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException;
 
     int getCountOfArticles() throws SQLException;

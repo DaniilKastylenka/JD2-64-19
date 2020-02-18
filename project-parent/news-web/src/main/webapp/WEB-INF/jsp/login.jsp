@@ -8,7 +8,7 @@
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
-<form method="POST" action="${pageContext.request.contextPath}/login">
+<form method="POST" action="${pageContext.request.contextPath}/login" autocomplete="off">
     <table class="login-table">
         <tr>
             <td align="center" class="login-head"><fmt:message key="login.login"/></td>

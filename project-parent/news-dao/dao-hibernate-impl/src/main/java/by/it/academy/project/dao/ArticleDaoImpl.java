@@ -107,6 +107,16 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
+    public List<Article> getArticlesBySearchRequest(String request) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public List<Article> getArticlesBySearchRequestAndUserId(String request, Long id) {
+        return null;
+    }
+
+    @Override
     public List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException {
         Session session = sessionFactory.openSession();
         List<Article> result = new ArrayList<>();
