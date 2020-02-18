@@ -21,6 +21,18 @@ p {
 input {
     outline: none;
     border: none;
+    cursor: pointer;
+}
+
+textarea{
+    outline: none;
+    border: none;
+}
+
+button{
+    outline: none;
+    border: none;
+    cursor: pointer;
 }
 
 .comment-tbl {
