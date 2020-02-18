@@ -2,40 +2,43 @@ package by.it.academy.project.model;
 
 import lombok.*;
 
-import java.util.Objects;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @ToString
+@Entity
+@Table(name = "role")
 
 public class Role {
 
+    @Id
+    @Column(name = "R_id")
+    @EqualsAndHashCode.Exclude
     private Integer id;
+
+    @Column(name = "R_name")
     private String name;
 
-    //one-to-many
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<User> users;
 
     public Role(String name) {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(name, role.name);
+    public Role(Integer id) {
+        this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public Role(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
-
-
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class SectionDaoImpl extends AbstractDao implements SectionDao {
 
-    private static SectionDaoImpl INSTANCE = new SectionDaoImpl();
+    private static final SectionDaoImpl INSTANCE = new SectionDaoImpl();
 
     public static SectionDao getINSTANCE() {
         return INSTANCE;

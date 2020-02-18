@@ -3,6 +3,7 @@ package by.it.academy.project.model;
 import by.it.academy.project.security.EncryptUtils;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -11,37 +12,73 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Entity
+@Table(name = "user")
+
 
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "U_id")
+    @EqualsAndHashCode.Exclude
     private Long id;
+
+    @Column(name = "U_username")
     private String username;
+
+    @Column(name = "U_password")
     private String password;
+
+    @Column(name = "U_salt")
     private String salt = EncryptUtils.generateSalt();
 
-    //many-to-one
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "U_role_id")
     private Role role;
 
-    //one-to-many
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Article> ownArticles;
 
-    //many-to-many
+    @ManyToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Transient
     private Set<Article> likedArticles;
 
-    //one-to-many
+    @ManyToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Transient
+    private Set<Article> dislikedArticles;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Comment> ownComments;
 
-    //many-to-many
+    @ManyToMany()
+    @JoinTable(name = "comment_user_like",
+            joinColumns = {@JoinColumn(name = "User_U_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Comment_C_id")})
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Comment> likedComments;
+
+    @ManyToMany()
+    @JoinTable(name = "comment_user_dislike",
+            joinColumns = {@JoinColumn(name = "User_U_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Comment_C_id")})
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Comment> dislikedComments;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = new Role("user");
+        this.role = new Role(3,"user");
     }
 
     public User(String username, String password, Role role) {
@@ -62,6 +99,10 @@ public class User {
     public User(Long id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 }
 

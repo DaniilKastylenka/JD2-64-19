@@ -1,7 +1,8 @@
 package by.it.academy.servlet;
 
+import by.it.academy.project.dto.CommentDto;
 import by.it.academy.project.model.Article;
-import by.it.academy.project.model.Comment;
+import by.it.academy.project.model.User;
 import by.it.academy.project.service.ArticleService;
 import by.it.academy.project.service.ArticleServiceImpl;
 import by.it.academy.project.service.CommentService;
@@ -30,9 +31,20 @@ public class ArticleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
-        List<Comment> allComments = commentService.getAllComments();
+        User user = (User) req.getSession().getAttribute("user");
+
+        List<CommentDto> allComments = commentService.getDtoComments();
+
+        for (CommentDto c:allComments){
+            c.setLiked(commentService.isLiked(c.getId(), user.getId()));
+            c.setDisliked(commentService.isDisliked(c.getId(), user.getId()));
+        }
+
         req.setAttribute("commentList", allComments);
+
         Article article = articleService.findArticleById(articleId).orElseThrow(() -> new RuntimeException("no article with id " + articleId));
+        req.setAttribute("isLiked", articleService.isLiked(article.getId(), user.getId()));
+        req.setAttribute("isDisliked", articleService.isDisliked(article.getId(), user.getId()));
         req.setAttribute("article", article);
         req.getRequestDispatcher("/WEB-INF/jsp/article.jsp").forward(req, resp);
     }

@@ -4,7 +4,6 @@
 
 <html>
 <head>
-    <fmt:setLocale scope="session" value="${param.lang}"/>
     <fmt:setBundle basename="messages"/>
     <title>Title</title>
 </head>

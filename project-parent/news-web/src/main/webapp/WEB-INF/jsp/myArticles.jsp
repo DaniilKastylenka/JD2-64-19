@@ -1,51 +1,88 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<html lang="${param.lang}">
+
+<html>
 <head>
-    <fmt:setLocale scope="session" value="${param.lang}"/>
     <fmt:setBundle basename="messages"/>
-    <title><fmt:message key="my.articles.page.title"/></title>
-    <meta charset="UTF-8">
+    <title><fmt:message key="articles.my"/> </title>
 </head>
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1>My articles</h1>
+<h1 align="center"><a style="font-size: 40px" class="article-title-link" href="${pageContext.request.contextPath}/myArticles?page=1"><fmt:message key="articles.my"/></a></h1>
 
-<table class="article-list-tbl" border="1px">
-    <tr>
-        <td><fmt:message key="article.list.id"/></td>
-        <td><fmt:message key="article.list.section"/></td>
-        <td><fmt:message key="article.list.title"/></td>
-        <td><fmt:message key="article.list.text"/></td>
-        <td><fmt:message key="article.list.author"/></td>
-        <td><fmt:message key="article.list.date"/></td>
-        <td>Updated date</td>
-        <td><fmt:message key="article.list.likes"/></td>
-        <td><fmt:message key="my.articles.actions"/></td>
-    </tr>
-    <c:forEach items="${articles}" var="article">
-        <c:if test="${article.author.username == user.username}">
+<div align="center">
+    <a style="font-size: 30px"> | </a>
+    <c:forEach items="${sections}" var="section">
+        <a class="article-title-link"
+           <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="font-size: 33px;color: #007bff" </c:if>
+           href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${section.id}&page=1"><fmt:message key="section.${section.name}"/></a>
+        <a style="font-size: 30px"> | </a>
+    </c:forEach>
+</div>
+
+<div align="center" style="padding-top: 40px">
+    <c:choose>
+        <c:when test="${pageContext.request.parameterMap.containsKey('sectionId')}">
+            <%@include file="/WEB-INF/include/pageButtonsWithSectionId.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="/WEB-INF/include/pageButtons.jsp" %>
+        </c:otherwise>
+    </c:choose>
+</div>
+
+<table class="articles-list">
+    <col width="70%"/>
+    <col width="30%"/>
+    <c:forEach items="${articleList}" var="article">
+        <c:if test="${article.author.username == sessionScope.user.username}">
             <tr>
-                <td valign="top"><c:out value="${article.id}"/></td>
-                <td valign="top"><c:out value="${article.section.name}"/></td>
-                <td valign="top"><a href="${pageContext.request.contextPath}/article?articleId=${article.id}"><p class="title-link">${article.title}</p></a></td>
-                <td valign="top"><p style="overflow:hidden; height: 90px"><c:out value="${article.text}"/></p></td>
-                <td valign="top"><c:out value="${article.author.username}"/></td>
-                <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.publicationDate}"/></td>
-                <td valign="top"><fmt:formatDate pattern="dd.MM.yyy | HH:mm" value="${article.updatedDate}"/></td>
-                <td valign="top"><c:out value="${article.numberOfLikes}"/></td>
-                <td valign="top">
-                    <a class="delete-btn" href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}">DELETE</a> |
-                    <a class="update-btn" href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}">UPDATE</a>
+                <td align="center" class="art-title-brd" colspan="2"><h1><a class="article-title-link"
+                                                                            href="${pageContext.request.contextPath}/article?articleId=${article.id}">${article.title}</a>
+                </h1>
+                </td>
+            </tr>
+            <tr>
+                <td class="art-text-brd" rowspan="2"><p class="article-list-text">${article.text}</p></td>
+                <td class="art-info" align="left" valign="center">
+                    <div style="border-bottom: 1px solid #a1a1a1; font-size: 30px"
+                         align="center"><a class="article-title-link"
+                                           href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${article.section.id}&page=1"><fmt:message key="section.${article.section.name}"/> </a>
+                    </div>
+                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.author"/>: ${article.author.username}</div>
+                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.published"/>: <fmt:formatDate
+                            value="${article.publicationDate}" pattern="dd.MM.yyy • HH:mm"/></div>
+                    <c:if test="${article.updatedDate!=null}">
+                        <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.updated"/>: <fmt:formatDate
+                                value="${article.updatedDate}" pattern="dd.MM • HH:mm"/></div>
+                    </c:if>
+                    <div style="border-bottom: 1px solid #e3e3e3"><fmt:message key="articles.likes"/>: ${article.likes}</div>
+                    <div><fmt:message key="articles.dislikes"/>: ${article.dislikes}</div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" class="art-btns">
+                    <a class="delete-btn"
+                       href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message key="delete.btn"/></a> |
+                    <a class="update-btn"
+                       href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message key="update.btn"/></a>
                 </td>
             </tr>
         </c:if>
     </c:forEach>
 </table>
-
+<div align="center" style="padding-bottom: 50px;">
+    <c:choose>
+        <c:when test="${pageContext.request.parameterMap.containsKey('sectionId')}">
+            <%@include file="/WEB-INF/include/pageButtonsWithSectionIdInMyArticles.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="/WEB-INF/include/pageButtonsInMyArticles.jsp" %>
+        </c:otherwise>
+    </c:choose>
+</div>
 <%@include file="/WEB-INF/include/footer.jsp" %>
-
 </body>
 </html>

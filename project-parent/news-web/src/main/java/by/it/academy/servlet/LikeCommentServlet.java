@@ -30,20 +30,26 @@ public class LikeCommentServlet extends HttpServlet {
 
         Optional<Comment> comment = commentService.findCommentById(commentId);
 
-        //Article article = comment.orElseThrow(()->new RuntimeException("unknown article")).getArticle();
-
         Long likes = null;
+        Long dislikes = null;
+        boolean isLiked = false;
+        boolean isDisliked = false;
 
         if(comment.isPresent()){
-            likes = comment.get().getNumberOfLikes();
+            likes = comment.get().getLikes();
+            dislikes = comment.get().getDislikes();
+            isLiked = commentService.isLiked(comment.get().getId(), user.getId());
+            isDisliked = commentService.isDisliked(comment.get().getId(), user.getId());
         }
 
-        String result = likes + " like(s)";
+        String result =
+                likes + " like(s)" + ":" +
+                dislikes + " dislike(s)" + ":" +
+                isLiked + ":" +
+                isDisliked;
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("plain/text");
         resp.getWriter().write(result);
-
-        //resp.sendRedirect(req.getContextPath() + "/article?articleId=" + article.getId());
 
     }
 }

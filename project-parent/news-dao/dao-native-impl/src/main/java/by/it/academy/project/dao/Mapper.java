@@ -30,9 +30,11 @@ public class Mapper {
             updatedDate = new Date(timestamp1.getTime());
         }
 
-        Long numberOfLikes = resultSet.getLong("A_number_of_likes");
+        Long likes = resultSet.getLong("A_likes");
 
-        return new Article(articleId, section, title, text, author, publicationDate, updatedDate, numberOfLikes);
+        Long dislikes = resultSet.getLong("A_dislikes");
+
+        return new Article(articleId, section, title, text, author, publicationDate, updatedDate, likes, dislikes);
     }
 
     public static User mapUser(ResultSet resultSet) throws SQLException {
@@ -54,21 +56,25 @@ public class Mapper {
         Timestamp timestamp = resultSet.getTimestamp("C_date");
         Date date = new Date(timestamp.getTime());
 
-        Long numberOfLikes = resultSet.getLong("C_number_of_likes");
+        Long likes = resultSet.getLong("C_likes");
+
+        Long dislikes = resultSet.getLong("C_dislikes");
 
         Article article = mapArticle(resultSet);
 
-        return new Comment(id, user, text, date, numberOfLikes, article);
+        return new Comment(id, user, text, date, likes, dislikes, article);
     }
 
     public static Section mapSection(ResultSet resultSet) throws SQLException {
+        Integer id = resultSet.getInt("S_id");
         String name = resultSet.getString("S_name");
-        return new Section(name);
+        return new Section(id, name);
     }
 
     public static Role mapRole(ResultSet resultSet) throws SQLException {
+        Integer id = resultSet.getInt("R_id");
         String name = resultSet.getString("R_name");
-        return new Role(name);
+        return new Role(id, name);
     }
 
 }

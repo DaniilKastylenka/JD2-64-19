@@ -11,13 +11,16 @@
 
     <artifactId>news-web</artifactId>
     <packaging>war</packaging>
-    <name>news-web</name>
-
 
     <dependencies>
         <dependency>
             <groupId>by.it.academy.project</groupId>
             <artifactId>news-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.it.academy.project</groupId>
+            <artifactId>news-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
