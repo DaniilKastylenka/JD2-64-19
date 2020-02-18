@@ -108,12 +108,31 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public List<Article> getArticlesBySearchRequest(String request) throws SQLException {
-        return null;
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE title LIKE :request ORDER BY publicationDate DESC", Article.class);
+            query.setParameter("request", "%" + request + "%");
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by search request", e);
+        }
+        return result;
     }
 
     @Override
     public List<Article> getArticlesBySearchRequestAndUserId(String request, Long id) {
-        return null;
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE title LIKE :request AND author.id=:id", Article.class);
+            query.setParameter("request", "%" + request + "%");
+            query.setParameter("id", id);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by search request and user id");
+        }
+        return result;
     }
 
     @Override

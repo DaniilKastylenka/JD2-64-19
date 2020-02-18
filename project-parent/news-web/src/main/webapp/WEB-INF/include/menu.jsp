@@ -11,8 +11,6 @@
 
 <style>
     <%@include file="menu_style/style.css" %>
-    <%@include file="/WEB-INF/jsp/login_style/css/main.css" %>
-    <%@include file="/WEB-INF/jsp/login_style/css/util.css" %>
     <%@include file="/WEB-INF/jsp/style/style.css"%>
 </style>
 <nav role="navigation">
