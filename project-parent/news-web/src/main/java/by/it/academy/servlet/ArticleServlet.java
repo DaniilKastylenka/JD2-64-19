@@ -43,7 +43,6 @@ public class ArticleServlet extends HttpServlet {
         }
 
         req.setAttribute("commentList", allComments);
-
         Article article = articleService.findArticleById(articleId).orElseThrow(() -> new RuntimeException("no article with id " + articleId));
         if (user != null) {
             req.setAttribute("isLiked", articleService.isLiked(article.getId(), user.getId()));
@@ -51,5 +50,8 @@ public class ArticleServlet extends HttpServlet {
         }
         req.setAttribute("article", article);
         req.getRequestDispatcher("/WEB-INF/jsp/article.jsp").forward(req, resp);
+        req.getSession().removeAttribute("errorString");
+        req.getSession().removeAttribute("errorLength");
+        req.getSession().removeAttribute("commentText");
     }
 }

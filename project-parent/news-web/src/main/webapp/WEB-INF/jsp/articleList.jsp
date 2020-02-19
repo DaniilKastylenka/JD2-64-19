@@ -17,7 +17,7 @@
         <tr>
             <td>
                 <input class="search-bar" type="search" name="searchRequest" placeholder="<fmt:message key="search"/> "
-                       onfocus="this.placeholder=''" onblur="this.placeholder='<fmt:message key="search"/> '" required>
+                       onfocus="this.placeholder=''" onblur="this.placeholder='<fmt:message key="search"/> '">
             </td>
         </tr>
     </table>

@@ -20,6 +20,12 @@
         </dependency>
         <dependency>
             <groupId>by.it.academy.project</groupId>
+            <!--<artifactId>dao-native-impl</artifactId>-->
+            <artifactId>dao-hibernate-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.it.academy.project</groupId>
             <artifactId>news-model</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -32,34 +38,5 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>dao-native-impl</id>
-            <dependencies>
-                <dependency>
-                    <groupId>by.it.academy.project</groupId>
-                    <artifactId>dao-native-impl</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-            </dependencies>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>dao-hibernate-impl</id>
-            <dependencies>
-                <dependency>
-                    <groupId>by.it.academy.project</groupId>
-                    <artifactId>dao-hibernate-impl</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-            </dependencies>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
 
 </project>

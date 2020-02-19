@@ -2,6 +2,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmr" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html lang="${param.lang}">
 <head>
@@ -9,9 +10,11 @@
     <title>${article.title}</title>
     <meta charset="UTF-8">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script>
         <%@include file="js/ajax/ajax_like_article.js" %>
         <%@include file="js/ajax/ajax_dislike_article.js"%>
+        <%@include file="js/popup.js"%>
     </script>
 </head>
 <body>
@@ -62,7 +65,7 @@
     </tr>
 </table>
 
-<table style="margin-left: 140px; width: 200px; height: 150px">
+<table style="margin-left: 250px; width: 200px; height: 150px">
     <tr>
         <td align="center">
             <div style="width: 60px; height: 30px" align="center">
@@ -87,21 +90,29 @@
 <form method="post" action="${pageContext.request.contextPath}/writeComment?articleId=${article.id}">
     <table class="comment-tbl" style="padding-bottom: 100px">
         <tr>
-            <td style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place"
+            <td colspan="2" style="border: 1px solid #d4d4d4; border-radius: 15px"><textarea class="comment-text-place"
                                                                                  name="text"
                                                                                  placeholder="write your comment"
-                                                                                 required
-                                                                                 maxlength="500"></textarea>
+                                                                                 maxlength="500">${commentText}</textarea>
             </td>
         </tr>
         <tr>
-            <td align="left" style="width: 100px; height: 35px"><input type="submit" class="submit-btn"
-                                                                       placeholder="submit"></td>
+            <td align="left" style="width: 100px; height: 35px">
+                <input class="submit-btn"
+                       <c:if test="${sessionScope.user == null}">onclick="PopUpShow()" </c:if>
+                       type="submit"
+            </td>
+            <td style="padding-left: 20px; font-size: 16px; color: red">
+                <c:if test="${errorLength != null}">
+                    <fmr:message key="comment.error.${errorLength}"/>
+                </c:if>
+            </td>
         </tr>
     </table>
 </form>
-
-<h2 align="center" style="padding-bottom: 50px"><fmt:message key="article.comments"/></h2>
+<c:if test="${fn:length(commentList)>1}">
+    <h2 align="center" style="padding-bottom: 50px"><fmt:message key="article.comments"/></h2>
+</c:if>
 
 
 <table class="comment-tbl">
@@ -156,6 +167,15 @@
 </table>
 
 <%@include file="/WEB-INF/include/footer.jsp" %>
+
+<div class="b-popup" id="popup"
+        <c:if test="${errorString == null}"> hidden
+        </c:if>>
+    <div class="b-popup-content">
+        <a style="font-size: 40px; position: absolute; padding-left: 20px" href="javascript:PopUpHide()">×</a>
+        <%@include file="/WEB-INF/include/loginForm.jsp" %>
+    </div>
+</div>
 
 </body>
 </html>

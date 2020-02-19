@@ -14,8 +14,8 @@
         </tr>
         <tr>
             <td align="center" style="padding-bottom: 20px">
-                <input class="login-data-space" placeholder="<fmt:message key="reg.username"/>" type="text"
-                       name="username">
+                <input class="login-data-space" autofocus placeholder="<fmt:message key="reg.username"/>" type="text"
+                       name="username" value="${username}">
             </td>
         </tr>
         <tr>
@@ -25,14 +25,16 @@
             </td>
         </tr>
         <tr>
-            <td align="center">
+            <td align="center" style="padding-bottom: 5px">
                 <input class="login-data-space" placeholder="<fmt:message key="reg.repeat.password"/>" type="password"
                        name="repeatPass">
             </td>
         </tr>
         <tr>
-            <td style="height: 16px; color: red">
-                ${errorString}
+            <td style="height: 20px; color: red; font-size: 16px">
+                <c:if test="${errorString != null}">
+                    <fmt:message key="reg.error.${errorString}"/>
+                </c:if>
             </td>
         </tr>
         <tr>

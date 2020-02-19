@@ -31,13 +31,18 @@ public class WriteCommentServlet extends HttpServlet {
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         User user = (User) req.getSession().getAttribute("user");
-        String text = req.getParameter("text");
-
-        Comment comment = new Comment(user, text, new Article(articleId));
-
-        commentService.addComment(comment);
-
-        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
-
+        String text = req.getParameter("text").trim();
+        if (user == null) {
+            req.setAttribute("text", text);
+        }
+        if (text.length() < 5) {
+            req.getSession().setAttribute("commentText", text);
+            req.getSession().setAttribute("errorLength", "length");
+            resp.sendRedirect(req.getHeader("referer"));
+        } else {
+            Comment comment = new Comment(user, text, new Article(articleId));
+            commentService.addComment(comment);
+            resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
+        }
     }
 }

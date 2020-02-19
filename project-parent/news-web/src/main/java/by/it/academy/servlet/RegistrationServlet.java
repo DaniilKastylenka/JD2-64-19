@@ -35,18 +35,19 @@ public class RegistrationServlet extends HttpServlet {
                 password == null || password.length() == 0 ||
                 repeatPass == null || repeatPass.length() == 0) {
             hasError = true;
-            errorMessage = "Fields should not be empty.";
+            errorMessage = "empty";
         } else if (userService.findUserByUsername(username)) {
             hasError = true;
-            errorMessage = "User with the same name already exists.";
+            errorMessage = "user";
         } else if (!password.equals(repeatPass)) {
             hasError = true;
-            errorMessage = "Passwords do not match.";
+            errorMessage = "repeat";
         }
 
 
         if (hasError) {
             req.setAttribute("errorString", errorMessage);
+            req.setAttribute("username", username);
             req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
         } else {
             userService.addUser(new User(username, password));

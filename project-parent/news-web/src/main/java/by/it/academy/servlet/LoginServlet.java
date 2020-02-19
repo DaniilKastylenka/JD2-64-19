@@ -18,19 +18,19 @@ public class LoginServlet extends HttpServlet {
 
     private UserService userService;
 
-    public LoginServlet(){
+    public LoginServlet() {
         userService = UserServiceImpl.getINSTANCE();
     }
 
-    public LoginServlet(UserService userService){
+    public LoginServlet(UserService userService) {
         this.userService = userService;
     }
 
     public static final String LOGIN_JSP = "/WEB-INF/jsp/login.jsp";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
-    public static final String SHOULD_NOT_BE_EMPTY = "Username and password should not be empty.";
-    public static final String BAD_CREDENTIALS = "Bad credentials";
+    public static final String SHOULD_NOT_BE_EMPTY = "empty";
+    public static final String BAD_CREDENTIALS = "bad";
     public static final String ERROR_STRING_ATTRIBUTE = "errorString";
     public static final String USER_ATTRIBUTE = "user";
     public static final String ARTICLES = "/articleList?page=1";
@@ -65,9 +65,15 @@ public class LoginServlet extends HttpServlet {
         if (hasError) {
             req.setAttribute("username", username);
             req.setAttribute(ERROR_STRING_ATTRIBUTE, errMsg);
-            req.getRequestDispatcher(LOGIN_JSP).forward(req, resp);
+            if (!req.getHeader("Referer").contains("/login")) {
+                req.getSession().setAttribute("errorString", errMsg);
+                resp.sendRedirect(req.getHeader("referer"));
+            } else {
+                req.getRequestDispatcher(LOGIN_JSP).forward(req, resp);
+            }
         } else {
-            resp.sendRedirect(req.getContextPath() + ARTICLES);
+            resp.sendRedirect(req.getHeader("Referer"));
         }
     }
 }
+
