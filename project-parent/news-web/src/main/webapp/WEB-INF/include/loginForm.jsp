@@ -16,7 +16,7 @@
             </td>
         </tr>
         <tr>
-            <td style="height: 20px; color: red; font-size: 16px">
+            <td style="height: 20px; color: #ff7777; font-size: 16px">
                 <c:if test="${errorString != null}">
                     <fmt:message key="login.error.${errorString}"/>
                 </c:if>
@@ -24,8 +24,8 @@
         </tr>
         <tr>
             <td style="padding-bottom: 40px">
-                <div style="font-size: 16px"><fmt:message key="login.no.account"/>
-                    <a class="reg-link" style="font-size: 16px" href="${pageContext.request.contextPath}/register">
+                <div style="color: #dcdcdc;font-size: 16px"><fmt:message key="login.no.account"/>
+                    <a class="reg-link" style="color: #dcdcdc;font-size: 16px" href="${pageContext.request.contextPath}/register">
                         <fmt:message key="login.sign.up"/>
                     </a></div>
             </td>

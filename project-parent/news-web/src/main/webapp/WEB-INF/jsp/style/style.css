@@ -58,14 +58,13 @@ button {
     margin-left: 225px;
     position: absolute;
     font-size: 50px;
-    color: #000;
+    color: #dcdcdc;
     transition: 0.15s;
     z-index: 2;
 }
 
 .news-header:hover {
     color: #a7c8ff;
-
 }
 
 .create-article-tbl {
@@ -99,6 +98,8 @@ a {
 
 body {
     margin-top: 100px;
+    background-image: url("https://cdn2.vectorstock.com/i/1000x1000/30/91/background-with-city-for-business-web-site-vector-21133091.jpg");
+    background-attachment: fixed;
 }
 
 p {
@@ -106,7 +107,7 @@ p {
 }
 
 .delete-btn {
-    color: #666666;
+    color: #fff;
     transition: 0.15s;
 }
 
@@ -115,7 +116,7 @@ p {
 }
 
 .update-btn {
-    color: #666666;
+    color: #fff;
     transition: 0.15s;
 }
 
@@ -171,7 +172,7 @@ p {
     width: 50px;
     height: 25px;
     border: 1.5px solid #4a93d9;
-    background-color: #fff;
+    background-color: inherit;
     border-radius: 30px;
     user-select: none;
 
@@ -448,9 +449,7 @@ p {
 
 .articles-list {
     border-radius: 15px;
-    margin-right: 300px;
-    margin-left: 300px;
-    margin-bottom: 50px;
+    margin: 20px 100px 50px;
     word-wrap: break-word;
 }
 
@@ -465,6 +464,7 @@ p {
     font-size: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #dcdcdc;
 }
 
 .art-text-brd {
@@ -478,7 +478,7 @@ p {
     border-top: 1px solid #d4d4d4;
     border-bottom: 1px solid #909090;
     border-radius: 15px;
-    color: #6a6a6a;
+    color: #dcdcdc;
     padding-left: 5px;
 }
 
@@ -490,6 +490,8 @@ p {
 
 .page-btn {
     font-size: 25px;
+    color: #dcdcdc;
+
 }
 
 .page-btn:hover {
@@ -499,6 +501,8 @@ p {
 .article-title-link {
     font-size: 30px;
     transition: 0.3s;
+    color: #dcdcdc;
+
 }
 
 .article-title-link:hover {
@@ -580,12 +584,19 @@ p {
 }
 
 .login-table {
+    z-index: 1;
     width: 300px;
-    margin: auto;
-    padding-top: 60px;
+    margin-top: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    background: rgba(109, 109, 109, 0.90);
 }
 
 .login-head {
+    color: #dcdcdc;
     font-size: 30px;
     text-transform: uppercase;
     padding-bottom: 40px;
@@ -651,14 +662,27 @@ p {
 
 .b-popup .b-popup-content {
     z-index: 3;
-    margin: 90px auto 0px auto;
-    width: 500px;
-    height: 500px;
-    background-color: #fff;
-    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 430px;
+    border-radius: 15px;
     box-shadow: 0px 0px 10px #000;
 }
 
+.articles-block{
+    margin-right: 200px;
+    margin-left: 200px;
+    background: rgba(109, 109, 109, 0.90);
+    border-radius: 15px;
+    min-height: 100%;
+    backdrop-filter: blur(5px);
+}
+
+.article-block{
+    border-radius: 15px;
+    background: rgba(109, 109, 109, 0.90);
+    backdrop-filter: blur(10px);
+}
 
 
 

@@ -32,7 +32,7 @@
                 </li>
             </ul>
         </li>
-        <li><a style="color: green" href="#"><fmt:message key="menu.hello"/></a>
+        <li><a style="color: #00e200" href="#"><fmt:message key="menu.hello"/></a>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/login"><fmt:message key="login.login"/></a></li>
                 <li><a href="${pageContext.request.contextPath}/register"><fmt:message key="reg.reg"/></a></li>
