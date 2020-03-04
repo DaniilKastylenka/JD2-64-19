@@ -104,7 +104,7 @@
 
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
-                                key="delete.btn"/> </a> |
+                                key="delete.btn"/> </a> <a style="color: #fff">|</a>
                         <a class="update-btn"
                            href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
                                 key="update.btn"/></a>

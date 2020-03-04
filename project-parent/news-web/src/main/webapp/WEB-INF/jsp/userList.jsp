@@ -9,7 +9,7 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1 align="center" style="padding-bottom: 40px"><fmt:message key="all.users"/> </h1>
+<h1 align="center" style="color: #fff; padding-bottom: 40px"><fmt:message key="all.users"/> </h1>
 <table class="users-tbl">
     <col width="15%">
     <col width="50%">
