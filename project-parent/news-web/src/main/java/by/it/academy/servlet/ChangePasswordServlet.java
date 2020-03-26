@@ -38,7 +38,8 @@ public class ChangePasswordServlet extends HttpServlet {
         boolean hasError = false;
 
         if (oldPassword == null || oldPassword.length() == 0 ||
-                newPassword == null || newPassword.length() == 0) {
+                newPassword == null || newPassword.length() == 0 ||
+                repeatPassword == null || repeatPassword.length() == 0) {
             hasError = true;
             error = "empty";
         } else if (!encryptedOldPassword.equals(user.getPassword())) {
