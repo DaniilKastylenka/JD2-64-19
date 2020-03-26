@@ -40,13 +40,13 @@ public class ChangePasswordServlet extends HttpServlet {
         if (oldPassword == null || oldPassword.length() == 0 ||
                 newPassword == null || newPassword.length() == 0) {
             hasError = true;
-            error = "fields should not be empty";
+            error = "empty";
         } else if (!encryptedOldPassword.equals(user.getPassword())) {
             hasError = true;
-            error = "introduced password do not match with real password";
+            error = "old";
         } else if (!newPassword.equals(repeatPassword)) {
             hasError = true;
-            error = "new and repeated passwords do not match";
+            error = "match";
         }
 
         if (hasError) {

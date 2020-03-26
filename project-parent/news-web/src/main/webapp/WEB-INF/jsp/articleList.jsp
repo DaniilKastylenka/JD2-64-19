@@ -21,20 +21,19 @@
                     <input class="search-bar" type="search" name="searchRequest"
                            placeholder="<fmt:message key="search"/> "
                            onfocus="this.placeholder=''" onblur="this.placeholder='<fmt:message key="search"/>'"/></td>
-                </td>
             </tr>
         </table>
     </form>
 
     <c:if test="${sections != null}">
         <div align="center">
-            <a style="font-size: 30px;color: #dcdcdc;"> | </a>
+            <a style="font-size: 35px;color: #555555;"> | </a>
             <c:forEach items="${sections}" var="section">
                 <a class="article-title-link"
                    <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff; font-size: 33px" </c:if>
                    href="${pageContext.request.contextPath}/articleListBySection?sectionId=${section.id}&page=1"><fmt:message
                         key="section.${section.name}"/></a>
-                <a style="color: #dcdcdc;font-size: 30px"> | </a>
+                <a style="color: #555555;font-size: 35px"> | </a>
             </c:forEach>
         </div>
     </c:if>
@@ -53,13 +52,13 @@
 
     <c:choose>
         <c:when test="${fn:length(articleList) < 1 and param.searchRequest!=null}">
-            <div align="center" style="margin-left: 35%; margin-right: 35%; font-size: 20px; color: #dcdcdc;">
+            <div align="center" style="margin-left: 35%; margin-right: 35%; font-size: 20px; color: #555555;">
                 <fmt:message
                         key="no.articles"/> "${param.searchRequest}"
             </div>
         </c:when>
         <c:when test="${fn:length(articleList) >= 1 and param.searchRequest!=null}">
-            <div align="center" style="color: #dcdcdc;margin-left: 35%; margin-right: 35%; font-size:20px"><fmt:message
+            <div align="center" style="color: #555555;margin-left: 35%; margin-right: 35%; font-size:20px"><fmt:message
                     key="search.result"/> "${param.searchRequest}"
             </div>
         </c:when>
@@ -104,7 +103,7 @@
 
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
-                                key="delete.btn"/> </a> <a style="color: #fff">|</a>
+                                key="delete.btn"/> </a> <a style="color: #555555">|</a>
                         <a class="update-btn"
                            href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
                                 key="update.btn"/></a>

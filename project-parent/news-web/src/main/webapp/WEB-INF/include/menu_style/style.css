@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato);
+  @import url(https://fonts.googleapis.com/css?family=Lato);
 *, *:before, *:after {
   box-sizing: border-box;
   padding: 0;
@@ -13,9 +13,8 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(85, 85, 85, 0.90);
+  background: rgba(0, 28, 89, 0.85);
   box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
 }
 
@@ -33,7 +32,7 @@ nav ul li {
 }
 
 nav ul li:hover {
-  background: rgba(0,0,0,0.15);
+  background: rgba(66, 219, 160, 0.85);
 }
 
 nav ul li:hover > ul {
@@ -57,12 +56,10 @@ nav ul li a {
 
 nav ul ul {
   display: none;
-  background: rgba(85, 85, 85, 0.99);
+  background: rgba(0, 34, 109, 0.98);
   position: absolute;
   top: 100%;
   box-shadow: -3px 3px 10px -2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
 }
 
 nav ul ul li {

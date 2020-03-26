@@ -11,14 +11,14 @@
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
 <div class="create-article-block">
-    <h1 align="center" style="color: #fff; padding-bottom: 30px"><fmt:message key="create.article"/></h1>
+    <h1 align="center" style="color: #555555; padding-bottom: 30px"><fmt:message key="create.article"/></h1>
 
     <form method="POST" action="${pageContext.request.contextPath}/createArticle">
         <table class="create-article-tbl">
             <col width="80%">
             <tr>
-                <td><h2 style="color: #fff"><fmt:message key="create.article.title"/></h2></td>
-                <td><h2><label for="section" style="color: #fff"><fmt:message key="create.article.section"/></label></h2>
+                <td><h2 style="color: #555555"><fmt:message key="create.article.title"/></h2></td>
+                <td><h2><label for="section" style="color: #555555"><fmt:message key="create.article.section"/></label></h2>
             </tr>
             <tr>
                 <td style="border: 1px solid #d4d4d4; border-radius: 10px">
@@ -49,7 +49,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><h2 style="color: #fff"><fmt:message key="create.article.text"/></h2></td>
+                <td colspan="2"><h2 style="color: #555555"><fmt:message key="create.article.text"/></h2></td>
             </tr>
             <tr>
                 <td colspan="2"

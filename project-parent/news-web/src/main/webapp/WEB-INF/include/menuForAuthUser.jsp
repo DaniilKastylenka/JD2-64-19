@@ -38,13 +38,12 @@
                 </li>
             </ul>
         </li>
-        <li><a href="#"
-               style="color: #00e200"><fmt:message key="menu.hello"/> ${sessionScope.user.username}</a>
+        <li><a href="#"><fmt:message key="menu.hello"/> ${sessionScope.user.username}</a>
             <ul>
 
                 <li><a href="${pageContext.request.contextPath}/userPage"><fmt:message key="menu.account"/></a></li>
 
-                <li><a href="${pageContext.request.contextPath}/logout" style="color: #ff4834"><fmt:message
+                <li><a href="${pageContext.request.contextPath}/logout" style="color: #fff300"><fmt:message
                         key="menu.logout"/></a></li>
 
             </ul>

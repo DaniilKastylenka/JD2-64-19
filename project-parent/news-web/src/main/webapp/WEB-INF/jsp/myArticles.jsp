@@ -32,13 +32,13 @@
 
     <c:if test="${sections != null}">
         <div align="center">
-            <a style="color:#fff; font-size: 30px"> | </a>
+            <a style="color:#555555; font-size: 30px"> | </a>
             <c:forEach items="${sections}" var="section">
                 <a class="article-title-link"
                    <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="font-size: 33px;color: #007bff" </c:if>
                    href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${section.id}&page=1"><fmt:message
                         key="section.${section.name}"/></a>
-                <a style="color: #fff; font-size: 30px"> | </a>
+                <a style="color: #555555; font-size: 30px"> | </a>
             </c:forEach>
         </div>
     </c:if>
@@ -56,13 +56,13 @@
 
     <c:choose>
         <c:when test="${fn:length(articleList) < 1 and param.searchRequest!=null}">
-            <div align="center" style="margin-left: 35%; margin-right: 35%; font-size: 20px; color: #dcdcdc;">
+            <div align="center" style="margin-left: 35%; margin-right: 35%; font-size: 20px; color: #555555; ">
                 <fmt:message
                         key="no.articles"/> "${param.searchRequest}"
             </div>
         </c:when>
         <c:when test="${fn:length(articleList) >= 1 and param.searchRequest!=null}">
-            <div align="center" style="color: #dcdcdc;margin-left: 35%; margin-right: 35%; font-size:20px"><fmt:message
+            <div align="center" style="color: #555555;margin-left: 35%; margin-right: 35%; font-size:20px"><fmt:message
                     key="search.result"/> "${param.searchRequest}"
             </div>
         </c:when>
@@ -106,7 +106,7 @@
                     <td align="center" class="art-btns">
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/deleteArticle?articleId=${article.id}"><fmt:message
-                                key="delete.btn"/></a> <a style="color: #fff">|</a>
+                                key="delete.btn"/></a> <a style="color: #555555">|</a>
                         <a class="update-btn"
                            href="${pageContext.request.contextPath}/updateArticle?articleId=${article.id}"><fmt:message
                                 key="update.btn"/></a>
