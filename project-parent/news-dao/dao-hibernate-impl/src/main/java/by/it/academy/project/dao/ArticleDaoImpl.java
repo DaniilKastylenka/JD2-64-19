@@ -107,6 +107,35 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
+    public List<Article> getArticlesBySearchRequest(String request) throws SQLException {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE title LIKE :request ORDER BY publicationDate DESC", Article.class);
+            query.setParameter("request", "%" + request + "%");
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by search request", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getArticlesBySearchRequestAndUserId(String request, Long id) {
+        Session session = sessionFactory.openSession();
+        List<Article> result = new ArrayList<>();
+        try (session) {
+            Query<Article> query = session.createQuery("FROM Article WHERE title LIKE :request AND author.id=:id", Article.class);
+            query.setParameter("request", "%" + request + "%");
+            query.setParameter("id", id);
+            result = query.list();
+        } catch (HibernateException e) {
+            log.error("error while getting articles by search request and user id");
+        }
+        return result;
+    }
+
+    @Override
     public List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException {
         Session session = sessionFactory.openSession();
         List<Article> result = new ArrayList<>();
@@ -259,15 +288,14 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public int deleteLike(Long articleId, Long userId) {
+    public void deleteLike(Long articleId, Long userId) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             NativeQuery query = session.createNativeQuery("DELETE FROM user_article_like WHERE Article_A_id = ? AND User_U_id = ?");
             query.setParameter(1, articleId);
             query.setParameter(2, userId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while deleting like from article_user_like table", e);
@@ -275,13 +303,11 @@ public class ArticleDaoImpl implements ArticleDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
-    public int updateLikeInArticle(Long articleId, boolean isLiked) {
+    public void updateLikeInArticle(Long articleId, boolean isLiked) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             Long numberOfLikes = read(articleId).orElseThrow(() -> new RuntimeException("unknown article")).getLikes();
@@ -292,7 +318,7 @@ public class ArticleDaoImpl implements ArticleDao {
                 query.setParameter("likes", numberOfLikes + 1);
             }
             query.setParameter("id", articleId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while update like in article", e);
@@ -300,7 +326,6 @@ public class ArticleDaoImpl implements ArticleDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
@@ -339,15 +364,14 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public int deleteDislike(Long articleId, Long userId) {
+    public void deleteDislike(Long articleId, Long userId) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             NativeQuery query = session.createNativeQuery("DELETE FROM user_article_dislike WHERE Article_A_id = ? AND User_U_id = ?");
             query.setParameter(1, articleId);
             query.setParameter(2, userId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while deleting dislike from article_user_dislike table", e);
@@ -355,13 +379,11 @@ public class ArticleDaoImpl implements ArticleDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
-    public int updateDislikeInArticle(Long articleId, boolean isDisliked) {
+    public void updateDislikeInArticle(Long articleId, boolean isDisliked) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             Long dislikes = read(articleId).orElseThrow(() -> new RuntimeException("unknown article")).getDislikes();
@@ -372,7 +394,7 @@ public class ArticleDaoImpl implements ArticleDao {
                 query.setParameter("dislikes", dislikes + 1);
             }
             query.setParameter("id", articleId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while update dislike in article", e);
@@ -380,7 +402,6 @@ public class ArticleDaoImpl implements ArticleDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override

@@ -44,6 +44,5 @@ public class ArticlesBySectionServlet extends HttpServlet {
         req.setAttribute("totalPages", totalPages);
         req.setAttribute("sections", sectionService.getSections());
         req.getRequestDispatcher("/WEB-INF/jsp/articleList.jsp").forward(req, resp);
-
     }
 }

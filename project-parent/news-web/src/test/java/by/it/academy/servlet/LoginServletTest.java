@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
-
 public class LoginServletTest {
 
     public static final String USER_NAME = "TEST_USER_NAME";

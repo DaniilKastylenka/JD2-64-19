@@ -22,10 +22,9 @@ public class DeleteUserFilter extends HttpFilter {
         Long id = Long.valueOf(req.getParameter("userId"));
 
         if (!user.getId().equals(id) && !user.getRole().getName().equals("admin")) {
-            res.sendRedirect(req.getContextPath() + "/home");
+            res.sendRedirect(req.getContextPath() + "/articleList?page=1");
         } else {
             super.doFilter(req, res, chain);
         }
-
     }
 }

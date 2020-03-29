@@ -13,13 +13,10 @@ public interface UserService {
 
     boolean findUserByUsername(String username);
 
-    Optional<User> findUserByID(Long id);
-
     void deleteUser (Long id);
 
     void updateUser (User user);
 
     List<User> getAllUsers();
-
 
 }

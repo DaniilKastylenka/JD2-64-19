@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface UserDao extends DAO<User>{
 
-    Optional<User> findUserByUsernameAndPassword(String username, String password) throws SQLException;
     Optional<User> findUserByUsername(String username) throws SQLException;
 
 }

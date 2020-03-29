@@ -12,18 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/login", "/register"}, dispatcherTypes = DispatcherType.REQUEST)
+@WebFilter(urlPatterns = {"/likeArticle", "/dislikeArticle", "/likeComment", "/dislikeComment", "/writeComment", "/userPage"}, dispatcherTypes = DispatcherType.REQUEST)
 
-public class AuthFilter extends HttpFilter {
+public class LikeAndCommentFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-
-        if (user != null) {
-            res.sendRedirect(req.getContextPath() + "/articleList?page=1");
+        if (user == null) {
+            if (req.getServletPath().contains("/writeComment")) {
+                res.sendRedirect("javascript:PopUpHide()");
+            } else if (req.getServletPath().contains("/userPage")) {
+                res.sendRedirect(req.getContextPath() + "/login");
+            } else {
+                res.sendRedirect(req.getHeader("Referer"));
+            }
         } else {
             super.doFilter(req, res, chain);
         }

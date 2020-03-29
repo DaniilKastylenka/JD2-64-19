@@ -14,14 +14,12 @@ import java.io.IOException;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = "/dislikeArticle")
-
 public class DislikeArticleServlet extends HttpServlet {
 
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         User user = (User) req.getSession().getAttribute("user");
@@ -50,7 +48,5 @@ public class DislikeArticleServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(response);
-
     }
-
 }

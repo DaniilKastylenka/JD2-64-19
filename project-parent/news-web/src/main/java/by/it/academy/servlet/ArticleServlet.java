@@ -35,17 +35,23 @@ public class ArticleServlet extends HttpServlet {
 
         List<CommentDto> allComments = commentService.getDtoComments();
 
-        for (CommentDto c:allComments){
-            c.setLiked(commentService.isLiked(c.getId(), user.getId()));
-            c.setDisliked(commentService.isDisliked(c.getId(), user.getId()));
+        if (user != null) {
+            for (CommentDto c : allComments) {
+                c.setLiked(commentService.isLiked(c.getId(), user.getId()));
+                c.setDisliked(commentService.isDisliked(c.getId(), user.getId()));
+            }
         }
 
         req.setAttribute("commentList", allComments);
-
         Article article = articleService.findArticleById(articleId).orElseThrow(() -> new RuntimeException("no article with id " + articleId));
-        req.setAttribute("isLiked", articleService.isLiked(article.getId(), user.getId()));
-        req.setAttribute("isDisliked", articleService.isDisliked(article.getId(), user.getId()));
+        if (user != null) {
+            req.setAttribute("isLiked", articleService.isLiked(article.getId(), user.getId()));
+            req.setAttribute("isDisliked", articleService.isDisliked(article.getId(), user.getId()));
+        }
         req.setAttribute("article", article);
         req.getRequestDispatcher("/WEB-INF/jsp/article.jsp").forward(req, resp);
+        req.getSession().removeAttribute("errorString");
+        req.getSession().removeAttribute("errorLength");
+        req.getSession().removeAttribute("commentText");
     }
 }

@@ -112,23 +112,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
-        Session session = sessionFactory.openSession();
-        Optional<User> result = Optional.empty();
-        try (session) {
-            Query<User> query = session.createQuery("SELECT distinct u FROM User u WHERE username=:username and password=:password", User.class);
-            query.setParameter("username", username);
-            query.setParameter("password", password);
-            result = Optional.ofNullable(query.getSingleResult());
-        } catch (HibernateException e) {
-            log.error("error while finding user by username and password", e);
-        } catch (NoResultException e) {
-            log.error("find user by username and password - no result", e);
-        }
-        return result;
-    }
-
-    @Override
     public Optional<User> findUserByUsername(String username) {
         Session session = sessionFactory.openSession();
         Optional<User> result = Optional.empty();

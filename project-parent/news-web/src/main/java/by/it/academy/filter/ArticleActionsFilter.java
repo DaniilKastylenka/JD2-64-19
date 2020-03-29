@@ -31,9 +31,9 @@ public class ArticleActionsFilter extends HttpFilter {
 
         Article article = optionalArticle.orElseThrow(() -> new RuntimeException("no article with id " + articleId));
 
-        if (!user.equals(article.getAuthor())
-                && !user.getRole().getName().equals("admin")) {
-            res.sendRedirect(req.getContextPath() + "/articleList");
+        if (user == null || (!user.equals(article.getAuthor())
+                && !user.getRole().getName().equals("admin"))) {
+            res.sendRedirect(req.getContextPath() + "/articleList?page=1");
         } else {
             super.doFilter(req, res, chain);
         }

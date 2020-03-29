@@ -31,6 +31,19 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     private static final String DELETE_ARTICLE =
             "DELETE FROM article WHERE A_id = ?;";
 
+    private static final String GET_ARTICLES_BY_SEARCH_REQUEST =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_title LIKE  ?  ORDER BY a.A_publication_date DESC;";
+
+    private static final String GET_ARTICLES_BY_SEARCH_REQUEST_AND_USER_ID =
+            "SELECT * FROM article a " +
+                    "JOIN section s ON a.A_section_id = s.S_id " +
+                    "JOIN user u ON a.A_author_id = u.U_id " +
+                    "JOIN role r ON u.U_role_id = r.R_id WHERE a.A_title LIKE  ?  AND a.A_author_id = ? ORDER BY a.A_publication_date DESC;";
+
+
     private static final String SELECT_ALL_ARTICLES =
             "SELECT * FROM article a " +
                     "JOIN section s ON a.A_section_id = s.S_id " +
@@ -210,6 +223,41 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
+    public List<Article> getArticlesBySearchRequest(String request) throws SQLException {
+        ResultSet resultSet = null;
+        List<Article> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ARTICLES_BY_SEARCH_REQUEST)) {
+            statement.setString(1, "%" + request + "%");
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(Mapper.mapArticle(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getArticlesBySearchRequestAndUserId(String request, Long id) throws SQLException {
+        ResultSet resultSet = null;
+        List<Article> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ARTICLES_BY_SEARCH_REQUEST_AND_USER_ID)) {
+            statement.setString(1, "%" + request + "%");
+            statement.setLong(2, id);
+            resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                result.add(Mapper.mapArticle(resultSet));
+            }
+        } finally {
+            closeQuietly(resultSet);
+        }
+        return result;
+    }
+
+    @Override
     public List<Article> getLimitedNumberOfArticles(int start, int total) throws SQLException {
         ResultSet resultSet = null;
         List<Article> result = new ArrayList<>();
@@ -283,8 +331,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     public List<Article> getLimitedNumberOfArticlesByUserId(int start, int total, Long userId) throws SQLException {
         ResultSet resultSet = null;
         List<Article> result = new ArrayList<>();
-        try(Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID)){
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID)) {
             statement.setLong(1, userId);
             statement.setInt(2, start - 1);
             statement.setInt(3, total);
@@ -319,8 +367,8 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     public List<Article> getLimitedNumberOfArticlesByUserIdAndSectionId(int start, int total, Long userId, int sectionId) throws SQLException {
         ResultSet resultSet = null;
         List<Article> result = new ArrayList<>();
-        try(Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID_AND_SECTION_ID)){
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_LIMITED_NUMBER_OF_ARTICLES_BY_USER_ID_AND_SECTION_ID)) {
             statement.setLong(1, userId);
             statement.setInt(2, sectionId);
             statement.setInt(3, start - 1);
@@ -384,14 +432,14 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int deleteLike(Long articleId, Long userId) throws SQLException {
+    public void deleteLike(Long articleId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_LIKE)) {
 
             statement.setLong(1, articleId);
             statement.setLong(2, userId);
 
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -417,7 +465,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int updateLikeInArticle(Long articleId, boolean isLiked) throws SQLException {
+    public void updateLikeInArticle(Long articleId, boolean isLiked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
 
@@ -430,7 +478,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 statement.setLong(1, article.getLikes() + 1);
             }
             statement.setLong(2, articleId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -448,14 +496,14 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int deleteDislike(Long articleId, Long userId) throws SQLException {
+    public void deleteDislike(Long articleId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_DISLIKE)) {
 
             statement.setLong(1, articleId);
             statement.setLong(2, userId);
 
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -481,7 +529,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int updateDislikeInArticle(Long articleId, boolean isLiked) throws SQLException {
+    public void updateDislikeInArticle(Long articleId, boolean isLiked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_DISLIKE)) {
 
@@ -494,7 +542,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 statement.setLong(1, article.getDislikes() + 1);
             }
             statement.setLong(2, articleId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 

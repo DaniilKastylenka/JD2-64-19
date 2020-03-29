@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 import java.util.ResourceBundle;
 
-@WebListener()
+@WebListener
 
 public class NewsPortalContextInitListener implements ServletContextListener {
 
@@ -19,7 +19,6 @@ public class NewsPortalContextInitListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
         logger.info("Context initialized");
 
         try{
@@ -31,7 +30,6 @@ public class NewsPortalContextInitListener implements ServletContextListener {
             logger.error("error", e);
             throw new RuntimeException("Datasource initialization error", e);
         }
-
     }
 
     @Override

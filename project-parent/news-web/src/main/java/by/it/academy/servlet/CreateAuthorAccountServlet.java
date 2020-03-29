@@ -28,7 +28,7 @@ public class CreateAuthorAccountServlet extends HttpServlet {
 
         String username = req.getParameter("username").toLowerCase();
         String password = req.getParameter("password");
-        String repeatPassword = req.getParameter("repeatPassword");
+        String repeatPassword = req.getParameter("repeatPass");
 
         boolean hasError = false;
         String error = "";
@@ -37,13 +37,13 @@ public class CreateAuthorAccountServlet extends HttpServlet {
                 password == null || password.length() == 0 ||
                 repeatPassword == null || repeatPassword.length() == 0) {
             hasError = true;
-            error = "fields should not be empty";
+            error = "empty";
         } else if (!password.equals(repeatPassword)) {
             hasError = true;
-            error = "passwords do not match";
+            error = "repeat";
         } else if (userService.findUserByUsername(username)) {
             hasError = true;
-            error = "User with the same name already exists.";
+            error = "user";
         }
 
         if (hasError) {
