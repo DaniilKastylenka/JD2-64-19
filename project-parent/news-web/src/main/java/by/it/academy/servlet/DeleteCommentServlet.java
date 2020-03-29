@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = "/deleteComment")
-
 public class DeleteCommentServlet extends HttpServlet {
 
     private CommentService commentService = CommentServiceImpl.getINSTANCE();
@@ -25,7 +24,6 @@ public class DeleteCommentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Long commentId = Long.valueOf(req.getParameter("commentId"));
 
         Optional<Comment> comment = commentService.findCommentById(commentId);
@@ -34,7 +32,6 @@ public class DeleteCommentServlet extends HttpServlet {
         commentService.deleteComment(commentId);
 
         resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
-
     }
 }
 

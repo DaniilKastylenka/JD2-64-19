@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/register")
-
 public class RegistrationServlet extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getINSTANCE();
@@ -44,7 +43,6 @@ public class RegistrationServlet extends HttpServlet {
             errorMessage = "repeat";
         }
 
-
         if (hasError) {
             req.setAttribute("errorString", errorMessage);
             req.setAttribute("username", username);
@@ -53,7 +51,5 @@ public class RegistrationServlet extends HttpServlet {
             userService.addUser(new User(username, password));
             resp.sendRedirect(req.getContextPath() + "/login");
         }
-
     }
-
 }

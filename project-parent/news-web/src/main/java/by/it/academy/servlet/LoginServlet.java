@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = "/login")
-
 public class LoginServlet extends HttpServlet {
 
     private UserService userService;
@@ -42,7 +41,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String username = req.getParameter(USERNAME);
         String password = req.getParameter(PASSWORD);
 

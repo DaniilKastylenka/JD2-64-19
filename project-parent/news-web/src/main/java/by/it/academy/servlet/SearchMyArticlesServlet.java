@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/searchMyArticles")
-
 public class SearchMyArticlesServlet extends HttpServlet {
 
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/writeComment")
-
 public class WriteCommentServlet extends HttpServlet {
 
     private CommentService commentService = CommentServiceImpl.getINSTANCE();
@@ -26,8 +25,6 @@ public class WriteCommentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         User user = (User) req.getSession().getAttribute("user");

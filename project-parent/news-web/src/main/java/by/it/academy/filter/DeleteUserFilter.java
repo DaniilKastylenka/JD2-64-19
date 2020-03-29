@@ -26,6 +26,5 @@ public class DeleteUserFilter extends HttpFilter {
         } else {
             super.doFilter(req, res, chain);
         }
-
     }
 }

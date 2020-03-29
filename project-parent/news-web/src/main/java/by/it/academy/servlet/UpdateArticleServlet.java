@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.Optional;
 
 @WebServlet(urlPatterns = "/updateArticle")
-
 public class UpdateArticleServlet extends HttpServlet {
 
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
@@ -62,5 +61,4 @@ public class UpdateArticleServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/myArticles?page=1");
         }
     }
-
 }

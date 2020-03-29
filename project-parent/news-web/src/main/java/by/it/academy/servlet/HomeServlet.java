@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/home")
-
 public class HomeServlet extends HttpServlet {
 
     @Override

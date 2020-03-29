@@ -23,7 +23,6 @@ public class MyArticlesBySectionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         User user = (User) req.getSession().getAttribute("user");
 
         int sectionId = Integer.valueOf(req.getParameter("sectionId"));
@@ -47,6 +46,5 @@ public class MyArticlesBySectionServlet extends HttpServlet {
         req.setAttribute("totalPages", totalPages);
         req.setAttribute("sections", sectionService.getSections());
         req.getRequestDispatcher("/WEB-INF/jsp/myArticles.jsp").forward(req, resp);
-
     }
 }

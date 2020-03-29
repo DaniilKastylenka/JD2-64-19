@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/changePassword")
-
 public class ChangePasswordServlet extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getINSTANCE();
@@ -25,7 +24,6 @@ public class ChangePasswordServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String oldPassword = req.getParameter("oldPassword");
         String newPassword = req.getParameter("newPassword");
         String repeatPassword = req.getParameter("repeatPassword");
@@ -59,6 +57,5 @@ public class ChangePasswordServlet extends HttpServlet {
             userService.updateUser(user);
             resp.sendRedirect(req.getContextPath() + "/userPage");
         }
-
     }
 }

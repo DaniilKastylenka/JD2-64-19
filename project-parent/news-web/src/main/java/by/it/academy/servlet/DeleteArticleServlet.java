@@ -23,7 +23,6 @@ public class DeleteArticleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Long id = Long.valueOf(req.getParameter("articleId"));
         articleService.deleteArticle(id);
 

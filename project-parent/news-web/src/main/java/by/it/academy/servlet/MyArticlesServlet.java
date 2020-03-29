@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/myArticles")
-
 public class MyArticlesServlet extends HttpServlet {
 
     private ArticleService articleService = ArticleServiceImpl.getINSTANCE();
@@ -24,7 +23,6 @@ public class MyArticlesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         User user = (User) req.getSession().getAttribute("user");
 
         int page = Integer.valueOf(req.getParameter("page"));

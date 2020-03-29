@@ -21,7 +21,6 @@ public class DislikeCommentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Long commentId = Long.valueOf(req.getParameter("commentId"));
 
         User user = (User) req.getSession().getAttribute("user");
@@ -50,7 +49,5 @@ public class DislikeCommentServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("plain/text");
         resp.getWriter().write(result);
-
     }
-
 }
