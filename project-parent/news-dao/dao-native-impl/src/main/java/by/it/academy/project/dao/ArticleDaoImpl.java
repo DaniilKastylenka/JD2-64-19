@@ -432,14 +432,14 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int deleteLike(Long articleId, Long userId) throws SQLException {
+    public void deleteLike(Long articleId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_LIKE)) {
 
             statement.setLong(1, articleId);
             statement.setLong(2, userId);
 
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -465,7 +465,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int updateLikeInArticle(Long articleId, boolean isLiked) throws SQLException {
+    public void updateLikeInArticle(Long articleId, boolean isLiked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
 
@@ -478,7 +478,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 statement.setLong(1, article.getLikes() + 1);
             }
             statement.setLong(2, articleId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -496,14 +496,14 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int deleteDislike(Long articleId, Long userId) throws SQLException {
+    public void deleteDislike(Long articleId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_DISLIKE)) {
 
             statement.setLong(1, articleId);
             statement.setLong(2, userId);
 
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -529,7 +529,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
     }
 
     @Override
-    public int updateDislikeInArticle(Long articleId, boolean isLiked) throws SQLException {
+    public void updateDislikeInArticle(Long articleId, boolean isLiked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_DISLIKE)) {
 
@@ -542,7 +542,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
                 statement.setLong(1, article.getDislikes() + 1);
             }
             statement.setLong(2, articleId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
