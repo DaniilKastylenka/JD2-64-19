@@ -13,7 +13,7 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(0, 28, 89, 0.85);
+  background: rgba(0, 28, 89, 0.96);
   box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
 }

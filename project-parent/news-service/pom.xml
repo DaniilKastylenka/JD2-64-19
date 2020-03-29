@@ -23,8 +23,8 @@
         </dependency>
         <dependency>
             <groupId>by.it.academy.project</groupId>
-            <artifactId>dao-native-impl</artifactId>
-            <!--<artifactId>dao-hibernate-impl</artifactId>-->
+            <!--<artifactId>dao-native-impl</artifactId>-->
+            <artifactId>dao-hibernate-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -14,8 +14,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "article")
-
+@Table(name = "article", indexes = @Index(columnList = "A_title", name = "article_title"))
 public class Article {
 
     @Id

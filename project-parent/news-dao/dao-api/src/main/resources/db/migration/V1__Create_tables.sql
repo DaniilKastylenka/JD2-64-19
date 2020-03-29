@@ -33,6 +33,8 @@ CREATE TABLE article(
                       FOREIGN KEY (A_author_id) REFERENCES user(U_id) ON DELETE CASCADE
 );
 
+CREATE INDEX article_title ON article (A_title);
+
 CREATE TABLE comment(
                       C_id              BIGINT        PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       C_user_id         BIGINT        NOT NULL,
