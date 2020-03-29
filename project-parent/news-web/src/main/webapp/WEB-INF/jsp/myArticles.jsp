@@ -32,13 +32,13 @@
 
     <c:if test="${sections != null}">
         <div align="center">
-            <a style="color:#555555; font-size: 30px"> | </a>
+            <a style="color:#555555; font-size: 33px"> | </a>
             <c:forEach items="${sections}" var="section">
                 <a class="article-title-link"
-                   <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="font-size: 33px;color: #007bff" </c:if>
+                   <c:if test="${pageContext.request.getParameter('sectionId')==section.id}">style="color: #007bff" </c:if>
                    href="${pageContext.request.contextPath}/myArticlesBySection?sectionId=${section.id}&page=1"><fmt:message
                         key="section.${section.name}"/></a>
-                <a style="color: #555555; font-size: 30px"> | </a>
+                <a style="color: #555555; font-size: 33px"> | </a>
             </c:forEach>
         </div>
     </c:if>
