@@ -185,17 +185,17 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     }
 
     @Override
-    public int deleteLike(Long commentId, Long userId) throws SQLException {
+    public void deleteLike(Long commentId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_LIKE)) {
             statement.setLong(1, commentId);
             statement.setLong(2, userId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
     @Override
-    public int updateLikeInComment(Long commentId, boolean isLiked) throws SQLException {
+    public void updateLikeInComment(Long commentId, boolean isLiked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_LIKE)) {
             Comment comment = read(commentId)
@@ -206,7 +206,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                 statement.setLong(1, comment.getLikes() + 1);
             }
             statement.setLong(2, commentId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
@@ -246,17 +246,17 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
     }
 
     @Override
-    public int deleteDislike(Long commentId, Long userId) throws SQLException {
+    public void deleteDislike(Long commentId, Long userId) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_DISLIKE)) {
             statement.setLong(1, commentId);
             statement.setLong(2, userId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 
     @Override
-    public int updateDislikeInComment(Long commentId, boolean isDisliked) throws SQLException {
+    public void updateDislikeInComment(Long commentId, boolean isDisliked) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_DISLIKE)) {
             Comment comment = read(commentId)
@@ -267,7 +267,7 @@ public class CommentDaoImpl extends AbstractDao implements CommentDao {
                 statement.setLong(1, comment.getDislikes() + 1);
             }
             statement.setLong(2, commentId);
-            return statement.executeUpdate();
+            statement.executeUpdate();
         }
     }
 

@@ -128,15 +128,14 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public int deleteLike(Long commentId, Long userId) {
+    public void deleteLike(Long commentId, Long userId) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             NativeQuery query = session.createNativeQuery("DELETE FROM comment_user_like WHERE Comment_C_id = ? AND User_U_id = ?");
             query.setParameter(1, commentId);
             query.setParameter(2, userId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while deleting like from comment", e);
@@ -144,13 +143,11 @@ public class CommentDaoImpl implements CommentDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
-    public int updateLikeInComment(Long commentId, boolean isLiked) {
+    public void updateLikeInComment(Long commentId, boolean isLiked) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             Long likes = read(commentId).orElseThrow(() -> new RuntimeException("unknown comment")).getLikes();
@@ -161,7 +158,7 @@ public class CommentDaoImpl implements CommentDao {
                 query.setParameter("likes", likes + 1);
             }
             query.setParameter("id", commentId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while updating like in comment", e);
@@ -169,7 +166,6 @@ public class CommentDaoImpl implements CommentDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
@@ -208,15 +204,14 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public int deleteDislike(Long commentId, Long userId) {
+    public void deleteDislike(Long commentId, Long userId) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             NativeQuery query = session.createNativeQuery("DELETE FROM comment_user_dislike WHERE Comment_C_id = ? AND User_U_id = ?");
             query.setParameter(1, commentId);
             query.setParameter(2, userId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while deleting dislike from comment", e);
@@ -224,13 +219,11 @@ public class CommentDaoImpl implements CommentDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
-    public int updateDislikeInComment(Long commentId, boolean isDisliked) {
+    public void updateDislikeInComment(Long commentId, boolean isDisliked) {
         Session session = sessionFactory.openSession();
-        int result = 0;
         try {
             session.getTransaction().begin();
             Long dislikes = read(commentId).orElseThrow(() -> new RuntimeException("unknown comment")).getDislikes();
@@ -241,7 +234,7 @@ public class CommentDaoImpl implements CommentDao {
                 query.setParameter("dislikes", dislikes + 1);
             }
             query.setParameter("id", commentId);
-            result = query.executeUpdate();
+            query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             log.error("error while updating dislike in comment", e);
@@ -249,7 +242,6 @@ public class CommentDaoImpl implements CommentDao {
         } finally {
             session.close();
         }
-        return result;
     }
 
     @Override
