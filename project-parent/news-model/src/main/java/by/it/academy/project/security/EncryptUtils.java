@@ -34,8 +34,6 @@ public class EncryptUtils {
         return Base64.getEncoder().encodeToString(salt);
     }
 
-
-
 }
 
 

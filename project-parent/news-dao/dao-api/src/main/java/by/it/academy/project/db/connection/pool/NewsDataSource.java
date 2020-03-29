@@ -44,5 +44,4 @@ public final class NewsDataSource {
             throw new SQLException("Datasource is null; Need to call init() first.");
         }
     }
-
 }

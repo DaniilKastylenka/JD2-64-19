@@ -31,17 +31,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(Comment comment) {
-        logger.debug("update comment");
-        try {
-            int result = commentDao.update(comment);
-            logger.debug("result " + result);
-        } catch (SQLException e) {
-            logger.debug("error while updating comment ", e);
-        }
-    }
-
-    @Override
     public void deleteComment(Long id) {
         logger.debug("delete comment");
         try {
@@ -50,19 +39,6 @@ public class CommentServiceImpl implements CommentService {
         } catch (SQLException e) {
             logger.error("error while deleting comment ", e);
         }
-    }
-
-    @Override
-    public List<Comment> getAllComments() {
-        logger.debug("get all comments");
-        ArrayList<Comment> result = null;
-        try {
-            result = (ArrayList<Comment>) commentDao.getAll();
-            logger.debug("result " + result);
-        } catch (SQLException e) {
-            logger.error("error while getting all comments ", e);
-        }
-        return result;
     }
 
     @Override

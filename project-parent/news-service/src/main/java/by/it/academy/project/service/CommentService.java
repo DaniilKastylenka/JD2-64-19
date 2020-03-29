@@ -9,9 +9,7 @@ import java.util.Optional;
 public interface CommentService {
 
     void addComment(Comment comment);
-    void updateComment(Comment comment);
     void deleteComment(Long id);
-    List<Comment> getAllComments();
     Optional<Comment> findCommentById(Long id);
     void like(Long commentId, Long userId);
     boolean isLiked(Long commentId, Long userId);

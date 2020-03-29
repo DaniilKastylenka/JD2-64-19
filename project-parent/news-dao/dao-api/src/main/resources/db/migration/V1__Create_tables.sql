@@ -84,7 +84,7 @@ INSERT INTO section (S_name) VALUES
 ('Entertainment'),
 ('Game'),
 ('World'),
-('Education');
+('Science');
 
 
 INSERT INTO role (R_id, R_name) VALUES
