@@ -36,6 +36,32 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> getArticlesBySearchRequest(String request) {
+        logger.debug("get articles by search request");
+        List<Article> result = new ArrayList<>();
+        try {
+            result = articleDao.getArticlesBySearchRequest(request);
+            logger.debug("result{}", result);
+        } catch (SQLException e){
+            logger.error("error while getting articles by search request", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Article> getArticlesBySearchRequestAndUserId(String request, Long id) {
+        logger.debug("get articles by search request and user id");
+        List<Article> result = new ArrayList<>();
+        try{
+            result = articleDao.getArticlesBySearchRequestAndUserId(request, id);
+            logger.debug("result{}", result);
+        } catch (SQLException e){
+            logger.error("error while getting articles by search request and user id", e);
+        }
+        return result;
+    }
+
+    @Override
     public List<Article> getLimitedNumberOfArticles(int start, int total) {
         logger.debug("get limited number articles");
         List<Article> result = new ArrayList<>();

@@ -9,11 +9,12 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1>My account</h1>
-<div><a class="update-btn" href="${pageContext.request.contextPath}/changePassword">CHANGE MY PASSWORD</a></div>
-<div><a class="delete-btn" href="${pageContext.request.contextPath}/deleteUser?userId=${sessionScope.user.id}">DELETE MY ACCOUNT</a></div>
+<div class="account-block" align="center">
+    <h1 style="color: #555555; padding-bottom: 15px"><fmt:message key="my.account"/></h1>
+    <div><a class="update-btn" style="font-size: 20px" href="${pageContext.request.contextPath}/changePassword"><fmt:message key="change.my.password"/></a></div>
+    <div><a class="delete-btn" style="font-size: 20px" href="${pageContext.request.contextPath}/deleteUser?userId=${sessionScope.user.id}"><fmt:message key="delete.my.account"/> </a></div>
+</div>
 
-
-<%@include file="/WEB-INF/include/footer.jsp"%>
+<%@include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/changePassword")
-
 public class ChangePasswordServlet extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getINSTANCE();
@@ -25,7 +24,6 @@ public class ChangePasswordServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String oldPassword = req.getParameter("oldPassword");
         String newPassword = req.getParameter("newPassword");
         String repeatPassword = req.getParameter("repeatPassword");
@@ -38,15 +36,16 @@ public class ChangePasswordServlet extends HttpServlet {
         boolean hasError = false;
 
         if (oldPassword == null || oldPassword.length() == 0 ||
-                newPassword == null || newPassword.length() == 0) {
+                newPassword == null || newPassword.length() == 0 ||
+                repeatPassword == null || repeatPassword.length() == 0) {
             hasError = true;
-            error = "fields should not be empty";
+            error = "empty";
         } else if (!encryptedOldPassword.equals(user.getPassword())) {
             hasError = true;
-            error = "introduced password do not match with real password";
+            error = "old";
         } else if (!newPassword.equals(repeatPassword)) {
             hasError = true;
-            error = "new and repeated passwords do not match";
+            error = "match";
         }
 
         if (hasError) {
@@ -58,6 +57,5 @@ public class ChangePasswordServlet extends HttpServlet {
             userService.updateUser(user);
             resp.sendRedirect(req.getContextPath() + "/userPage");
         }
-
     }
 }

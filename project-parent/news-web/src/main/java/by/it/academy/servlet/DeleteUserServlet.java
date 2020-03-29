@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/deleteUser")
-
 public class DeleteUserServlet extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getINSTANCE();
@@ -24,7 +23,6 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Long userId = Long.valueOf(req.getParameter("userId"));
 
         userService.deleteUser(userId);
@@ -37,5 +35,4 @@ public class DeleteUserServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/userList");
         }
     }
-
 }

@@ -17,13 +17,11 @@ public class SectionServiceImpl implements SectionService {
 
     private static final SectionDao sectionDao = SectionDaoImpl.getINSTANCE();
 
-    private SectionServiceImpl() {
-    }
+    private SectionServiceImpl() {}
 
     public static SectionService getINSTANCE() {
         return INSTANCE;
     }
-
 
     @Override
     public Set<Section> getSections() {
@@ -37,19 +35,5 @@ public class SectionServiceImpl implements SectionService {
         }
         return result;
     }
-
-    @Override
-    public Optional<Section> findSectionByID(Long id) {
-        logger.debug("find section by id");
-        Optional<Section> result = Optional.empty();
-        try {
-            result = sectionDao.read(id);
-            logger.debug("result " + result);
-        } catch (SQLException e) {
-            logger.error("error while finding section by id", e);
-        }
-        return result;
-    }
-
 
 }

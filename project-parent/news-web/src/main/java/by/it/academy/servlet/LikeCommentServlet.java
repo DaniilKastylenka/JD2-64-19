@@ -35,7 +35,7 @@ public class LikeCommentServlet extends HttpServlet {
         boolean isLiked = false;
         boolean isDisliked = false;
 
-        if(comment.isPresent()){
+        if (comment.isPresent()) {
             likes = comment.get().getLikes();
             dislikes = comment.get().getDislikes();
             isLiked = commentService.isLiked(comment.get().getId(), user.getId());
@@ -44,9 +44,9 @@ public class LikeCommentServlet extends HttpServlet {
 
         String result =
                 likes + " like(s)" + ":" +
-                dislikes + " dislike(s)" + ":" +
-                isLiked + ":" +
-                isDisliked;
+                        dislikes + " dislike(s)" + ":" +
+                        isLiked + ":" +
+                        isDisliked;
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("plain/text");
         resp.getWriter().write(result);

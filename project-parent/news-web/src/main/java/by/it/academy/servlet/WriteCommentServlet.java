@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/writeComment")
-
 public class WriteCommentServlet extends HttpServlet {
 
     private CommentService commentService = CommentServiceImpl.getINSTANCE();
@@ -26,18 +25,21 @@ public class WriteCommentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         Long articleId = Long.valueOf(req.getParameter("articleId"));
 
         User user = (User) req.getSession().getAttribute("user");
-        String text = req.getParameter("text");
-
-        Comment comment = new Comment(user, text, new Article(articleId));
-
-        commentService.addComment(comment);
-
-        resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
-
+        String text = req.getParameter("text").trim();
+        if (user == null) {
+            req.setAttribute("text", text);
+        }
+        if (text.length() < 5) {
+            req.getSession().setAttribute("commentText", text);
+            req.getSession().setAttribute("errorLength", "length");
+            resp.sendRedirect(req.getHeader("referer"));
+        } else {
+            Comment comment = new Comment(user, text, new Article(articleId));
+            commentService.addComment(comment);
+            resp.sendRedirect(req.getContextPath() + "/article?articleId=" + articleId);
+        }
     }
 }

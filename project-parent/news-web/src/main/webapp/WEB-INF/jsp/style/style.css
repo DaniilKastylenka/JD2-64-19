@@ -1,3 +1,39 @@
+a {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666666;
+    margin: 0px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666666;
+    margin: 0px;
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    outline: none;
+    border: none;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
 .comment-tbl {
     table-layout: fixed;
     width: 50%;
@@ -7,34 +43,33 @@
     border: black;
 }
 
-.footer {
+.nfooter {
     position: fixed;
     left: 0;
     bottom: 0;
-    padding: 0;
-    background: #4a93d9;
+    padding: 0 0 0 5px;
+    background: rgb(0, 33, 120);
     color: #fff;
     width: 100%;
+    backdrop-filter: blur(10px);
 }
 
 .news-header {
+    font-family: 'Lato', sans-serif;
     margin-left: 225px;
-    position: fixed;
+    position: absolute;
     font-size: 50px;
-    color: #000;
+    color: #dcdcdc;
     transition: 0.15s;
+    z-index: 2;
 }
 
 .news-header:hover {
     color: #a7c8ff;
-
 }
 
 .create-article-tbl {
-    padding-bottom: 50px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
 }
 
 .article-list-tbl {
@@ -46,8 +81,8 @@
 }
 
 .article-tbl {
+    min-width: 100%;
     table-layout: fixed;
-    margin-bottom: 40px;
 }
 
 .create-author-tbl {
@@ -60,8 +95,7 @@ a {
 
 body {
     margin-top: 100px;
-    margin-left: 8%;
-    margin-right: 8%;
+    background-color: #e6e6e6;
 }
 
 p {
@@ -69,7 +103,7 @@ p {
 }
 
 .delete-btn {
-    color: #666666;
+    color: #555555;
     transition: 0.15s;
 }
 
@@ -78,7 +112,7 @@ p {
 }
 
 .update-btn {
-    color: #666666;
+    color: #555555;
     transition: 0.15s;
 }
 
@@ -97,17 +131,31 @@ p {
 }
 
 .comment-text-place {
-    height: 165px;
+    height: 195px;
     resize: none;
     width: 100%;
-    color: #000;
+    background-color: rgb(240, 240, 240);
+    color: #555555;
+    padding: 3px;
 }
+
+.comment-text-place::placeholder {
+    color: #555555;
+}
+
 
 .article-title-place {
     resize: none;
-    height: 150px;
+    height: 160px;
     width: 100%;
     font-size: 20px;
+    background: inherit;
+    color: #555555;
+    padding: 5px;
+}
+
+.article-title-place::placeholder {
+    color: #555555;
 }
 
 .article-text-place {
@@ -115,12 +163,19 @@ p {
     height: 500px;
     width: 100%;
     font-size: 16px;
+    background: inherit;
+    color: #555555;
+    padding: 5px;
+}
+
+.article-text-place::placeholder {
+    color: #555555;
 }
 
 .article-like-btn {
     font-family: 'Lato', sans-serif;
     font-size: 13px;
-    color: black;
+    color: #555555;
     line-height: 1.2;
 
     display: -webkit-box;
@@ -133,7 +188,7 @@ p {
     width: 50px;
     height: 25px;
     border: 1.5px solid #4a93d9;
-    background-color: #fff;
+    background-color: inherit;
     border-radius: 30px;
     user-select: none;
 
@@ -156,7 +211,7 @@ p {
 .comment-like-btn {
     font-family: 'Lato', sans-serif;
     font-size: 11px;
-    color: black;
+    color: #555555;
     line-height: 1.2;
 
     display: -webkit-box;
@@ -169,7 +224,7 @@ p {
     width: 40px;
     height: 20px;
     border: 1.5px solid #4a93d9;
-    background-color: #fff;
+    background-color: inherit;
     border-radius: 30px;
 
     -webkit-transition: all 0.4s;
@@ -209,8 +264,8 @@ p {
 }
 
 .comment-like-btn:hover {
-    color: #fff;
     background-color: #4a93d9;
+    color: #fff;
 }
 
 .comment-like-btn:active {
@@ -221,7 +276,7 @@ p {
 .comment-dislike-btn {
     font-family: 'Lato', sans-serif;
     font-size: 11px;
-    color: black;
+    color: #555555;
     line-height: 1.2;
 
     display: -webkit-box;
@@ -234,7 +289,7 @@ p {
     width: 40px;
     height: 20px;
     border: 1.5px solid #c72323;
-    background-color: #fff;
+    background-color: inherit;
     border-radius: 30px;
 
     -webkit-transition: all 0.4s;
@@ -274,8 +329,9 @@ p {
 }
 
 .comment-dislike-btn:hover {
-    color: #fff;
     background-color: #c72323;
+    color: #fff;
+
 }
 
 .comment-dislike-btn:active {
@@ -286,7 +342,7 @@ p {
 .submit-btn {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
-    color: black;
+    color: #555555;
     line-height: 1.2;
 
     display: -webkit-box;
@@ -299,7 +355,7 @@ p {
     width: 100px;
     height: 35px;
     border: 2px solid #4a93d9;
-    background-color: #fff;
+    background-color: inherit;
     border-radius: 10px;
 
     -webkit-transition: all 0.4s;
@@ -311,6 +367,8 @@ p {
 .submit-btn:hover {
     color: #fff;
     background-color: #4a93d9;
+    cursor: pointer;
+    text-align: center;
 }
 
 .submit-btn:active {
@@ -321,7 +379,7 @@ p {
 .article-dislike-btn {
     font-family: 'Lato', sans-serif;
     font-size: 13px;
-    color: black;
+    color: #555555;
     line-height: 1.2;
 
     display: -webkit-box;
@@ -334,7 +392,7 @@ p {
     width: 50px;
     height: 25px;
     border: 1.5px solid #c72323;
-    background-color: #fff;
+    background-color: inherit;
     border-radius: 30px;
     user-select: none;
 
@@ -408,9 +466,7 @@ p {
 
 .articles-list {
     border-radius: 15px;
-    margin-right: 200px;
-    margin-left: 200px;
-    margin-bottom: 50px;
+    margin: 20px 100px 50px;
     word-wrap: break-word;
 }
 
@@ -425,6 +481,7 @@ p {
     font-size: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #555555;
 }
 
 .art-text-brd {
@@ -438,7 +495,7 @@ p {
     border-top: 1px solid #d4d4d4;
     border-bottom: 1px solid #909090;
     border-radius: 15px;
-    color: #6a6a6a;
+    color: #555555;
     padding-left: 5px;
 }
 
@@ -450,6 +507,8 @@ p {
 
 .page-btn {
     font-size: 25px;
+    color: #555555;
+
 }
 
 .page-btn:hover {
@@ -459,6 +518,8 @@ p {
 .article-title-link {
     font-size: 30px;
     transition: 0.3s;
+    color: #555555;
+
 }
 
 .article-title-link:hover {
@@ -497,7 +558,7 @@ p {
 }
 
 /* style the items (options), including the selected item: */
-.select-items div,.select-selected {
+.select-items div, .select-selected {
     color: #ffffff;
     padding: 8px 16px;
     border: 1px solid transparent;
@@ -524,6 +585,147 @@ p {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.users-tbl {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.users-tbl-col {
+    height: 30px;
+    border-bottom: 3px solid #8b8b8b;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: rgb(240, 240, 240);
+    color: #555555;
+}
+
+.login-table {
+    z-index: 1;
+    width: 300px;
+    margin-top: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    /*background: rgba(109, 109, 109, 0.90);*/
+    background: rgba(0, 28, 89, 0.85);
+}
+
+.login-head {
+    color: #dcdcdc;
+    font-size: 30px;
+    text-transform: uppercase;
+    padding-bottom: 40px;
+}
+
+.login-data-space {
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    height: 60px;
+    width: 370px;
+    transition: 0.25s;
+    padding-left: 20px;
+}
+
+.login-data-space:focus {
+    background-color: #cdf2de;
+    border-radius: 5px;
+    height: 60px;
+    width: 370px;
+}
+
+.login-btn {
+    color: #fff;
+    font-size: 20px;
+    width: 370px;
+    height: 60px;
+    border-radius: 5px;
+    background-color: rgba(66, 219, 160, 0.85);
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background-color: rgba(44, 142, 103, 0.85);
+    cursor: pointer;
+}
+
+.reg-link:hover {
+    color: #a7c8ff;
+}
+
+.search-bar {
+    font-size: 16px;
+    width: 250px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    background-color: #dfdfdf;
+    text-align: center;
+}
+
+.b-popup {
+    z-index: 3;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    transition: 0.3s;
+}
+
+.b-popup .b-popup-content {
+    z-index: 3;
+    margin-left: auto;
+    margin-right: auto;
+    width: 430px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #000;
+}
+
+.articles-block {
+    margin-right: 200px;
+    margin-left: 200px;
+    background: rgb(240, 240, 240);
+    border-radius: 15px;
+    min-height: 100%;
+    backdrop-filter: blur(20px);
+    margin-bottom: 50px;
+}
+
+.article-block {
+    border-radius: 15px;
+    background: rgb(240, 240, 240);
+    backdrop-filter: blur(10px);
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-bottom: 50px;
+    padding: 30px;
+}
+
+.create-article-block {
+    padding: 30px;
+    background: rgb(240, 240, 240);
+    backdrop-filter: blur(15px);
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    margin-bottom: 50px;
+}
+
+.account-block {
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+    width: 40%;
+    padding: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 

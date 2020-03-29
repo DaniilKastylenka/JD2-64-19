@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/logout")
-
 public class LogoutServlet extends HttpServlet {
 
     @Override

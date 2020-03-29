@@ -9,6 +9,10 @@ public interface ArticleService {
 
     List<Article> getAllArticles();
 
+    List<Article> getArticlesBySearchRequest(String request);
+
+    List<Article> getArticlesBySearchRequestAndUserId(String request, Long id);
+
     List<Article> getLimitedNumberOfArticles(int start, int total);
 
     int getCountOfPages(int countOfArticlesOnPage);

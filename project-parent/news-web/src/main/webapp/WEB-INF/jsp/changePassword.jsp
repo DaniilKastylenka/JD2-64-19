@@ -9,29 +9,41 @@
 <body>
 <%@include file="/WEB-INF/include/menu.jsp" %>
 
-<h1>Change password</h1>
-
-<div style="color: red;">${errorString}</div>
-<form method="post" action="${pageContext.request.contextPath}/changePassword">
-    <table border="1px" style="border: black">
+<form method="POST" action="${pageContext.request.contextPath}/changePassword" autocomplete="off">
+    <table class="login-table">
         <tr>
-            <td>Old password</td>
-            <td><input type="password" name="oldPassword" placeholder="old password"></td>
+            <td align="center" class="login-head"><fmt:message key="change.password"/></td>
         </tr>
         <tr>
-            <td>New password</td>
-            <td><input type="password" name="newPassword" placeholder="new password"></td>
+            <td align="center" style="padding-bottom: 20px">
+                <input class="login-data-space" autofocus placeholder="<fmt:message key="old.password"/>" type="password"
+                       name="oldPassword">
+            </td>
         </tr>
         <tr>
-            <td>Repeat</td>
-            <td><input type="password" name="repeatPassword" placeholder="repeat new password"></td>
+            <td align="center" style="padding-bottom: 20px">
+                <input class="login-data-space" placeholder="<fmt:message key="new.password"/>" type="password"
+                       name="newPassword">
+            </td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit"></td>
+            <td align="center" style="padding-bottom: 5px">
+                <input class="login-data-space" placeholder="<fmt:message key="new.repeat"/>" type="password"
+                       name="repeatPassword">
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 20px; color: #ff7777; font-size: 16px">
+                <c:if test="${errorString != null}">
+                    <fmt:message key="change.password.error.${errorString}"/>
+                </c:if>
+            </td>
+        </tr>
+        <tr>
+            <td><input class="login-btn" type="submit" value="<fmt:message key="change"/> "/></td>
         </tr>
     </table>
 </form>
-
 
 <%@include file="/WEB-INF/include/footer.jsp" %>
 </body>
