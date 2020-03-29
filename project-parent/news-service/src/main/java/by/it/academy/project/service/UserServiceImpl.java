@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findUserByUsernameAndPassword(String username, String password) {
-
         logger.debug("find user by username and password");
         try {
             Optional<User> optionalUser = userDao.findUserByUsername(username);
@@ -36,13 +35,10 @@ public class UserServiceImpl implements UserService {
                     return Optional.of(user);
                 }
             }
-
             logger.debug("result" + optionalUser);
-
         } catch (SQLException e) {
             logger.error("error while finding user by username and password", e);
         }
-
         return Optional.empty();
     }
 
@@ -57,19 +53,6 @@ public class UserServiceImpl implements UserService {
             logger.error("error while finding user by username", e);
         }
         return optionalUser.isPresent();
-    }
-
-    @Override
-    public Optional<User> findUserByID(Long id) {
-        logger.debug("find user by id");
-        Optional<User> optionalUser = Optional.empty();
-        try {
-            optionalUser = userDao.read(id);
-            logger.debug("result " + optionalUser);
-        } catch (SQLException e) {
-            logger.error("error while finding user by id ", e);
-        }
-        return optionalUser;
     }
 
     @Override
@@ -120,7 +103,6 @@ public class UserServiceImpl implements UserService {
             logger.error("error while adding user", e);
         }
     }
-
 
     public static UserService getINSTANCE() {
         return INSTANCE;
