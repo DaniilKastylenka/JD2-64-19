@@ -135,31 +135,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByUsernameAndPassword(String username, String password) throws SQLException {
-
-        ResultSet resultSet = null;
-        Optional<User> result = Optional.empty();
-
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_BY_USERNAME_AND_PASSWORD)) {
-
-            statement.setString(1, username);
-            statement.setString(2, password);
-
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                result = Optional.of(Mapper.mapUser(resultSet));
-            }
-
-        } finally {
-            closeQuietly(resultSet);
-        }
-
-        return result;
-    }
-
-    @Override
     public Optional<User> findUserByUsername(String username) throws SQLException {
 
         ResultSet resultSet = null;
